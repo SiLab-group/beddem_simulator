@@ -2,7 +2,7 @@ package main.agent.core;
 
 import java.util.List;
 
-import framework.environment.ILocation;
+import main.environment.ILocation;
 
 /**
  * All agents must implement this interface so that it the simulation knows how

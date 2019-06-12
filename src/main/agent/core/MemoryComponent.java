@@ -3,9 +3,9 @@ package main.agent.core;
 import java.util.HashSet;
 import java.util.Set;
 
-import framework.concept.Option;
-import framework.concept.Resource;
-import framework.environment.ILocation;
+import main.concept.Option;
+import main.concept.Resource;
+import main.environment.ILocation;
 
 public abstract class MemoryComponent {
 	

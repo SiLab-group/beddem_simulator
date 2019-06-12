@@ -6,8 +6,8 @@ import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import framework.concept.Task;
-import framework.environment.ILocation;
+import main.concept.Task;
+import main.environment.ILocation;
 
 /**
  * Define all the fields and decision making process of an agent. Here the agent

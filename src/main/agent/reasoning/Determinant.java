@@ -6,8 +6,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import framework.concept.Option;
-import framework.concept.Task;
+import main.concept.Option;
+import main.concept.Task;
 
 /**
  * A class represent a standard determinant (psychology) in decision making.

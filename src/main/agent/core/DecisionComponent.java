@@ -2,8 +2,8 @@ package main.agent.core;
 
 import java.util.Set;
 
-import framework.concept.Option;
-import framework.concept.Task;
+import main.concept.Option;
+import main.concept.Task;
 
 public abstract class DecisionComponent {
 	

@@ -1,8 +1,8 @@
 package main.agent.core;
 
-import framework.concept.Option;
-import framework.concept.Task;
-import framework.environment.ILocation;
+import main.concept.Option;
+import main.concept.Task;
+import main.environment.ILocation;
 
 public abstract class CommunicationComponent {
 	

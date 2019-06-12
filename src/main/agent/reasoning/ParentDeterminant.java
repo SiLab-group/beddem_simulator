@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import framework.agent.core.IAgent;
-import framework.concept.Option;
-import framework.concept.Task;
+import main.concept.Option;
+import main.concept.Task;
 
 /**
  * A class represent a parent determinant in decision making model. Its ranking
