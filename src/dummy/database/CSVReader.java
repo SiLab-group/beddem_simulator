@@ -19,7 +19,7 @@ import dummy.report.IReporter;
 import dummy.simulator.ContextManager;
 import dummy.simulator.GlobalVars;
 import main.agent.core.IAgent;
-import main.environment.ILocation;
+import main.environment.Environment;
 
 /**
  * The class that has the functions to read csv files and create agents,
@@ -65,7 +65,7 @@ public class CSVReader {
 	 * @throws MissingElementException
 	 * @throws IOException
 	 */
-	public void createLocations(LocationContext context, HashMap<String, ILocation> idToLocationMap)
+	public void createLocations(LocationContext context, HashMap<String, Environment> idToLocationMap)
 			throws IOException {
 
 		String csvDataDir = ContextManager.getProperty(GlobalVars.CSVDataDirectory);
@@ -76,7 +76,7 @@ public class CSVReader {
 		br.readLine();
 
 		while ((line = br.readLine()) != null) {
-			
+
 		}
 
 		br.close();
@@ -97,7 +97,7 @@ public class CSVReader {
 	 * @throws MissingElementException
 	 * @throws IOException
 	 */
-	public void createAgents(AgentContext agentContext, HashMap<String, ILocation> idToLocationMap,
+	public void createAgents(AgentContext agentContext, HashMap<String, Environment> idToLocationMap,
 			HashMap<String, IAgent> idToAgentMap) throws IOException {
 
 		String csvDataDir = ContextManager.getProperty(GlobalVars.CSVDataDirectory);
@@ -112,7 +112,7 @@ public class CSVReader {
 		while ((line = br.readLine()) != null) {
 			String[] inputs = line.split(",");
 
-			ILocation loc = idToLocationMap.get(inputs[6] + inputs[7]);
+			Environment loc = idToLocationMap.get(inputs[6] + inputs[7]);
 
 			Set<String> negModes = new HashSet<String>();
 			Set<String> posModes = new HashSet<String>();
@@ -160,7 +160,6 @@ public class CSVReader {
 		String policyFile = csvDataDir + ContextManager.getProperty(GlobalVars.PolicyCSVfile)
 				+ GlobalVars.SIMULATION_PARAMS.POLICY_MATRIX_NUM + ".csv";
 
-		
 		updateAgentResource();
 	}
 
@@ -180,10 +179,9 @@ public class CSVReader {
 	public void updateAgentResource() {
 		int year = GlobalVars.SIMULATION_PARAMS.START_YEAR + ContextManager.getCheckPointNum();
 		String csvDataDir = ContextManager.getProperty(GlobalVars.CSVDataDirectory);
-		String correspondenceFile = csvDataDir + ContextManager.getProperty(GlobalVars.CorrespondenceCSVfile) + "."+year+".csv";
+		String correspondenceFile = csvDataDir + ContextManager.getProperty(GlobalVars.CorrespondenceCSVfile) + "."
+				+ year + ".csv";
 
-		
 	}
-
 
 }

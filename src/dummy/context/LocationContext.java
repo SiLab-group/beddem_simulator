@@ -1,7 +1,7 @@
 package dummy.context;
 
 import dummy.simulator.GlobalVars;
-import main.environment.ILocation;
+import main.environment.Environment;
 import repast.simphony.context.DefaultContext;
 
 /**
@@ -10,7 +10,7 @@ import repast.simphony.context.DefaultContext;
  * @author khoa_nguyen
  *
  */
-public class LocationContext extends DefaultContext<ILocation> {
+public class LocationContext extends DefaultContext<Environment> {
 
 	public LocationContext() {
 		super(GlobalVars.CONTEXT_NAMES.LOCATION_CONTEXT);

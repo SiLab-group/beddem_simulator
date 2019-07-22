@@ -5,7 +5,7 @@ public class TPBModel extends ParentDeterminant {
 			double behaviouralControlWeight, double normWeight, double intentionWeight) {
 		super("FishbeinAndAjzen", 1);
 		ParentDeterminant intention = new ParentDeterminant("intention", intentionWeight);
-		
+
 		addDeterminantChild(behaviouralControl);
 		addDeterminantChild(intention);
 

@@ -7,7 +7,7 @@ package main.concept;
  * @author khoa_nguyen
  *
  */
-public class Task implements Comparable<Task> {
+public abstract class Task implements Comparable<Task> {
 
 	protected double executingTime;
 

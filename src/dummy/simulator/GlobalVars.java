@@ -29,19 +29,17 @@ public abstract class GlobalVars {
 	public static final String RankingMatrixCSVfile = "RankingMatrixCSVfile";
 	public static final String AgentWeightCSVfile = "AgentWeightCSVfile";
 	public static final String AgentSociogramCSVfile = "AgentSociogramCSVfile";
-	
+
 	public static final String AgentTable = "AgentTable";
 	public static final String CorrespondenceTable = "CorrespondenceTable";
 	public static final String EconomyTable = "EconomyTable";
-	public static final String ResourcesTable= "ResourcesTable";
+	public static final String ResourcesTable = "ResourcesTable";
 	public static final String ScheduleTable = "ScheduleTable";
 	public static final String WeightsTable = "WeightsTable";
 	public static final String TransportationTable = "TransportationTable";
 	public static final String TypeofvehiclesTable = "TypeofvehiclesTable";
 	public static final String Sociogram = "Sociogram";
-	
-	
-	
+
 	public static final String postgreURL = "postgreURL";
 	public static final String postgreUser = "postgreUser";
 	public static final String postgrePassword = "postgrePassword";
@@ -62,39 +60,6 @@ public abstract class GlobalVars {
 	}
 
 	/**
-	 * Parameters that are mainly used for VISUALISATION.
-	 * 
-	 * @author khoa_nguyen
-	 *
-	 */
-	public static final class GEOGRAPHY_PARAMS {
-		public enum BUFFER_DISTANCE {
-			// The smallest distance, rarely used. Approximately 0.001m
-			SMALL(0.00000001, "0.001"),
-			// Most commonly used distance, OK for looking for nearby houses or
-			// roads. Approximatey 110m
-			MEDIUM(0.001, "110"),
-			// Largest buffer, approximately 550m. I use this when doing things
-			// that don't need to be done often, like populating caches.
-			LARGE(0.005, "550");
-
-			/**
-			 * @param dist
-			 *            The distance to be passed to the search function (in lat/long?)
-			 * @param distInMeters
-			 *            An approximate equivalent distance in meters.
-			 */
-			BUFFER_DISTANCE(double dist, String distInMeters) {
-				this.dist = dist;
-				this.distInMeters = distInMeters;
-			}
-
-			public double dist;
-			public String distInMeters;
-		}
-	}
-
-	/**
 	 * Parameters that control the simulation time and step
 	 * 
 	 * @author khoa_nguyen
@@ -105,7 +70,8 @@ public abstract class GlobalVars {
 		public static final int START_YEAR = (Integer) params.getValue("start_year");
 		public static final int CHECKPOINTS_IN_SIMULATE = (Integer) params.getValue("checkpoints_in_simulate");
 		public static final int PERIODS_TO_NEXT_CHECKPOINT = (Integer) params.getValue("periods_to_checkpoint");
-		public static final int AGENT_PROBABILISTIC_DECISION = (Integer) params.getValue("agent_made_probabilistic_decision");
+		public static final int AGENT_PROBABILISTIC_DECISION = (Integer) params
+				.getValue("agent_made_probabilistic_decision");
 		public static final int POLICY_MATRIX_NUM = (Integer) params.getValue("policy_matrix_num");
 		public static final int SELF_RANKING_NUM_1 = (Integer) params.getValue("self_ranking_1");
 		public static final int SELF_RANKING_NUM_2 = (Integer) params.getValue("self_ranking_2");
@@ -118,75 +84,35 @@ public abstract class GlobalVars {
 		public static final int NUMBER_OF_MODES = 5;
 		public static final double MAX_WEIGHT = 5.0;
 	}
-	
+
 	public static final class AGENT_DECISION_PARAMS {
-		//public static final double WEIGHT_OF_HABITS = 0.5;
-		//public static final double WEIGHT_OF_INTENTION = 0.5;
-		//public static final int OPTIONS_CONSIDERED = 10;
-		
+		// public static final double WEIGHT_OF_HABITS = 0.5;
+		// public static final double WEIGHT_OF_INTENTION = 0.5;
+		// public static final int OPTIONS_CONSIDERED = 10;
+
 		public static final double ENVIRONMENTAL_RANKING_VALUE_OF_MOTOR_NW = 1.0;
 		public static final double ENVIRONMENTAL_RANKING_VALUE_OF_MOTOR_E = 2.5;
 		public static final double ENVIRONMENTAL_RANKING_VALUE_OF_MOTOR_G = 5.0;
-		
+
 		public static final double WORK_SPACE_RANKING_VALUE_OF_RAIL_BUS_TRAM = 1.0;
 		public static final double WORK_SPACE_RANKING_VALUE_OF_OTHER_MODE = 5.0;
-		
-		//public static final double INDEPENDENT_RANKING_VALUE_OF_PRIVATE_MODE = 1.0;
-		//public static final double INDEPENDENT_RANKING_VALUE_OF_PUBLIC_MODE = 2.0;
-	
-/*		public static double PERSONAL_SPACE_RANKING_VALUE_OF_CAR;
-		public static double PERSONAL_SPACE_RANKING_VALUE_OF_TRAM_BUS;
-		public static double PERSONAL_SPACE_RANKING_VALUE_OF_TRAIN;
-		public static double PERSONAL_SPACE_RANKING_VALUE_OF_WALKING;
-		public static double PERSONAL_SPACE_RANKING_VALUE_OF_BIKING;
-		public static void addPersonalSpaceRanking(int[] rankings) {
-			PERSONAL_SPACE_RANKING_VALUE_OF_CAR = rankings[0];
-			PERSONAL_SPACE_RANKING_VALUE_OF_TRAM_BUS = rankings[1];
-			PERSONAL_SPACE_RANKING_VALUE_OF_TRAIN = rankings[2];
-			PERSONAL_SPACE_RANKING_VALUE_OF_WALKING = rankings[3];
-			PERSONAL_SPACE_RANKING_VALUE_OF_BIKING = rankings[4];
-		}*/
-		
-/*		public static double ENJOYMENT_RANKING_VALUE_OF_CAR;
-		public static double ENJOYMENT_RANKING_VALUE_OF_TRAM_BUS;
-		public static double ENJOYMENT_RANKING_VALUE_OF_TRAIN;
-		public static double ENJOYMENT_RANKING_VALUE_OF_WALKING;
-		public static double ENJOYMENT_RANKING_VALUE_OF_BIKING;
-		public static void addEnjoymentRanking(int[] rankings) {
-			ENJOYMENT_RANKING_VALUE_OF_CAR = rankings[0];
-			ENJOYMENT_RANKING_VALUE_OF_TRAM_BUS = rankings[1];
-			ENJOYMENT_RANKING_VALUE_OF_TRAIN = rankings[2];
-			ENJOYMENT_RANKING_VALUE_OF_WALKING = rankings[3];
-			ENJOYMENT_RANKING_VALUE_OF_BIKING = rankings[4];
-		}
-		
-		public static double SELF_CONCEPT_RANKING_VALUE_OF_CAR;
-		public static double SELF_CONCEPT_RANKING_VALUE_OF_TRAM_BUS;
-		public static double SELF_CONCEPT_RANKING_VALUE_OF_TRAIN;
-		public static double SELF_CONCEPT_RANKING_VALUE_OF_WALKING;
-		public static double SELF_CONCEPT_RANKING_VALUE_OF_BIKING;
-		public static void addSelfConceptRanking(int[] rankings) {
-			SELF_CONCEPT_RANKING_VALUE_OF_CAR = rankings[0];
-			SELF_CONCEPT_RANKING_VALUE_OF_TRAM_BUS = rankings[1];
-			SELF_CONCEPT_RANKING_VALUE_OF_TRAIN = rankings[2];
-			SELF_CONCEPT_RANKING_VALUE_OF_WALKING = rankings[3];
-			SELF_CONCEPT_RANKING_VALUE_OF_BIKING = rankings[4];
-		}*/
+
 	}
-	
+
 	public static final class CALIBRATION_PARAMS {
 		public static final double MAX_WEIGHT = 5;
-		public static final double CENSUS_WALKING_KMS =  5802075451.0;//2672484909.0; // 5802075451.0;
-		public static final double CENSUS_BIKING_KMS = 2748351529.0;//4907267234.0;// 2748351529.0;
-		public static final double CENSUS_CAR_KMS = 72678629333.0;//73092978474.0; // 72678629333.0;
-		public static final double CENSUS_BUS_TRAM_KMS = 4580585882.0;//4069602738.0; // 4580585882.0;
-		public static final double CENSUS_TRAIN_KMS =  22902929412.0; //23198972550.0; // 22902929412.0;
-		public static final double CENSUS_OTHER_KMS =  3664468706.0;//4422349369.0; // 3664468706.0;
+		public static final double CENSUS_WALKING_KMS = 5802075451.0;// 2672484909.0; // 5802075451.0;
+		public static final double CENSUS_BIKING_KMS = 2748351529.0;// 4907267234.0;// 2748351529.0;
+		public static final double CENSUS_CAR_KMS = 72678629333.0;// 73092978474.0; // 72678629333.0;
+		public static final double CENSUS_BUS_TRAM_KMS = 4580585882.0;// 4069602738.0; // 4580585882.0;
+		public static final double CENSUS_TRAIN_KMS = 22902929412.0; // 23198972550.0; // 22902929412.0;
+		public static final double CENSUS_OTHER_KMS = 3664468706.0;// 4422349369.0; // 3664468706.0;
 		public static final double CENSUS_TOTAL_KMS = 112377040313.0;
 	}
 
 	public final static class GLOBAL_FUEL_PRICE {
 		private static List<List<Double>> yearToPriceList = new ArrayList<List<Double>>();
+
 		public static void addNewPrices(double priceOfG, double priceOfD, double priceOfE, double priceOfH) {
 			List<Double> prices = new ArrayList<Double>();
 			prices.add(priceOfG);

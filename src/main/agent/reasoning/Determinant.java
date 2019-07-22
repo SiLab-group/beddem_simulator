@@ -1,4 +1,4 @@
- package main.agent.reasoning;
+package main.agent.reasoning;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ import main.concept.Task;
  */
 public abstract class Determinant {
 	private static Logger LOGGER = Logger.getLogger(Determinant.class.getName());
-	
+
 	private String id;
 	private double weight;
 
@@ -48,21 +48,22 @@ public abstract class Determinant {
 		for (Double v : valueToOptsMap.keySet()) {
 			sumValue += v;
 		}
-		if (Double.compare(sumValue, 0.0) == 0) sumValue = 1;
+		if (Double.compare(sumValue, 0.0) == 0)
+			sumValue = 1;
 		String debugString = "Determinant: " + this.id + " with weight " + this.weight + " \n";
-		
+
 		for (Map.Entry<Double, Set<Option>> entry : valueToOptsMap.entrySet()) {
 			debugString += "Value: " + entry.getKey() + " \n";
 			for (Option opt : entry.getValue()) {
 				debugString += "Option: " + opt.toString() + " \n";
 			}
 			debugString += " \n";
-			rankingResult.put(entry.getKey()/sumValue,entry.getValue());
+			rankingResult.put(entry.getKey() / sumValue, entry.getValue());
 		}
 		LOGGER.log(Level.FINE, debugString);
 		return rankingResult;
 	}
-	
+
 	/**
 	 * This function evaluate the input option set and put product the result as a
 	 * map from value to option(s).
@@ -73,13 +74,13 @@ public abstract class Determinant {
 	 *            The task to be performed by the agent.
 	 */
 	protected abstract Map<Double, Set<Option>> evalOpts(Set<Option> inputOpts, Task task);
-	
+
 	public String getID() {
 		return this.id;
 	}
-	
+
 	public double getWeight() {
 		return this.weight;
 	}
-	
+
 }

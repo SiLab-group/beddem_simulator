@@ -1,39 +1,19 @@
 package main.agent.core;
 
+import java.util.Map;
 import java.util.Set;
 
 import main.concept.Option;
-import main.concept.Task;
 
-public abstract class DecisionComponent {
-	
-	private Option pickedOpt;
+public interface DecisionComponent {
 
-	public void update(Task task, MemoryComponent memoryComponent) {
-		// Create list of options for the agent and evaluate them.
-		Set<Option> opts = calculatePossibleOptions(task, memoryComponent);
-
-		// Pick an option from the list based on their probability and inform
-		// the environment. Also put the task and its options to planning
-		// result.
-		pickedOpt = pickAnOpt(opts, task);
-	}
-	
 	/**
-	 * Check agent's desire with its internal state and environment constraints to
-	 * generate possible list of options for that agent.
+	 * Evaluate all options in the provided set.
 	 * 
-	 * @param task
-	 *            The task which the agent need to perform
-	 * @param memoryComponent 
-	 * @return Possible list of options for the agent to achieve goal
+	 * @param options
+	 *            The options provided for evaluation.
+	 * @return The map for values to all the options scored that value.
 	 */
-	protected abstract Set<Option> calculatePossibleOptions(Task task, MemoryComponent memoryComponent);
+	Map<Double, Set<Option>> evaluateOptions(Set<Option> options);
 
-	protected abstract Option pickAnOpt(Set<Option> opts, Task task);
-
-	public Option getPickedOpt() {
-		return pickedOpt;
-	}
-	
 }

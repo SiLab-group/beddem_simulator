@@ -20,7 +20,7 @@ import main.concept.Task;
 public class ParentDeterminant extends Determinant {
 
 	private List<Determinant> children;
-	
+
 	public ParentDeterminant(String id, double weight) {
 		super(id, weight);
 		this.children = new LinkedList<Determinant>();
@@ -51,13 +51,14 @@ public class ParentDeterminant extends Determinant {
 			// based on its rank.
 			Map<Option, Double> optionToValueMap = new HashMap<Option, Double>();
 			for (Determinant child : this.children) {
-				Map<Double,Set<Option>> childOptList = child.rankOptions(inputOpts, task);
-				for (Map.Entry<Double,Set<Option>> mapEntry : childOptList.entrySet()) {
+				Map<Double, Set<Option>> childOptList = child.rankOptions(inputOpts, task);
+				for (Map.Entry<Double, Set<Option>> mapEntry : childOptList.entrySet()) {
 					Set<Option> sameRankOpts = mapEntry.getValue();
-					// The new value of the option equals to the sum of all its normalised positions in the
+					// The new value of the option equals to the sum of all its normalised positions
+					// in the
 					// children lists multiplied by their weights.
 					for (Option opt : sameRankOpts) {
-						// Used for cut offs a number of option. 
+						// Used for cut offs a number of option.
 						if (inputOpts.contains(opt)) {
 							double newValue = mapEntry.getKey() * child.getWeight();
 							if (optionToValueMap.containsKey(opt)) {

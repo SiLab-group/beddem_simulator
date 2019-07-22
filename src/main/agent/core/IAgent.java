@@ -1,9 +1,5 @@
 package main.agent.core;
 
-import java.util.List;
-
-import main.environment.ILocation;
-
 /**
  * All agents must implement this interface so that it the simulation knows how
  * to step them.
@@ -12,6 +8,13 @@ import main.environment.ILocation;
  *
  */
 public interface IAgent {
+
+	/**
+	 * Get the ID of the agent.
+	 * 
+	 * @return The ID of the agent.
+	 */
+	String getID();
 
 	/**
 	 * Controls the agent. This method will be called by the scheduler once per
@@ -42,22 +45,6 @@ public interface IAgent {
 	 * @param clazz
 	 *            The type of object.
 	 */
-	<T> void addToMemory(List<T> objects, Class<T> clazz);
-
-	/**
-	 * Get the current location of agent.
-	 * 
-	 * @return The current location of the agent.
-	 */
-	ILocation getLoc();
-
-	/**
-	 * Get the ID of the agent.
-	 * 
-	 * @return The ID of the agent.
-	 */
-	String getID();
-
-	void updateInternalState();
+	// <T> void addToMemory(List<T> objects, Class<T> clazz);
 
 }

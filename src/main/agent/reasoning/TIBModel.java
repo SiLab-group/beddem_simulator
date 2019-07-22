@@ -10,20 +10,21 @@ package main.agent.reasoning;
  */
 public class TIBModel extends ParentDeterminant {
 
-	public TIBModel(Determinant facilitatingCon, Determinant freq, Determinant emotion, Determinant norm, Determinant role,
-			Determinant selfConcept, Determinant belief, Determinant evaluation, double attitudeWeight,
-			double socialWeight, double affectWeight, double intentionWeight, double habitWeight, double facilitatingWeight) {
+	public TIBModel(Determinant belief, Determinant evaluation, Determinant norm, Determinant role,
+			Determinant self_concept, Determinant emotion, Determinant facilitatingCond, Determinant freq,
+			double attitudeWeight, double socialWeight, double affectWeight, double intentionWeight,
+			double habitWeight) {
 		super("Triandis", 1);
 		ParentDeterminant intention = new ParentDeterminant("intention", intentionWeight);
 		ParentDeterminant habits = new ParentDeterminant("habits", habitWeight);
-		
+
 		ParentDeterminant attitude = new ParentDeterminant("attitude", affectWeight);
 		ParentDeterminant socialFactors = new ParentDeterminant("social", socialWeight);
 		ParentDeterminant affect = new ParentDeterminant("affect", affectWeight);
 
 		addDeterminantChild(intention);
 		addDeterminantChild(habits);
-		addDeterminantChild(facilitatingCon);
+		addDeterminantChild(facilitatingCond);
 
 		habits.addDeterminantChild(freq);
 
@@ -35,7 +36,7 @@ public class TIBModel extends ParentDeterminant {
 
 		socialFactors.addDeterminantChild(norm);
 		socialFactors.addDeterminantChild(role);
-		socialFactors.addDeterminantChild(selfConcept);
+		socialFactors.addDeterminantChild(self_concept);
 
 		attitude.addDeterminantChild(belief);
 		attitude.addDeterminantChild(evaluation);

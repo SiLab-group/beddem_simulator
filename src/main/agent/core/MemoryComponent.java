@@ -1,34 +1,28 @@
 package main.agent.core;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import main.concept.Feedback;
+import main.concept.InternalState;
 import main.concept.Option;
-import main.concept.Resource;
-import main.environment.ILocation;
 
-public abstract class MemoryComponent {
-	
-	// Set of available resource available to the agent.
-	protected Set<Resource> resources;
-	
-	public MemoryComponent() {
-		this.resources = new HashSet<Resource>();
-	}
+public interface MemoryComponent {
+	/**
+	 * Provide the current internal state of the agent. The information/properties
+	 * storing in InternalState can be included in the implementation of
+	 * InternalState Interface.
+	 * 
+	 * @return The current internal state of the agent.
+	 */
+	InternalState getInternalState();
 
 	/**
-	 * Update the agent's internal state.
+	 * Update the internal state of the agent using information provided from the
+	 * feedback.
 	 * 
-	 * @param pickedOption
-	 *            The best option that the agent selected
+	 * @param option
+	 *            The option chosen by the agent.
+	 * @param feedback
+	 *            The information/properties needed to update the internal state.
+	 *            included in the implementation of Feedback Interface.
 	 */
-	protected abstract void updateCurrentState(Option pickedOpt);
-
-	public abstract void update(ILocation loc);
-
-	public void update(CommunicationComponent communicationComponent) {
-		Option pickedOpt = communicationComponent.getPickedOpt();
-		updateCurrentState(pickedOpt);
-	}
-	
+	void updateInternalState(Option option, Feedback feedback);
 }

@@ -17,7 +17,7 @@ import dummy.context.LocationContext;
 import dummy.database.CSVReader;
 import dummy.report.IReporter;
 import main.agent.core.IAgent;
-import main.environment.ILocation;
+import main.environment.Environment;
 import main.exception.EnvironmentError;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
@@ -54,11 +54,11 @@ public class ContextManager implements ContextBuilder<Object> {
 	private static Context<Object> mainContext;
 
 	private static LocationContext locationContext;
-	private static HashMap<String, ILocation> idToLocationMap;
+	private static HashMap<String, Environment> idToLocationMap;
 
 	private static AgentContext agentContext;
 	private static HashMap<String, IAgent> idToAgentMap;
-	
+
 	// CSVReader generator;
 	CSVReader generator;
 
@@ -73,14 +73,12 @@ public class ContextManager implements ContextBuilder<Object> {
 		periodNum = 0;
 		checkpointNum = 0;
 
-
 		// Read in the model properties.
 		try {
 			readProperties();
 		} catch (IOException ex) {
 			throw new RuntimeException("Could not read model properties, reason: " + ex.toString(), ex);
 		}
-		
 
 		// generator = new CSVReader();
 		generator = new CSVReader();
@@ -93,8 +91,7 @@ public class ContextManager implements ContextBuilder<Object> {
 
 		// Create the location context.
 		locationContext = new LocationContext();
-		idToLocationMap = new HashMap<String, ILocation>();
-
+		idToLocationMap = new HashMap<String, Environment>();
 
 		try {
 			generator.createLocations(locationContext, idToLocationMap);
@@ -102,7 +99,6 @@ public class ContextManager implements ContextBuilder<Object> {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
 
 		mainContext.addSubContext(locationContext);
 
@@ -127,7 +123,6 @@ public class ContextManager implements ContextBuilder<Object> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
 		mainContext.addSubContext(agentContext);
 
@@ -156,9 +151,9 @@ public class ContextManager implements ContextBuilder<Object> {
 			if (periodNum == GlobalVars.SIMULATION_PARAMS.PERIODS_TO_NEXT_CHECKPOINT) {
 				periodNum = 0;
 				checkpointNum++;
-				for (ILocation loc : locationContext) {
-					loc.resetCounter();
-				}
+				// for (IEnvironment loc : locationContext) {
+				// loc.resetCounter();
+				// }
 				// generator.changePolicies();
 				if (checkpointNum < GlobalVars.SIMULATION_PARAMS.CHECKPOINTS_IN_SIMULATE) {
 					generator.updateAgentResource();
@@ -175,9 +170,9 @@ public class ContextManager implements ContextBuilder<Object> {
 
 				periodNum++;
 			}
-			for (IAgent agent : agentContext) {
-				agent.updateInternalState();
-			}
+			// for (IAgent agent : agentContext) {
+			// agent.updateInternalState();
+			// }
 
 			ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
 			ScheduleParameters params = ScheduleParameters.createOneTime(
@@ -259,7 +254,7 @@ public class ContextManager implements ContextBuilder<Object> {
 	private void readProperties() throws FileNotFoundException, IOException {
 
 		LOGGER.log(Level.FINE, new File(".").getAbsolutePath());
-		
+
 		File propFile = new File("./data/beddem_simulator.properties");
 		if (!propFile.exists()) {
 			throw new FileNotFoundException(

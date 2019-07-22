@@ -20,7 +20,7 @@ public class DummyReporter implements IReporter {
 		this.vehicleCategories = vehicleCategories;
 		this.agentContext = agentContext;
 	}
-	
+
 	@Override
 	public String printReport() {
 		return null;

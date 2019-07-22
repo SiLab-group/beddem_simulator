@@ -1,28 +1,31 @@
 package main.agent.core;
 
+import java.util.Map;
+import java.util.Set;
+
+import main.concept.Opinion;
 import main.concept.Option;
 import main.concept.Task;
-import main.environment.ILocation;
 
-public abstract class CommunicationComponent {
-	
-	private Option pickedOpt;
-		
+public interface CommunicationComponent {
+
 	/**
-	 * Send update information to the environment
+	 * Pick an option from this list of evaluated options. Agent can pick either the
+	 * highest/lowest value (deterministic) or based on the probabilities produced
+	 * from these values (stochastic).
 	 * 
-	 * @param pickedOption
-	 *            The best option that the agent selected
+	 * @param evaluatedOptions
+	 *            List of values and all the options that scored that value after
+	 *            the evaluation process.
+	 * @return An option selected by the agent.
 	 */
-	protected abstract void sendUpdateToEnvironment(Task task, ILocation loc, Option pickedOpt, MemoryComponent memoryComponent);
+	Option pickOption(Map<Double, Set<Option>> evaluatedOptions);
 
-	public void update(Task task, ILocation loc, DecisionComponent decisionComponent, MemoryComponent memoryComponent) {
-		pickedOpt = decisionComponent.getPickedOpt();
-		sendUpdateToEnvironment(task, loc, pickedOpt, memoryComponent);
-	}
+	/**
+	 * Return an opinion for certain option to perform a task.
+	 * 
+	 * @return An opinion for certain option to perform a task.
+	 */
+	Opinion getOpinion(Option option, Task task);
 
-	public Option getPickedOpt() {
-		return this.pickedOpt;
-	}
-	
 }
