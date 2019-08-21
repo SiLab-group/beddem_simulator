@@ -1,6 +1,5 @@
 package dummy.agent;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -19,12 +18,14 @@ public class DummyCommunicationComponent implements CommunicationComponent {
 
 	@Override
 	public Option pickOption(Map<Double, Set<Option>> evaluatedOptions) {
+		Option pickedOpt;
+		
 		if (GlobalVars.SIMULATION_PARAMS.AGENT_PROBABILISTIC_DECISION == 0) {
-			return pickBestOpt(evaluatedOptions);
+			pickedOpt =  pickBestOpt(evaluatedOptions);
 		} else {
-			return pickWithProbability(evaluatedOptions);
+			pickedOpt =  pickWithProbability(evaluatedOptions);
 		}
-
+		return pickedOpt;
 	}
 
 	private Option pickBestOpt(Map<Double, Set<Option>> evaluatedOptions) {

@@ -10,8 +10,10 @@ import main.environment.Environment;
 public class Location implements Environment {
 
 	private Set<Vehicle> publicTransports;
+	private String id;
 
-	public Location(Set<Vehicle> publicTransports) {
+	public Location(String id, Set<Vehicle> publicTransports) {
+		this.id = id;
 		this.publicTransports = publicTransports;
 	}
 

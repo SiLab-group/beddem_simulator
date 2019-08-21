@@ -115,22 +115,11 @@ public class ContextManager implements ContextBuilder<Object> {
 
 		mainContext.addSubContext(agentContext);
 
-		// Now create the resources for the agent.
-
-		try {
-			generator.createResources(idToAgentMap);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		mainContext.addSubContext(agentContext);
-
 		// Read the schedule file and schedule all the agents' events.
 		updateSchedule();
 
 		// Create reporter for the simulation.
-		IReporter mobilityReporter = generator.createMobilityReporter(agentContext, locationContext);
+		IReporter mobilityReporter = generator.createMobilityReporter(agentContext);
 		mainContext.add(mobilityReporter);
 		return mainContext;
 	}
@@ -151,13 +140,6 @@ public class ContextManager implements ContextBuilder<Object> {
 			if (periodNum == GlobalVars.SIMULATION_PARAMS.PERIODS_TO_NEXT_CHECKPOINT) {
 				periodNum = 0;
 				checkpointNum++;
-				// for (IEnvironment loc : locationContext) {
-				// loc.resetCounter();
-				// }
-				// generator.changePolicies();
-				if (checkpointNum < GlobalVars.SIMULATION_PARAMS.CHECKPOINTS_IN_SIMULATE) {
-					generator.updateAgentResource();
-				}
 			} else {
 				// Add tasks to the agent's schedule.
 

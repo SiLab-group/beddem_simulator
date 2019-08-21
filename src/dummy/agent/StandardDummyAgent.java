@@ -1,9 +1,9 @@
 package dummy.agent;
 
-import java.util.Map;
 import java.util.Set;
 
 import dummy.concept.MobilityOption;
+import dummy.concept.Vehicle;
 import main.agent.core.CommunicationComponent;
 import main.agent.core.DecisionComponent;
 import main.agent.core.MemoryComponent;
@@ -12,8 +12,6 @@ import main.agent.core.TaskExecutionAgent;
 import main.agent.reasoning.Determinant;
 import main.agent.reasoning.LeafDeterminant;
 import main.agent.reasoning.ParentDeterminant;
-import main.concept.Feedback;
-import main.concept.InternalState;
 import main.concept.Option;
 import main.concept.Task;
 import main.environment.Environment;
@@ -41,8 +39,11 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	private double affectWeight;
 	private double intentionWeight;
 	private double habitWeight;
+	
+	private double initialFund;
+	private Set<Vehicle> ownVehicles;
 
-	public StandardDummyAgent(String id, Environment loc, double beliefWeight, double timeWeight, double costWeight,
+	public StandardDummyAgent(String id, Environment loc, double initialFund, Set<Vehicle> ownVehicles, double beliefWeight, double timeWeight, double costWeight,
 			double normWeight, double roleWeight, double selfWeight, double emotionWeight, double facilitatingWeight,
 			double freqWeight, double attitudeWeight, double socialWeight, double affectWeight, double intentionWeight,
 			double habitWeight) {
@@ -61,6 +62,24 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		this.affectWeight = affectWeight;
 		this.intentionWeight = intentionWeight;
 		this.habitWeight = habitWeight;
+		
+		this.initialFund = initialFund;
+		this.ownVehicles = ownVehicles;
+	}
+	
+	@Override
+	protected PerceptionComponent createPerceptionComponent() {
+		return new DummyPerceptionComponent();
+	}
+
+	@Override
+	protected MemoryComponent createMemoryComponent() {
+		return new DummyMemoryComponent(initialFund,ownVehicles);
+	}
+
+	@Override
+	protected CommunicationComponent createCommunicationComponent() {
+		return new DummyCommunicationComponent();
 	}
 
 	@Override
@@ -129,7 +148,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	private Determinant createEmotionDeterminant() {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}		
 
 	private Determinant createFacilitatingDeterminant() {
 		// TODO Auto-generated method stub
@@ -140,22 +159,8 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	/*******************************************************************************************/
 
-	@Override
-	protected PerceptionComponent createPerceptionComponent() {
-		return new DummyPerceptionComponent();
-	}
-
-	@Override
-	protected MemoryComponent createMemoryComponent() {
-		return new DummyMemoryComponent();
-	}
-
-	@Override
-	protected CommunicationComponent createCommunicationComponent() {
-		return new DummyCommunicationComponent();
-	}
 
 }

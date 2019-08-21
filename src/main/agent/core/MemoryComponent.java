@@ -1,8 +1,11 @@
 package main.agent.core;
 
+import java.util.Map;
+
 import main.concept.Feedback;
 import main.concept.InternalState;
 import main.concept.Option;
+import main.concept.Task;
 
 public interface MemoryComponent {
 	/**
@@ -17,12 +20,16 @@ public interface MemoryComponent {
 	/**
 	 * Update the internal state of the agent using information provided from the
 	 * feedback.
-	 * 
+	 * @param task The task to be performed. 
 	 * @param option
 	 *            The option chosen by the agent.
 	 * @param feedback
 	 *            The information/properties needed to update the internal state.
 	 *            included in the implementation of Feedback Interface.
 	 */
-	void updateInternalState(Option option, Feedback feedback);
+	void updateInternalState(Task task, Option option, Feedback feedback);
+
+	Map<Task, Option> getDecisionResults();
+
+
 }

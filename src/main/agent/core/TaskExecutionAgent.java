@@ -87,13 +87,13 @@ public abstract class TaskExecutionAgent implements IAgent {
 
 		Set<Option> options = this.perceptionComponent.generateOptions(task, environmentalState, internalState);
 
-		Map<Double, Set<Option>> evaluatedOptions = this.decisionComponent.evaluateOptions(options);
+		Map<Double, Set<Option>> evaluatedOptions = this.decisionComponent.evaluateOptions(options,task);
 
 		Option pickedOption = this.communicationComponent.pickOption(evaluatedOptions);
 
 		Feedback feedback = this.perceptionComponent.getFeedback(task, pickedOption, loc);
 
-		this.memoryComponent.updateInternalState(pickedOption,feedback);
+		this.memoryComponent.updateInternalState(task, pickedOption,feedback);
 	}
 
 	/**
@@ -133,7 +133,11 @@ public abstract class TaskExecutionAgent implements IAgent {
 	public Opinion getOpinion(Option option, Task task) {
 		return this.communicationComponent.getOpinion(option, task);
 	}
-
+	
+	public Map<Task, Option> getDecisionResults() {
+		return this.memoryComponent.getDecisionResults();
+	}
+	
 	@Override
 	public final boolean isThreadable() {
 		return true;

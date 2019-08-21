@@ -8,6 +8,7 @@ import main.agent.core.DecisionComponent;
 import main.agent.reasoning.Determinant;
 import main.agent.reasoning.TIBModel;
 import main.concept.Option;
+import main.concept.Task;
 
 public class DummyDecisionComponent extends TIBModel implements DecisionComponent {
 
@@ -19,13 +20,13 @@ public class DummyDecisionComponent extends TIBModel implements DecisionComponen
 			double habitWeight) {
 		super(belief, evaluation, norm, role, self_concept, emotion, facilitatingCond, freq, attitudeWeight, socialWeight,
 				affectWeight, intentionWeight, habitWeight);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
-	public Map<Double, Set<Option>> evaluateOptions(Set<Option> options) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<Double, Set<Option>> evaluateOptions(Set<Option> options, Task task) {
+		// Get the list of all ranked options from agent's decision making model.
+		return rankOptions(options, task);
 	}
 
 }

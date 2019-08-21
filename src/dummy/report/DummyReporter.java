@@ -1,9 +1,14 @@
 package dummy.report;
 
-import java.util.Set;
+import java.util.Map;
 
+import dummy.agent.StandardDummyAgent;
+import dummy.concept.MobilityOption;
+import dummy.concept.MobilityTask;
 import dummy.context.AgentContext;
-import dummy.context.LocationContext;
+import main.agent.core.IAgent;
+import main.concept.Option;
+import main.concept.Task;
 
 /**
  * Decide output information of the simulator.
@@ -11,18 +16,26 @@ import dummy.context.LocationContext;
  * @author Khoa Nguyen
  */
 public class DummyReporter implements IReporter {
-	private LocationContext locationContext;
 	private AgentContext agentContext;
-	private Set<String> vehicleCategories;
-
-	public DummyReporter(LocationContext locationContext, AgentContext agentContext, Set<String> vehicleCategories) {
-		this.locationContext = locationContext;
-		this.vehicleCategories = vehicleCategories;
+	
+	public DummyReporter(AgentContext agentContext) {
 		this.agentContext = agentContext;
 	}
 
+
 	@Override
 	public String printReport() {
-		return null;
+		String reportString = "agentID,start_time,km,vehicle\n"; 
+		for (IAgent agent: this.agentContext) {
+			StandardDummyAgent mobilityAgent = (StandardDummyAgent) agent;
+			Map<Task,Option> results = mobilityAgent.getDecisionResults();
+			for (Task task : results.keySet()) {
+				MobilityOption mobilityOption = (MobilityOption) results.get(task);
+				MobilityTask mobilityTask = (MobilityTask) task;
+				reportString += agent.getID() + "," + mobilityTask.getExecutingTime() + "," + mobilityTask.getDistance() +"," + mobilityOption.getMainVehicle().getName() + "\n";
+			}
+		}
+		
+		return reportString;
 	}
 }
