@@ -1,12 +1,12 @@
-package main.agent.reasoning;
+package framework.agent.reasoning;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import main.concept.Option;
-import main.concept.Task;
+import framework.concept.Option;
+import framework.concept.Task;
 
 /**
  * The base node in decision making model. In which user has to define how agent

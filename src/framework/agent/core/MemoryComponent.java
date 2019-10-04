@@ -1,11 +1,11 @@
-package main.agent.core;
+package framework.agent.core;
 
 import java.util.Map;
 
-import main.concept.Feedback;
-import main.concept.InternalState;
-import main.concept.Option;
-import main.concept.Task;
+import framework.concept.Feedback;
+import framework.concept.InternalState;
+import framework.concept.Option;
+import framework.concept.Task;
 
 public interface MemoryComponent {
 	/**

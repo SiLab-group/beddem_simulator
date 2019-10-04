@@ -1,4 +1,4 @@
-package main.agent.core;
+package framework.agent.core;
 
 /**
  * All agents must implement this interface so that it the simulation knows how

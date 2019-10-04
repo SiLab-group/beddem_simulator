@@ -1,10 +1,10 @@
-package main.agent.core;
+package framework.agent.core;
 
 import java.util.Map;
 import java.util.Set;
 
-import main.concept.Option;
-import main.concept.Task;
+import framework.concept.Option;
+import framework.concept.Task;
 
 public interface DecisionComponent {
 

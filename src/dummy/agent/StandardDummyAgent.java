@@ -4,17 +4,17 @@ import java.util.Set;
 
 import dummy.concept.MobilityOption;
 import dummy.concept.Vehicle;
-import main.agent.core.CommunicationComponent;
-import main.agent.core.DecisionComponent;
-import main.agent.core.MemoryComponent;
-import main.agent.core.PerceptionComponent;
-import main.agent.core.TaskExecutionAgent;
-import main.agent.reasoning.Determinant;
-import main.agent.reasoning.LeafDeterminant;
-import main.agent.reasoning.ParentDeterminant;
-import main.concept.Option;
-import main.concept.Task;
-import main.environment.Environment;
+import framework.agent.core.CommunicationComponent;
+import framework.agent.core.DecisionComponent;
+import framework.agent.core.MemoryComponent;
+import framework.agent.core.PerceptionComponent;
+import framework.agent.core.TaskExecutionAgent;
+import framework.agent.reasoning.Determinant;
+import framework.agent.reasoning.LeafDeterminant;
+import framework.agent.reasoning.ParentDeterminant;
+import framework.concept.Option;
+import framework.concept.Task;
+import framework.environment.Environment;
 
 /**
  * A class represent a standard agent that has mobility demand.

@@ -1,4 +1,4 @@
-package main.agent.reasoning;
+package framework.agent.reasoning;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import main.concept.Option;
-import main.concept.Task;
+import framework.concept.Option;
+import framework.concept.Task;
 
 /**
  * A class represent a parent determinant in decision making model. Its ranking

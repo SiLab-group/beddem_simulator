@@ -1,7 +1,7 @@
 package dummy.context;
 
 import dummy.simulator.GlobalVars;
-import main.environment.Environment;
+import framework.environment.Environment;
 import repast.simphony.context.DefaultContext;
 
 /**

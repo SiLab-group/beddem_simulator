@@ -1,4 +1,4 @@
-package main.agent.reasoning;
+package framework.agent.reasoning;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,8 +6,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import main.concept.Option;
-import main.concept.Task;
+import framework.concept.Option;
+import framework.concept.Task;
 
 /**
  * A class represent a standard determinant (psychology) in decision making.
