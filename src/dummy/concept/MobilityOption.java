@@ -1,6 +1,6 @@
 package dummy.concept;
 
-import main.concept.Option;
+import framework.concept.Option;
 
 public class MobilityOption implements Option {
 	private Vehicle mainVehicle;

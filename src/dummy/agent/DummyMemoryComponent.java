@@ -10,11 +10,11 @@ import dummy.concept.MobilityInternalState;
 import dummy.concept.MobilityOption;
 import dummy.concept.MobilityTask;
 import dummy.concept.Vehicle;
-import main.agent.core.MemoryComponent;
-import main.concept.Feedback;
-import main.concept.InternalState;
-import main.concept.Option;
-import main.concept.Task;
+import framework.agent.core.MemoryComponent;
+import framework.concept.Feedback;
+import framework.concept.InternalState;
+import framework.concept.Option;
+import framework.concept.Task;
 
 public class DummyMemoryComponent implements MemoryComponent {
 

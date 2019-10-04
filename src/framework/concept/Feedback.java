@@ -1,4 +1,4 @@
-package main.concept;
+package framework.concept;
 
 public interface Feedback {
 

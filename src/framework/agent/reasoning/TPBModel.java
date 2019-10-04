@@ -1,4 +1,4 @@
-package main.agent.reasoning;
+package framework.agent.reasoning;
 
 public class TPBModel extends ParentDeterminant {
 	public TPBModel(Determinant attitude, Determinant norm, Determinant behaviouralControl, double attitudeWeight,

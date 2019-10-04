@@ -1,4 +1,4 @@
-package main.agent.reasoning;
+package framework.agent.reasoning;
 
 /**
  * A class represent Triandis' decision making model. User needs to define all

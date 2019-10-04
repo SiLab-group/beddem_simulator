@@ -1,6 +1,6 @@
 package dummy.concept;
 
-import main.concept.Task;
+import framework.concept.Task;
 
 public class MobilityTask extends Task {
 

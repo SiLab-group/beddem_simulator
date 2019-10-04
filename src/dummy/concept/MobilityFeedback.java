@@ -1,6 +1,6 @@
 package dummy.concept;
 
-import main.concept.Feedback;
+import framework.concept.Feedback;
 
 public class MobilityFeedback implements Feedback {
 

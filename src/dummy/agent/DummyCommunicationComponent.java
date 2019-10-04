@@ -7,10 +7,12 @@ import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import dummy.simulator.GlobalVars;
-import main.agent.core.CommunicationComponent;
-import main.concept.Opinion;
-import main.concept.Option;
-import main.concept.Task;
+import framework.agent.core.CommunicationComponent;
+import framework.concept.Feedback;
+import framework.concept.InternalState;
+import framework.concept.Option;
+import framework.concept.Task;
+import framework.environment.Environment;
 
 public class DummyCommunicationComponent implements CommunicationComponent {
 
@@ -82,7 +84,7 @@ public class DummyCommunicationComponent implements CommunicationComponent {
 	}
 
 	@Override
-	public Opinion getOpinion(Option option, Task task) {
+	public Feedback getFeedback(Task task, Option pickedOption, InternalState internalState, Environment loc) {
 		// TODO Auto-generated method stub
 		return null;
 	}

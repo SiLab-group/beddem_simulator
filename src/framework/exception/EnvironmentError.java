@@ -1,4 +1,4 @@
-package main.exception;
+package framework.exception;
 
 public class EnvironmentError extends Exception {
 

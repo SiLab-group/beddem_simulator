@@ -2,7 +2,7 @@ package dummy.concept;
 
 import java.util.Set;
 
-import main.concept.EnvironmentalState;
+import framework.concept.EnvironmentalState;
 
 public class MobilityEnvironmentalState implements EnvironmentalState {
 

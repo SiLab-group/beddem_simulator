@@ -4,8 +4,8 @@ import java.util.Set;
 
 import dummy.concept.MobilityEnvironmentalState;
 import dummy.concept.Vehicle;
-import main.concept.EnvironmentalState;
-import main.environment.Environment;
+import framework.concept.EnvironmentalState;
+import framework.environment.Environment;
 
 public class Location implements Environment {
 
@@ -20,6 +20,10 @@ public class Location implements Environment {
 	@Override
 	public EnvironmentalState getEnvironmentalState() {
 		return new MobilityEnvironmentalState(publicTransports);
+	}
+
+	public String getId() {
+		return this.id;
 	}
 
 }

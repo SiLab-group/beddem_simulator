@@ -21,8 +21,8 @@ import dummy.report.DummyReporter;
 import dummy.report.IReporter;
 import dummy.simulator.ContextManager;
 import dummy.simulator.GlobalVars;
-import main.agent.core.IAgent;
-import main.environment.Environment;
+import framework.agent.core.IAgent;
+import framework.environment.Environment;
 
 /**
  * The class that has the functions to read csv files and create agents,

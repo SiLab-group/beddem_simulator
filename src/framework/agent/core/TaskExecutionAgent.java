@@ -1,4 +1,4 @@
-package main.agent.core;
+package framework.agent.core;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,13 +8,12 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import main.concept.EnvironmentalState;
-import main.concept.Feedback;
-import main.concept.InternalState;
-import main.concept.Opinion;
-import main.concept.Option;
-import main.concept.Task;
-import main.environment.Environment;
+import framework.concept.EnvironmentalState;
+import framework.concept.Feedback;
+import framework.concept.InternalState;
+import framework.concept.Option;
+import framework.concept.Task;
+import framework.environment.Environment;
 
 /**
  * Define all the fields and decision making process of an agent. Here the agent
@@ -37,18 +36,18 @@ public abstract class TaskExecutionAgent implements IAgent {
 	private List<Task> schedule;
 
 	// Internal components of the agent.
-	private PerceptionComponent perceptionComponent;
-	private MemoryComponent memoryComponent;
-	private DecisionComponent decisionComponent;
-	private CommunicationComponent communicationComponent;
+	protected PerceptionComponent perceptionComponent;
+	protected MemoryComponent memoryComponent;
+	protected DecisionComponent decisionComponent;
+	protected CommunicationComponent communicationComponent;
 
 	public TaskExecutionAgent(String id, Environment loc) {
 		this.id = id;
 		this.loc = loc;
 		this.schedule = new LinkedList<Task>();
 		this.decisionComponent = createDecisionComponent();
-		this.communicationComponent = createCommunicationComponent();
 		this.memoryComponent = createMemoryComponent();
+		this.communicationComponent = createCommunicationComponent();
 		this.perceptionComponent = createPerceptionComponent();
 	}
 
@@ -90,8 +89,8 @@ public abstract class TaskExecutionAgent implements IAgent {
 		Map<Double, Set<Option>> evaluatedOptions = this.decisionComponent.evaluateOptions(options,task);
 
 		Option pickedOption = this.communicationComponent.pickOption(evaluatedOptions);
-
-		Feedback feedback = this.perceptionComponent.getFeedback(task, pickedOption, loc);
+		
+		Feedback feedback = this.communicationComponent.getFeedback(task, pickedOption, internalState, loc);
 
 		this.memoryComponent.updateInternalState(task, pickedOption,feedback);
 	}
@@ -128,10 +127,6 @@ public abstract class TaskExecutionAgent implements IAgent {
 	 */
 	public Environment getLoc() {
 		return this.loc;
-	}
-
-	public Opinion getOpinion(Option option, Task task) {
-		return this.communicationComponent.getOpinion(option, task);
 	}
 	
 	public Map<Task, Option> getDecisionResults() {

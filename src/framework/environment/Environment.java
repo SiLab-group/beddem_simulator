@@ -1,6 +1,6 @@
-package main.environment;
+package framework.environment;
 
-import main.concept.EnvironmentalState;
+import framework.concept.EnvironmentalState;
 
 /**
  * The location object where agents reside in.
