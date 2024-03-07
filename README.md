@@ -43,7 +43,7 @@ In this case we have example `<scenario>` called `dummy`. The directory structur
 	- `framework.exception`: all the exceptions and how to handle them.
 	
 * data
-	- csv_files:
+	- `csv_files`:
 		+ agents: list of all the agent and their parameters.
 		+ transportation: list of all transportation mode and their parameters.
 		+ schedule: list of all the events to be assigned to agents. At the moment, the price point of car is added at the end of the file name (ex: 0.0 mean car_price * 0.0). This is for when we want to run in batch mode where we want to define different price points in the demand curve.
