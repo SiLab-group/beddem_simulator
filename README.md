@@ -9,18 +9,35 @@ HOW TO RUN:
 
 PROJECT STRUCTURE (this is also the order you should look at to understand the model):
 * src
-	- simulator: contain the Repast controller, scheduler and logger of the project. This is the core function of Repast and you should not modify it. The two simulator classes here are ContextManager (the simulator controller and entry points of the simulator) and ThreadAgentScheduler (schedules the Tasks and execute them).
-	- util: utilities for the simulator operation of the model. Can be modified to add more parameters, constants and outputs of the model. Some simulator classes are:
-		+ MASCreator: describes how the input should be read and can be modified to fit the project. 
-		+ *Reporter classes: describes how what we want from the model. We can select which method to be run in Repast interface.
-	- agent: anything that is related to the agent's operation
+	- `<scenario>.agent`:
+	- `<scenario>.concept`:
+	- `<scenario>.context`:
+	- `<scenario>.database`:
+	- `<scenario>.environment`:
+	- `<scenario>.report`: contains scenario specific reporter classes.
+		+ Reporter classes: describes how what we want from the model. We can select which method to be run in Repast interface.
+	- `<scenario>.simulator`: contain the Repast controller, scheduler and logger of the project. This is the core function of Repast and you should not modify it. The two simulator classes here are ContextManager (the simulator controller and entry points of the simulator) and ThreadAgentScheduler (schedules the Tasks and execute them).
+		+ ContextManager: describes how the input should be read and can be modified to fit the project. Container of all the agents and locations.
+	- `framework.agent.core`: anything that is related to the agent's operation
 		+ IAgent: the Interface of agent. Contains some methods that an agent should have. 
 		+ DefaultAgent: the standard agent that can be extended depend on the type of project. Its simulator operation is described in the step() method which is controlled by the Scheduler mentioned above.
 		+ StandardTraveller: the class used specific for transportation demand. Contains the logic to evaluate an option. 
-	- environment: information of the environment where the agents reside in. (ex: available transportations, total demand, kms, spending for each mode, etc.).  
-	- concept: some basic concepts that are used around the model (i.e Task and Option available for the agent). Note that at the moment time is setup as hour and distance is in km. Also some classes that are implemented specifically for transportation demand.
-	- contexts: container of all the agents and locations.
-	- exception: all the exceptions and how to handle them.
+	- `framework.agent.reasoning`: containing the TPB and TIB model and determinant interfaces
+		+ Determinant:
+		+ LeafDeterminant:
+		+ ParentDeterminant:
+		+ TIBModel:
+		+ TPBModel:
+	- `framework.concept`: some basic concepts that are used around the model (i.e Task and Option available for the agent). Note that at the moment time is setup as hour and distance is in km. Also some classes that are implemented specifically for transportation demand.
+	    + EnvironmentalState
+	    + Feedback
+	    + InternalState
+	    + Opinion
+	    + Option
+	    + Task
+	- `framework.environment`: information of the environment where the agents reside in. (ex: available transportations, total demand, kms, spending for each mode, etc.).
+	    + Environment
+	- `framework.exception`: all the exceptions and how to handle them.
 	
 * data
 	- csv_files:
