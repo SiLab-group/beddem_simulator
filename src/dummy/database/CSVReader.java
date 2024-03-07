@@ -89,7 +89,9 @@ public class CSVReader {
 			String[] inputs = line.split(",");
 			Set<Vehicle> publicTransports = new HashSet<Vehicle>();
 			if (inputs[1].equals("1")) {
+				LOGGER.log(Level.INFO,"at 1 before add" + this.idToVehicleMap.get("1"));
 				publicTransports.add(this.idToVehicleMap.get("1"));
+				LOGGER.log(Level.INFO,"after add" + publicTransports.toString());
 			}
 			if (inputs[2].equals("1")) {
 				publicTransports.add(this.idToVehicleMap.get("2"));
