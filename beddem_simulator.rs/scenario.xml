@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Scenario simphonyVersion="2.9.0">
-<repast.simphony.dataLoader.engine.ClassNameDataLoaderAction context="beddem_simulator" file="repast.simphony.dataLoader.engine.ClassNameDataLoaderAction_0.xml" />
-<repast.simphony.action.data_set context="beddem_simulator" file="repast.simphony.action.data_set_1.xml" />
-<repast.simphony.action.file_sink context="beddem_simulator" file="repast.simphony.action.file_sink_2.xml" />
+<repast.simphony.action.data_set context="maincontext" file="repast.simphony.action.data_set_0.xml" />
+<repast.simphony.action.file_sink context="maincontext" file="repast.simphony.action.file_sink_1.xml" />
+<repast.simphony.action.console_sink context="maincontext" file="repast.simphony.action.console_sink_2.xml" />
+<repast.simphony.dataLoader.engine.ClassNameDataLoaderAction context="maincontext" file="repast.simphony.dataLoader.engine.ClassNameDataLoaderAction_3.xml" />
 </Scenario>

@@ -122,6 +122,7 @@ public class ContextManager implements ContextBuilder<Object> {
 		// Create reporter for the simulation.
 		IReporter mobilityReporter = generator.createMobilityReporter(agentContext);
 		mainContext.add(mobilityReporter);
+		LOGGER.log(Level.INFO," Returning main context");
 		return mainContext;
 	}
 

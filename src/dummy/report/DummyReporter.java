@@ -25,7 +25,8 @@ public class DummyReporter implements IReporter {
 
 	@Override
 	public String printReport() {
-		String reportString = "agentID,start_time,km,vehicle\n"; 
+		String reportString = "\n";
+		reportString += "agentID,start_time,km,vehicle\n"; 
 		for (IAgent agent: this.agentContext) {
 			StandardDummyAgent mobilityAgent = (StandardDummyAgent) agent;
 			Map<Task,Option> results = mobilityAgent.getDecisionResults();

@@ -77,7 +77,7 @@ public abstract class TaskExecutionAgent implements IAgent {
 
 	@Override
 	public void step() throws Exception {
-		LOGGER.log(Level.FINE, "Agent " + this.id + " is stepping.");
+		LOGGER.log(Level.INFO, "Agent " + this.id + " is stepping.");
 		// Get the next event from schedule.
 		Task task = schedule.remove(0);
 
