@@ -152,8 +152,10 @@ public class CSVReader {
 	public void createSchedule(Map<String, IAgent> idToAgentMap, int periodNum, int checkpointNum) throws IOException {
 
 		String csvDataDir = ContextManager.getProperty(GlobalVars.CSVDataDirectory);
-		String scheduleFile = csvDataDir + ContextManager.getProperty(GlobalVars.ScheduleCSVfile) + "." + periodNum
-				+ ".csv";
+//		String scheduleFile = csvDataDir + ContextManager.getProperty(GlobalVars.ScheduleCSVfile) + "." + periodNum
+//				+ ".csv";
+		
+		String scheduleFile = csvDataDir + ContextManager.getProperty(GlobalVars.ScheduleCSVfile) + ".csv";
 
 		BufferedReader br = getBufferReaderForFile(scheduleFile);
 		String line;
