@@ -98,7 +98,7 @@ public class ContextManager implements ContextBuilder<Object> {
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-			throw new RuntimeException("Could not create resources or locatons,reason:  " + e1.toString(),e1);
+			throw new RuntimeException("Could not create resources or locations,reason:  " + e1.toString(),e1);
 		}
 
 		mainContext.addSubContext(locationContext);
