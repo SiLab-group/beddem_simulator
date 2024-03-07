@@ -1,6 +1,6 @@
 # Behavior Demand Model simulator (BedDeM)
 
-## HOW TO RUN
+## How to run
 1. To install RePast in Eclipse, follow the instruction at: https://repast.github.io/download.html
 2. Download the project using git.
 3. Import the project to Eclipse by going to File -> New -> Other -> Repast Simphony (you should see this folder if you install Repast correctly) -> Repast Simphony Project -> Select where you put the downloaded project and fill in a name for the project (your_project_name) -> Click finish.
@@ -9,8 +9,8 @@
 6. Click the run button to run the project. After it finishes, you should see a new output file in the project folder.
 
 
-## PROJECT STRUCTURE (this is also the order you should look at to understand the model)
-In this case we have example `<scenario>` called `dummy. The directory structure:
+## Project structure
+In this case we have example `<scenario>` called `dummy`. The directory structure:
 * src
 	- `<scenario>.agent`:
 	- `<scenario>.concept`:
