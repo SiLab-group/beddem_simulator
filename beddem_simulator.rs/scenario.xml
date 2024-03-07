@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Scenario simphonyVersion="2.6.0">
+<Scenario simphonyVersion="2.9.0">
 <repast.simphony.dataLoader.engine.ClassNameDataLoaderAction context="beddem_simulator" file="repast.simphony.dataLoader.engine.ClassNameDataLoaderAction_0.xml" />
+<repast.simphony.action.data_set context="beddem_simulator" file="repast.simphony.action.data_set_1.xml" />
+<repast.simphony.action.file_sink context="beddem_simulator" file="repast.simphony.action.file_sink_2.xml" />
 </Scenario>

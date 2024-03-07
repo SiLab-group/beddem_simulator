@@ -6,12 +6,12 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
 				<parameter name="agent_made_probabilistic_decision" displayName="Agent made probabilistic decision" type="int" 
-						defaultValue="0" 
+						defaultValue="1" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
 				<parameter name="checkpoints_in_simulate" displayName="Checkpoint in Simulate" type="int" 
-						defaultValue="10" 
+						defaultValue="2" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>

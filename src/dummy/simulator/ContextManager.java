@@ -93,6 +93,7 @@ public class ContextManager implements ContextBuilder<Object> {
 		idToLocationMap = new HashMap<String, Environment>();
 
 		try {
+			generator.createResources();
 			generator.createLocations(locationContext, idToLocationMap);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -151,9 +152,9 @@ public class ContextManager implements ContextBuilder<Object> {
 
 				periodNum++;
 			}
-			// for (IAgent agent : agentContext) {
-			// agent.updateInternalState();
-			// }
+//			 for (IAgent agent : agentContext) {
+//			 agent.updateInternalState();
+//			 }
 
 			ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
 			ScheduleParameters params = ScheduleParameters.createOneTime(
