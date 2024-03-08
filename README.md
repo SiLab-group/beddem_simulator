@@ -11,8 +11,8 @@
 ## Run individual simulation
 Install Reapst Simphony and compatible `eclipse committers IDE (2022-06)` the official page can be found [here](https://repast.github.io/download.html)
 
-1. Install Groovy in Eclipse: Help -> Install New Software -> Add new repository ->  https://groovy.jfrog.io/artifactory/plugins-release/e4.24 -> Main package -> Eclipse Groovy Development tools
-2. Install Repast Simphony: Help -> Install New Software -> Add new repository -> https://web.cels.anl.gov/projects/Repast/update_site -> Repast Simphony
+1. Install Groovy in Eclipse: Help -> Install New Software -> Add new repository ->  `https://groovy.jfrog.io/artifactory/plugins-release/e4.24` -> Main package -> Eclipse Groovy Development tools
+2. Install Repast Simphony: Help -> Install New Software -> Add new repository -> `https://web.cels.anl.gov/projects/Repast/update_site` -> Repast Simphony
 3. Check Groovy compiler version is > than 3.0.x: Window -> Preferences -> Groovy compiler
 4. `Note:` If Surrogate issue UTF16 appears: Menu Window -> Preferences -> Java -> Mark occurences -> Untick
 5. Install openjdk-11 [here](https://jdk.java.net/archive/): Preferences -> Installed JREs -> Pick folder and Preferences -> Java -> Compiler-> Java 11
@@ -25,24 +25,24 @@ Install Reapst Simphony and compatible `eclipse committers IDE (2022-06)` the of
 In this case we have example `<scenario>` called `dummy`. The directory structure:
 * src
 	- `<scenario>.agent`:
-	   + CommunicationComponent:
-	   + DecisionComponent:
-	   + MemoryComponent:
-	   + PerceptionComponent:
-	   + StandardDummyAgent:
+	   + CommunicationComponent: decision communication
+	   + DecisionComponent: decision determinants definition
+	   + MemoryComponent: memory definition and feelings
+	   + PerceptionComponent: perception component of possibilities
+	   + StandardDummyAgent: definition of the agent and its functions
 	- `<scenario>.concept`:
-	   + EnvironmentalState:
-	   + Feedback:
-	   + InternalState
-	   + Option:
-	   + Task:
-	   + Vehicle:
-	- `<scenario>.context`:
-	   + AgentContext:
-	   + LocationContext:
-	- `<scenario>.database`:
-	   + CSVReader:
-	- `<scenario>.environment`:
+	   + EnvironmentalState: state of the environment and availability
+	   + Feedback: feedback of the environment
+	   + InternalState: state of the environment
+	   + Option: environment options
+	   + Task: one task in the agent schedule with all its constraints
+	   + Vehicle: vehicle definition and properties
+	- `<scenario>.context`: context definitions usually taken from the GlobVariables file
+	   + AgentContext: context definition for agent
+	   + LocationContext: context definition for location
+	- `<scenario>.database`: data retrievers
+	   + CSVReader: csv data reader 
+	- `<scenario>.environment`: definitions of the environment
 	- `<scenario>.report`: contains scenario specific reporter classes.
 		+ Reporter classes: describes how what we want from the model. We can select which method to be run in Repast interface.
 	- `<scenario>.simulator`: contain the Repast controller, scheduler and logger of the project. This is the core function of Repast and you should not modify it. The two simulator classes here are ContextManager (the simulator controller and entry points of the simulator) and ThreadAgentScheduler (schedules the Tasks and execute them).
