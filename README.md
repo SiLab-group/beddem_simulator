@@ -8,14 +8,40 @@
 5. Start Repast interface by click the small arrow next to the run button and select "your_project_name Model" (you can click the run button for the next run).
 6. Click the run button to run the project. After it finishes, you should see a new output file in the project folder.
 
+## Run individual simulation
+Install Reapst Simphony and compatible `eclipse committers IDE (2022-06)` the official page can be found [here](https://repast.github.io/download.html)
+
+1. Install Groovy in Eclipse: Help -> Install New Software -> Add new repository ->  https://groovy.jfrog.io/artifactory/plugins-release/e4.24 -> Main package -> Eclipse Groovy Development tools
+2. Install Repast Simphony: Help -> Install New Software -> Add new repository -> https://web.cels.anl.gov/projects/Repast/update_site -> Repast Simphony
+3. Check Groovy compiler version is > than 3.0.x: Window -> Preferences -> Groovy compiler
+4. `Note:` If Surrogate issue UTF16 appears: Menu Window -> Preferences -> Java -> Mark occurences -> Untick
+5. Install openjdk-11 [here](https://jdk.java.net/archive/): Preferences -> Installed JREs -> Pick folder and Preferences -> Java -> Compiler-> Java 11
+6. Clone the beddem repository ( only works on vpn or secure-hesv ) `git clone http://153.109.124.133:3000/amy/beddem.git`
+7. Import project to eclipse: File -> New -> Other -> Repast Simphony -> Repast Simphony Project -> Select the folder of cloned repo (beddem) -> Name the project beddem -> Finish
+8. Repast parameters, context, scenarios should be stored in `<project name>.rs` folder. If you name project differently it is needed to copy the xml files or in `Repast.settings`
+ 
 
 ## Project structure
 In this case we have example `<scenario>` called `dummy`. The directory structure:
 * src
 	- `<scenario>.agent`:
+	   + CommunicationComponent:
+	   + DecisionComponent:
+	   + MemoryComponent:
+	   + PerceptionComponent:
+	   + StandardDummyAgent:
 	- `<scenario>.concept`:
+	   + EnvironmentalState:
+	   + Feedback:
+	   + InternalState
+	   + Option:
+	   + Task:
+	   + Vehicle:
 	- `<scenario>.context`:
+	   + AgentContext:
+	   + LocationContext:
 	- `<scenario>.database`:
+	   + CSVReader:
 	- `<scenario>.environment`:
 	- `<scenario>.report`: contains scenario specific reporter classes.
 		+ Reporter classes: describes how what we want from the model. We can select which method to be run in Repast interface.
