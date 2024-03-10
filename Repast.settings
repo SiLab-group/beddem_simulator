@@ -12,6 +12,6 @@
     <string>SettingsRegistryId</string>
     <string>Repast.registry</string>
     <string>LastLoadedScenario</string>
-    <string>/home/khoa/repos/beddem_simulator/beddem_simulator.rs</string>
+    <string>\\WSL.LOCALHOST\Ubuntu\home\amy\repos\beddem_simulator\beddem_simulator.rs</string>
   </hashtable>
 </simphony.settings.SettingsRegistry>
