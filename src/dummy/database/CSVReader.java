@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,14 +89,17 @@ public class CSVReader {
 		while ((line = br.readLine()) != null) {
 			String[] inputs = line.split(",");
 			Set<Vehicle> publicTransports = new HashSet<Vehicle>();
+			
+			// Add train to location
 			if (inputs[1].equals("1")) {
-				LOGGER.log(Level.INFO,"at 1 before add" + this.idToVehicleMap.get("1"));
+				LOGGER.log(Level.INFO,"at 1 before add" + this.idToVehicleMap.get("1").toString());
 				publicTransports.add(this.idToVehicleMap.get("1"));
-				LOGGER.log(Level.INFO,"after add" + publicTransports.toString());
 			}
+			// Add bus to location
 			if (inputs[2].equals("1")) {
 				publicTransports.add(this.idToVehicleMap.get("2"));
 			}
+			// Add tram to location
 			if (inputs[3].equals("1")) {
 				publicTransports.add(this.idToVehicleMap.get("3"));
 			}
@@ -155,14 +159,21 @@ public class CSVReader {
 //		String scheduleFile = csvDataDir + ContextManager.getProperty(GlobalVars.ScheduleCSVfile) + "." + periodNum
 //				+ ".csv";
 		
+		// Schedule dataset containing agent_id, start, km, time_limit, purpose
 		String scheduleFile = csvDataDir + ContextManager.getProperty(GlobalVars.ScheduleCSVfile) + ".csv";
 
 		BufferedReader br = getBufferReaderForFile(scheduleFile);
 		String line;
 		br.readLine();
-
+		
 		while ((line = br.readLine()) != null) {
 			String[] inputs = line.split(",");
+			LOGGER.log(Level.INFO," time " + Arrays.toString(inputs));
+			double time = Double.parseDouble(inputs[1]);
+			double distance = Double.parseDouble(inputs[2]);
+			
+			// String time = line.getString(2);
+			// LOGGER.log(Level.INFO," time " + time);
 			
 		}
 
