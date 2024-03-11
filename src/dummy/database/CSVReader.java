@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dummy.agent.StandardDummyAgent;
+import dummy.concept.MobilityTask;
 import dummy.concept.Vehicle;
 import dummy.context.AgentContext;
 import dummy.context.LocationContext;
@@ -154,7 +155,7 @@ public class CSVReader {
 	}
 
 	public void createSchedule(Map<String, IAgent> idToAgentMap, int periodNum, int checkpointNum) throws IOException {
-
+	try {
 		String csvDataDir = ContextManager.getProperty(GlobalVars.CSVDataDirectory);
 //		String scheduleFile = csvDataDir + ContextManager.getProperty(GlobalVars.ScheduleCSVfile) + "." + periodNum
 //				+ ".csv";
@@ -169,8 +170,19 @@ public class CSVReader {
 		while ((line = br.readLine()) != null) {
 			String[] inputs = line.split(",");
 			LOGGER.log(Level.INFO," time " + Arrays.toString(inputs));
-			double time = Double.parseDouble(inputs[1]);
+			double start_time = Double.parseDouble(inputs[1]);
 			double distance = Double.parseDouble(inputs[2]);
+			double time_limit = Double.parseDouble(inputs[3]);
+			double purpose = Double.parseDouble(inputs[4]);
+			
+			MobilityTask task = new MobilityTask(start_time);
+			StandardDummyAgent agent = (StandardDummyAgent) idToAgentMap.get(inputs[0]);
+			
+			agent.addToSchedule(task);
+			//agent.rememberLastTask(task);
+			
+			ContextManager.scheduleNewTask(agent, start_time);
+			LOGGER.log(Level.FINE, "Scheduled demand at: " + start_time + "for agent: " + agent.getID());
 			
 			// String time = line.getString(2);
 			// LOGGER.log(Level.INFO," time " + time);
@@ -178,6 +190,9 @@ public class CSVReader {
 		}
 
 		br.close();
+		} catch (IOException ex ) {
+			LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+		}
 	}
 
 	public IReporter createMobilityReporter(AgentContext agentContext) {
