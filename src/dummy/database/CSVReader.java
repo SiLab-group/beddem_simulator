@@ -171,16 +171,17 @@ public class CSVReader {
 		while ((line = br.readLine()) != null) {
 			String[] inputs = line.split(",");
 			LOGGER.log(Level.INFO," time " + Arrays.toString(inputs));
-			double time = Double.parseDouble(inputs[1]);
+			//double time = Double.parseDouble(inputs[1]);
 			double distance = Double.parseDouble(inputs[2]);
 			double time_limit = Double.parseDouble(inputs[3]);
 			double purpose = Double.parseDouble(inputs[4]);
 			
+			double time = Double.parseDouble(inputs[1]);
 			time += GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD * periodNum
 					+ GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD
 							* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * checkpointNum;
 			
-			MobilityTask task = new MobilityTask(time,);
+			MobilityTask task = new MobilityTask(time, Double.parseDouble(inputs[1]), distance, purpose, time_limit);
 			StandardDummyAgent agent = (StandardDummyAgent) idToAgentMap.get(inputs[0]);
 			
 			agent.addToSchedule(task);
