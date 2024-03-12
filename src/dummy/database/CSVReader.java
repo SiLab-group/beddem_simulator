@@ -25,6 +25,7 @@ import dummy.simulator.ContextManager;
 import dummy.simulator.GlobalVars;
 import framework.agent.core.IAgent;
 import framework.environment.Environment;
+import dummy.simulator.GlobalVars;
 
 /**
  * The class that has the functions to read csv files and create agents,
@@ -170,19 +171,23 @@ public class CSVReader {
 		while ((line = br.readLine()) != null) {
 			String[] inputs = line.split(",");
 			LOGGER.log(Level.INFO," time " + Arrays.toString(inputs));
-			double start_time = Double.parseDouble(inputs[1]);
+			double time = Double.parseDouble(inputs[1]);
 			double distance = Double.parseDouble(inputs[2]);
 			double time_limit = Double.parseDouble(inputs[3]);
 			double purpose = Double.parseDouble(inputs[4]);
 			
-			MobilityTask task = new MobilityTask(start_time);
+			time += GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD * periodNum
+					+ GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD
+							* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * checkpointNum;
+			
+			MobilityTask task = new MobilityTask(time,);
 			StandardDummyAgent agent = (StandardDummyAgent) idToAgentMap.get(inputs[0]);
 			
 			agent.addToSchedule(task);
 			//agent.rememberLastTask(task);
 			
-			ContextManager.scheduleNewTask(agent, start_time);
-			LOGGER.log(Level.FINE, "Scheduled demand at: " + start_time + "for agent: " + agent.getID());
+			ContextManager.scheduleNewTask(agent, time);
+			LOGGER.log(Level.FINE, "Scheduled demand at: " + time + "for agent: " + agent.getID());
 			
 			// String time = line.getString(2);
 			// LOGGER.log(Level.INFO," time " + time);
