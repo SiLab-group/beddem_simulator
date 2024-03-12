@@ -79,7 +79,6 @@ public class ContextManager implements ContextBuilder<Object> {
 			throw new RuntimeException("Could not read model properties, reason: " + ex.toString(), ex);
 		}
 
-		// generator = new CSVReader();
 		generator = new CSVReader();
 
 		// Keep a useful static link to the simulator context.
