@@ -111,6 +111,7 @@ public class CSVReader {
 		}
 
 		br.close();
+		//LOGGER.log(Level.INFO, "Locations " + loc.);
 	}
 
 	public void createAgents(AgentContext agentContext, HashMap<String, Environment> idToLocationMap,
@@ -153,6 +154,7 @@ public class CSVReader {
 			agentContext.add(agent);
 		}
 		br.close();
+		
 	}
 
 	public void createSchedule(Map<String, IAgent> idToAgentMap, int periodNum, int checkpointNum) throws IOException {
@@ -188,7 +190,7 @@ public class CSVReader {
 			//agent.rememberLastTask(task);
 			
 			ContextManager.scheduleNewTask(agent, time);
-			LOGGER.log(Level.FINE, "Scheduled demand at: " + time + "for agent: " + agent.getID());
+			LOGGER.log(Level.INFO, "Scheduled demand at: " + time + "for agent: " + agent.getID());
 			
 			// String time = line.getString(2);
 			// LOGGER.log(Level.INFO," time " + time);
