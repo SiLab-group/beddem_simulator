@@ -16,7 +16,7 @@ Install Reapst Simphony and compatible `eclipse committers IDE (2022-06)` the of
 3. Check Groovy compiler version is > than 3.0.x: Window -> Preferences -> Groovy compiler
 4. `Note:` If Surrogate issue UTF16 appears: Menu Window -> Preferences -> Java -> Mark occurences -> Untick
 5. Install openjdk-11 [here](https://jdk.java.net/archive/): Preferences -> Installed JREs -> Pick folder and Preferences -> Java -> Compiler-> Java 11
-6. Clone the beddem repository ( only works on vpn or secure-hesv ) `git clone http://153.109.124.133:3000/amy/beddem.git`
+6. Clone the beddem_simulator repository `git clone https://github.com/SiLab-group/beddem_simulator.git`
 7. Import project to eclipse: File -> New -> Other -> Repast Simphony -> Repast Simphony Project -> Select the folder of cloned repo (beddem) -> Name the project beddem -> Finish
 8. Repast parameters, context, scenarios should be stored in `<project name>.rs` folder. If you name project differently it is needed to copy the xml files or in `Repast.settings`
  
