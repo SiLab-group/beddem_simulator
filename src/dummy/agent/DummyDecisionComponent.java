@@ -2,6 +2,7 @@ package dummy.agent;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import framework.agent.core.DecisionComponent;
@@ -26,6 +27,7 @@ public class DummyDecisionComponent extends TIBModel implements DecisionComponen
 	@Override
 	public Map<Double, Set<Option>> evaluateOptions(Set<Option> options, Task task) {
 		// Get the list of all ranked options from agent's decision making model.
+		LOGGER.log(Level.INFO, "Rank options");
 		return rankOptions(options, task);
 	}
 
