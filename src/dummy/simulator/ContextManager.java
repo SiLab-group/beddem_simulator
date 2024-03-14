@@ -143,16 +143,16 @@ public class ContextManager implements ContextBuilder<Object> {
 				checkpointNum++;
 			} else {
 				// Add tasks to the agent's schedule.
-				
+
+				try {
+					generator.createSchedule(idToAgentMap, periodNum, checkpointNum);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 				periodNum++;
 			}
-			try {
-				generator.createSchedule(idToAgentMap, periodNum, checkpointNum-1);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 //			 for (IAgent agent : agentContext) {
 //			 agent.updateInternalState();
 //			 }
