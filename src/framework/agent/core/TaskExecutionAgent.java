@@ -81,7 +81,7 @@ public abstract class TaskExecutionAgent implements IAgent {
 		// Get the next event from schedule.
 		Task task = schedule.remove(0);
 		LOGGER.log(Level.INFO, "After remove from shedule");
-		EnvironmentalState environmentalState = this.loc.getEnvironmentalState();
+		EnvironmentalState environmentalState = loc.getEnvironmentalState();
 		InternalState internalState = this.memoryComponent.getInternalState();
 		LOGGER.log(Level.INFO,"After internal state");
 		Set<Option> options = this.perceptionComponent.generateOptions(task, environmentalState, internalState);
