@@ -138,20 +138,20 @@ public class ContextManager implements ContextBuilder<Object> {
 		// If the simulator still hasn't reached the maximum checkpoints.
 		if (checkpointNum < GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum()) {
 			// If the number of periods has reached the next checkpoints.
-//			if (periodNum == GlobalVars.SIMULATION_PARAMS.PERIODS_TO_NEXT_CHECKPOINT) {
-//				periodNum = 0;
+			if (periodNum == GlobalVars.SIMULATION_PARAMS.PERIODS_TO_NEXT_CHECKPOINT) {
+				periodNum = 0;
 				checkpointNum++;
 			} else {
 				// Add tasks to the agent's schedule.
 
 				try {
-					generator.createSchedule(idToAgentMap, periodNum, checkpointNum-1);
+					generator.createSchedule(idToAgentMap, periodNum, checkpointNum);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
-				//periodNum++;
+				periodNum++;
 			}
 //			 for (IAgent agent : agentContext) {
 //			 agent.updateInternalState();
@@ -164,7 +164,7 @@ public class ContextManager implements ContextBuilder<Object> {
 									* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum()* checkpointNum,
 					PriorityType.FIRST);
 			schedule.schedule(params, this, "updateSchedule");
-		//}
+		}
 	}
 
 	// For recording time per N iterations (used for debugging).

@@ -24,13 +24,13 @@ Install Reapst Simphony and compatible `eclipse committers IDE (2022-06)` the of
 ## Project structure
 In this case we have example `<scenario>` called `dummy`. The directory structure:
 * src
-	- `<scenario>.agent`:
+	- `<scenario>.agent`: specific implementation of all agents for scenario and external inputs for processing
 	   + CommunicationComponent: decision communication
 	   + DecisionComponent: decision determinants definition
 	   + MemoryComponent: memory definition and feelings
 	   + PerceptionComponent: perception component of possibilities
 	   + StandardDummyAgent: definition of the agent and its functions
-	- `<scenario>.concept`:
+	- `<scenario>.concept`: basic concepts used around model such as Task and Option available for agent
 	   + EnvironmentalState: state of the environment and availability
 	   + Feedback: feedback of the environment
 	   + InternalState: state of the environment
