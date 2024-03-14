@@ -114,7 +114,7 @@ public class ContextManager implements ContextBuilder<Object> {
 		}
 
 		mainContext.addSubContext(agentContext);
-
+		LOGGER.log(Level.INFO, "After create agents" + idToAgentMap.toString());
 		// Read the schedule file and schedule all the agents' events.
 		updateSchedule();
 

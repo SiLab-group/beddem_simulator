@@ -103,6 +103,7 @@ public abstract class TaskExecutionAgent implements IAgent {
 	 *            The task needed to be add to agent's schedule.
 	 */
 	public void addToSchedule(Task task) {
+		LOGGER.log(Level.INFO, "Inside of task "+ task.toString());
 		ListIterator<Task> scheduleIt = this.schedule.listIterator(0);
 		if (!scheduleIt.hasNext()) {
 			this.schedule.add(task);
