@@ -42,6 +42,10 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	
 	private double initialFund;
 	private Set<Vehicle> ownVehicles;
+	// TODO: needs to be finished for decision making
+	private DummyMemoryComponent mobilityMemory;
+	private DummyCommunicationComponent mobilityCommunication;
+	private DummyDecisionComponent mobilityDecision;
 
 	public StandardDummyAgent(String id, Environment loc, double initialFund, Set<Vehicle> ownVehicles, double beliefWeight, double timeWeight, double costWeight,
 			double normWeight, double roleWeight, double selfWeight, double emotionWeight, double facilitatingWeight,
