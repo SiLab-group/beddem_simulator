@@ -132,6 +132,7 @@ public class CSVReader {
 			for (String vehicleID:vehicleIDs) {
 				ownVehicles.add(this.idToVehicleMap.get(vehicleID));
 			}
+			LOGGER.log(Level.INFO,"Owned vehicles" + ownVehicles.toString());
 			
 			double beliefWeight = 0;
 			double timeWeight = Double.parseDouble(inputs[4]);
@@ -147,6 +148,7 @@ public class CSVReader {
 			double affectWeight = Double.parseDouble(inputs[14]);
 			double intentionWeight = Double.parseDouble(inputs[15]);
 			double habitWeight = Double.parseDouble(inputs[16]);
+			
 			
 			
 			StandardDummyAgent agent = new StandardDummyAgent(inputs[0], idToLocationMap.get(inputs[1]), initialFund, ownVehicles, beliefWeight, timeWeight, costWeight, normWeight, roleWeight, selfWeight, emotionWeight, facilitatingWeight, freqWeight, attitudeWeight, socialWeight, affectWeight, intentionWeight, habitWeight);
@@ -181,9 +183,9 @@ public class CSVReader {
 			double purpose = Double.parseDouble(inputs[4]);
 			
 			double time = Double.parseDouble(inputs[1]);
-			time += GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD * periodNum
-					+ GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD
-							* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * checkpointNum;
+//			time += GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD * periodNum
+//					+ GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD
+//							* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * checkpointNum;
 			
 			MobilityTask task = new MobilityTask(time, Double.parseDouble(inputs[1]), distance, purpose, time_limit);
 			LOGGER.log(Level.INFO,"Before agent");

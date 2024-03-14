@@ -30,7 +30,7 @@ public class DummyPerceptionComponent implements PerceptionComponent {
 		MobilityEnvironmentalState mobilityEnvStat = (MobilityEnvironmentalState) environmentalState;
 		accessileVehicles.addAll(mobilityEnvStat.getPublicTransports());
 		MobilityInternalState mobilityInternalStat = (MobilityInternalState) internalState;
-		accessileVehicles.addAll(mobilityInternalStat.getOwnVehicles());
+//		accessileVehicles.addAll(mobilityInternalStat.getOwnVehicles());
 
 		Set<Option> opts = new HashSet<Option>();
 		for (Vehicle vehicle : accessileVehicles) {

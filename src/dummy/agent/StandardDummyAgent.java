@@ -42,10 +42,6 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	
 	private double initialFund;
 	private Set<Vehicle> ownVehicles;
-	// TODO: needs to be finished for decision making
-	private DummyMemoryComponent mobilityMemory;
-	private DummyCommunicationComponent mobilityCommunication;
-	private DummyDecisionComponent mobilityDecision;
 
 	public StandardDummyAgent(String id, Environment loc, double initialFund, Set<Vehicle> ownVehicles, double beliefWeight, double timeWeight, double costWeight,
 			double normWeight, double roleWeight, double selfWeight, double emotionWeight, double facilitatingWeight,
@@ -69,8 +65,6 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		
 		this.initialFund = initialFund;
 		this.ownVehicles = ownVehicles;
-		
-		this.mobilityMemory =  (DummyMemoryComponent) this.mobilityMemory;
 	}
 	
 	@Override
@@ -80,7 +74,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 
 	@Override
 	protected MemoryComponent createMemoryComponent() {
-		return new DummyMemoryComponent(initialFund,ownVehicles);
+		return new DummyMemoryComponent(this.initialFund, this.ownVehicles);
 	}
 
 	@Override

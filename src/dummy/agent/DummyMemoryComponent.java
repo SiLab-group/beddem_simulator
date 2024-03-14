@@ -3,6 +3,7 @@ package dummy.agent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dummy.concept.MobilityFeedback;
@@ -36,22 +37,23 @@ public class DummyMemoryComponent implements MemoryComponent {
 	
 	@Override
 	public InternalState getInternalState() {
-		return new MobilityInternalState(currentFund, ownVehicles);
+		return new MobilityInternalState(this.currentFund, this.ownVehicles);
 	}
 
 	@Override
 	public void updateInternalState(Task task, Option option, Feedback feedback) {
-		MobilityFeedback mobilityFeedBack = (MobilityFeedback) feedback;
+//		MobilityFeedback mobilityFeedBack = (MobilityFeedback) feedback;
 		MobilityOption mobilityOption = (MobilityOption) option;
 		MobilityTask mobilityTask = (MobilityTask) task;
-		this.currentFund -= mobilityFeedBack.getCost();
-		Vehicle mainVehicle = mobilityOption.getMainVehicle();
-		this.lastExperience.put(mainVehicle, mobilityFeedBack.getExperienceScore());
-		if (!this.pastFreq.containsKey(mainVehicle)) {
-			this.pastFreq.put(mainVehicle, 1);
-		} else {
-			this.pastFreq.put(mainVehicle, this.pastFreq.get(mainVehicle)+1);
-		}
+		LOGGER.log(Level.INFO,"Current fund " + this.currentFund +" feedback ");
+//		this.currentFund -= mobilityFeedBack.getCost();
+//		Vehicle mainVehicle = mobilityOption.getMainVehicle();
+//		this.lastExperience.put(mainVehicle, mobilityFeedBack.getExperienceScore());
+//		if (!this.pastFreq.containsKey(mainVehicle)) {
+//			this.pastFreq.put(mainVehicle, 1);
+//		} else {
+//			this.pastFreq.put(mainVehicle, this.pastFreq.get(mainVehicle)+1);
+//		}
 		this.decisionResults.put(mobilityTask, mobilityOption);
 	}
 
