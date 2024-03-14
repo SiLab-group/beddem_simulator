@@ -194,10 +194,6 @@ public class CSVReader {
 			LOGGER.log(Level.INFO,"After schedule");
 			ContextManager.scheduleNewTask(agent, time);
 			LOGGER.log(Level.INFO, "Scheduled demand at: " + time + "for agent: " + agent.getID());
-			
-			// String time = line.getString(2);
-			// LOGGER.log(Level.INFO," time " + time);
-			
 		}
 
 		br.close();
