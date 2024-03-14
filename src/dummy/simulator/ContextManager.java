@@ -135,8 +135,9 @@ public class ContextManager implements ContextBuilder<Object> {
 	 * The period is when agent need to read new file and update its timetable.
 	 */
 	public void updateSchedule() {
+		LOGGER.log(Level.INFO,"UpdateSchedule: before if: " + checkpointNum);
 		// If the simulator still hasn't reached the maximum checkpoints.
-		if (checkpointNum < GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum()) {
+		if (checkpointNum < GlobalVars.SIMULATION_PARAMS.CHECKPOINTS_IN_SIMULATE) {
 			// If the number of periods has reached the next checkpoints.
 			if (periodNum == GlobalVars.SIMULATION_PARAMS.PERIODS_TO_NEXT_CHECKPOINT) {
 				periodNum = 0;

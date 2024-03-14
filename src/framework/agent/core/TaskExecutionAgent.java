@@ -80,18 +80,18 @@ public abstract class TaskExecutionAgent implements IAgent {
 		LOGGER.log(Level.INFO, "Agent " + this.id + " is stepping.");
 		// Get the next event from schedule.
 		Task task = schedule.remove(0);
-
-		EnvironmentalState environmentalState = loc.getEnvironmentalState();
+		LOGGER.log(Level.INFO, "After remove from shedule");
+		EnvironmentalState environmentalState = this.loc.getEnvironmentalState();
 		InternalState internalState = this.memoryComponent.getInternalState();
-
+		LOGGER.log(Level.INFO,"After internal state");
 		Set<Option> options = this.perceptionComponent.generateOptions(task, environmentalState, internalState);
-
+		LOGGER.log(Level.INFO,"After option perception");
 		Map<Double, Set<Option>> evaluatedOptions = this.decisionComponent.evaluateOptions(options,task);
-
+		LOGGER.log(Level.INFO,"After evaluated options");
 		Option pickedOption = this.communicationComponent.pickOption(evaluatedOptions);
-		
-		Feedback feedback = this.communicationComponent.getFeedback(task, pickedOption, internalState, loc);
-
+		LOGGER.log(Level.INFO,"After picked option");
+		Feedback feedback = this.communicationComponent.getFeedback(task, pickedOption, internalState, this.loc);
+		LOGGER.log(Level.INFO,"After feedback");
 		this.memoryComponent.updateInternalState(task, pickedOption,feedback);
 	}
 
