@@ -185,7 +185,7 @@ public class CSVReader {
 			
 			MobilityTask task = new MobilityTask(time, Double.parseDouble(inputs[1]), distance, purpose, time_limit);
 			StandardDummyAgent agent = (StandardDummyAgent) idToAgentMap.get(inputs[0]);
-			
+			LOGGER.log(Level.INFO,"Before schedule");
 			agent.addToSchedule(task);
 			//agent.rememberLastTask(task);
 			
