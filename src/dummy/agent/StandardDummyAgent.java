@@ -69,6 +69,8 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		
 		this.initialFund = initialFund;
 		this.ownVehicles = ownVehicles;
+		
+		this.mobilityMemory =  (DummyMemoryComponent) this.mobilityMemory;
 	}
 	
 	@Override
