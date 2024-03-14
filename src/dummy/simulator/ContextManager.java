@@ -113,7 +113,7 @@ public class ContextManager implements ContextBuilder<Object> {
 			LOGGER.log(Level.SEVERE, "IO exception.", e);
 		}
 
-		mainContext.addSubContext(agentContext);
+		mainContext.add(agentContext);
 		LOGGER.log(Level.INFO, "After create agents" + idToAgentMap.toString());
 		// Read the schedule file and schedule all the agents' events.
 		updateSchedule();
