@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import framework.concept.Task;
 
 
-// TODO: Needs to be implemented!!
+
 public class MobilityTask extends Task {
 
 	private static Logger LOGGER = Logger.getLogger(MobilityTask.class.getName());
@@ -22,6 +22,7 @@ public class MobilityTask extends Task {
 		this.timeStart = timeStart;
 		this.purpose = purpose;
 		this.timeLimit = timeLimit;
+		//this.distance = distance;
 		
 		LOGGER.log(Level.INFO, "New event is initialised: " + toString());
 
