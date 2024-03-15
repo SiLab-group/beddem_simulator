@@ -2,6 +2,7 @@ package dummy.agent;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dummy.concept.MobilityEnvironmentalState;
@@ -21,6 +22,12 @@ import framework.environment.Environment;
 public class DummyPerceptionComponent implements PerceptionComponent {
 
 	private static Logger LOGGER = Logger.getLogger(DummyPerceptionComponent.class.getName());
+	private String agentID;
+	
+	public DummyPerceptionComponent(String agentID) {
+		super();
+		this.agentID = agentID;
+	}
 
 	@Override
 	public Set<Option> generateOptions(Task task, EnvironmentalState environmentalState,
@@ -30,7 +37,11 @@ public class DummyPerceptionComponent implements PerceptionComponent {
 		MobilityEnvironmentalState mobilityEnvStat = (MobilityEnvironmentalState) environmentalState;
 		accessileVehicles.addAll(mobilityEnvStat.getPublicTransports());
 		MobilityInternalState mobilityInternalStat = (MobilityInternalState) internalState;
-//		accessileVehicles.addAll(mobilityInternalStat.getOwnVehicles());
+		accessileVehicles.addAll(mobilityInternalStat.getOwnVehicles());
+		
+		String debugStr = "Task for agent" + this.agentID + "Task distance: " + mobilityTask.getDistance() + " Task maxtime: "
+				+ mobilityTask.getTimeLimit() + "\n";
+		LOGGER.log(Level.INFO,debugStr);
 
 		Set<Option> opts = new HashSet<Option>();
 		for (Vehicle vehicle : accessileVehicles) {
