@@ -69,7 +69,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	
 	@Override
 	protected PerceptionComponent createPerceptionComponent() {
-		return new DummyPerceptionComponent();
+		return new DummyPerceptionComponent(this.getID());
 	}
 
 	@Override
