@@ -27,7 +27,8 @@ public class DummyReporter implements IReporter {
 	@Override
 	public String printReport() {
 		String reportString = "\n";
-		reportString += "agentID,start_time,km,vehicle\n"; 
+		//reportString += "agentID,start_time,km,vehicle\n";
+		reportString += "agentID,start_time,vehicle\n"; 
 		for (IAgent agent: this.agentContext) {
 			StandardDummyAgent mobilityAgent = (StandardDummyAgent) agent;
 			Map<Task,Option> results = mobilityAgent.getDecisionResults();
@@ -36,7 +37,7 @@ public class DummyReporter implements IReporter {
 				MobilityTask mobilityTask = (MobilityTask) task;
 				System.out.println(mobilityOption.getMainVehicle().getName());
 				//reportString += agent.getID() + "," + mobilityTask.getExecutingTime() + "," + mobilityTask.getDistance() +"," + mobilityOption.getMainVehicle().getName() + "\n";
-				reportString += agent.getID() + "," + mobilityTask.getExecutingTime() + "," + mobilityTask.getDistance() + "," + mobilityOption.getMainVehicle().getName() + "\n";
+				reportString += agent.getID() + "," + mobilityTask.getExecutingTime() + "," + mobilityOption.getMainVehicle().getName() + "\n";
 			}
 		}
 		
