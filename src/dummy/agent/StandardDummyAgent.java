@@ -25,7 +25,7 @@ import framework.environment.Environment;
 public class StandardDummyAgent extends TaskExecutionAgent {
 
 	private double beliefWeight;
-	// private double evaluationWeight;
+	private double evaluationWeight;
 	private double timeWeight;
 	private double costWeight;
 	private double normWeight;

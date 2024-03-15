@@ -1,6 +1,7 @@
 package dummy.report;
 
 import java.util.Map;
+import java.util.logging.Level;
 
 import dummy.agent.StandardDummyAgent;
 import dummy.concept.MobilityOption;
@@ -33,7 +34,9 @@ public class DummyReporter implements IReporter {
 			for (Task task : results.keySet()) {
 				MobilityOption mobilityOption = (MobilityOption) results.get(task);
 				MobilityTask mobilityTask = (MobilityTask) task;
-				reportString += agent.getID() + "," + mobilityTask.getExecutingTime() + "," + mobilityTask.getDistance() +"," + mobilityOption.getMainVehicle().getName() + "\n";
+				System.out.println(mobilityOption.getMainVehicle().getName());
+				//reportString += agent.getID() + "," + mobilityTask.getExecutingTime() + "," + mobilityTask.getDistance() +"," + mobilityOption.getMainVehicle().getName() + "\n";
+				reportString += agent.getID() + "," + mobilityTask.getExecutingTime() + "," + mobilityTask.getDistance() + "," + mobilityOption.getMainVehicle().getName() + "\n";
 			}
 		}
 		
