@@ -62,13 +62,13 @@ public abstract class GlobalVars {
 	public static final class SIMULATION_PARAMS {
 		private static Parameters params = RunEnvironment.getInstance().getParameters();
 	
+		// 1 checkpoint, 1 period == one day of the schedule
 		public static final int CHECKPOINTS_IN_SIMULATE = (Integer) params.getValue("checkpoints_in_simulate");
 		public static final int PERIODS_TO_NEXT_CHECKPOINT = (Integer) params.getValue("periods_to_checkpoint");
 		public static final int AGENT_PROBABILISTIC_DECISION = (Integer) params.getValue("agent_made_probabilistic_decision");
-		// public static final double TIME_STEPS_IN_PERIOD = 24 * 7 * 4 * 3;
 		public static final double TIME_STEPS_IN_PERIOD = 24;
-		public static final double TIME_OF_EACH_SCHEDULE = 13;
-		public static final int NUMBER_OF_MODES = 5;
+		public static final double TIME_OF_EACH_SCHEDULE = 24;
+		public static final int NUMBER_OF_MODES = 6;
 		public static final double MAX_WEIGHT = 5.0;
 		
 		public static int getPeriodToNextCheckNum() {
