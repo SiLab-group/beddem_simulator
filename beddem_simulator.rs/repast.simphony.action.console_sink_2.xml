@@ -1,4 +1,4 @@
-<repast.simphony.data2.engine.ConsoleSinkDescriptor simphonyVersion="2.9.0">
+<repast.simphony.data2.engine.ConsoleSinkDescriptor simphonyVersion="2.10.0">
   <name>DummyReport Cons</name>
   <dataSet>DummyReport</dataSet>
   <delimiter>,</delimiter>

@@ -1,4 +1,4 @@
-<repast.simphony.data2.engine.DataSetDescriptor simphonyVersion="2.9.0">
+<repast.simphony.data2.engine.DataSetDescriptor simphonyVersion="2.10.0">
   <name>DummyReport</name>
   <type>NON_AGGREGATE</type>
   <sourceType>dummy.report.DummyReporter</sourceType>
