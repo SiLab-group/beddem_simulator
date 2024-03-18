@@ -49,9 +49,9 @@ public class DummyMemoryComponent implements MemoryComponent {
 		MobilityOption mobilityOption = (MobilityOption) option;
 		MobilityTask mobilityTask = (MobilityTask) task;
 		LOGGER.log(Level.INFO,"Current fund " + this.currentFund +" feedback ");
-		this.currentFund -= mobilityFeedBack.getCost();
+//		this.currentFund -= mobilityFeedBack.getCost();
 		Vehicle mainVehicle = mobilityOption.getMainVehicle();
-		this.lastExperience.put(mainVehicle, mobilityFeedBack.getExperienceScore());
+//		this.lastExperience.put(mainVehicle, mobilityFeedBack.getExperienceScore());
 		if (!this.pastFreq.containsKey(mainVehicle)) {
 			this.pastFreq.put(mainVehicle, 1);
 		} else {

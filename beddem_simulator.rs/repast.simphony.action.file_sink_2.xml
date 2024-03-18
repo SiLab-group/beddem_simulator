@@ -1,0 +1,11 @@
+<repast.simphony.data2.engine.FileSinkDescriptor simphonyVersion="2.10.0">
+  <name>DummyReport</name>
+  <dataSet>DummyReport</dataSet>
+  <delimiter>,</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>printReport</string>
+  </sourceIds>
+  <fileName>DummyOutput.txt</fileName>
+  <addTimeStamp>true</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>

@@ -45,6 +45,9 @@ public abstract class TaskExecutionAgent implements IAgent {
 		this.id = id;
 		this.loc = loc;
 		this.schedule = new LinkedList<Task>();
+	}
+
+	protected void setup_overrides() {
 		this.decisionComponent = createDecisionComponent();
 		this.memoryComponent = createMemoryComponent();
 		this.communicationComponent = createCommunicationComponent();

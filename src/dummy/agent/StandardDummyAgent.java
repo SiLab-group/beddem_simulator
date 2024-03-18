@@ -26,7 +26,7 @@ import framework.environment.Environment;
  */
 public class StandardDummyAgent extends TaskExecutionAgent {
 	
-	private static Logger LOGGER = Logger.getLogger(DummyPerceptionComponent.class.getName());
+	private static Logger LOGGER = Logger.getLogger(StandardDummyAgent.class.getName());
 
 	private double beliefWeight;
 	private double evaluationWeight;
@@ -43,11 +43,6 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	private double affectWeight;
 	private double intentionWeight;
 	private double habitWeight;
-	
-	private DummyMemoryComponent dummyMemory;
-	private DummyCommunicationComponent dummyCommunication;
-	private DummyDecisionComponent dummyDecision;
-	private DummyPerceptionComponent dummyPerception;
 	
 	private double initialFund;
 	private Set<Vehicle> ownVehicles;
@@ -75,10 +70,9 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		this.initialFund = initialFund;
 		this.ownVehicles = ownVehicles;
 		
-		this.dummyMemory = (DummyMemoryComponent) this.memoryComponent;
-		this.dummyCommunication = (DummyCommunicationComponent) this.communicationComponent;
-		this.dummyDecision = (DummyDecisionComponent) this.decisionComponent;
-		this.dummyPerception = (DummyPerceptionComponent) this.perceptionComponent;
+		LOGGER.log(Level.INFO,"Agent constructor " + this.getID() + " " + this.initialFund + " ");
+		
+		this.setup_overrides();
 	}
 	
 	@Override
@@ -88,8 +82,8 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 
 	@Override
 	protected MemoryComponent createMemoryComponent() {
-		LOGGER.log(Level.INFO,"Memory component " + this.getID() + " " + this.initialFund + " ");
-		return new DummyMemoryComponent(this.getID(), this.initialFund, this.ownVehicles);
+		LOGGER.log(Level.INFO,"Memory component ere5rertwerwrtertet" + this.getID() + " " + this.getFund() + " ");
+		return new DummyMemoryComponent(this.getID(), this.getFund(), this.ownVehicles);
 	}
 
 	@Override
@@ -113,6 +107,10 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 
 	
 	/*******************************************************************************************/
+	
+	public double getFund() {
+		return this.initialFund;
+	}
 
 	private Determinant createBeliefDeterminant() {
 		// TODO Auto-generated method stub
