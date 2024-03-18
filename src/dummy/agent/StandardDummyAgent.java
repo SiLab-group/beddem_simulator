@@ -1,6 +1,8 @@
 package dummy.agent;
 
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import dummy.concept.MobilityOption;
 import dummy.concept.Vehicle;
@@ -23,6 +25,8 @@ import framework.environment.Environment;
  *
  */
 public class StandardDummyAgent extends TaskExecutionAgent {
+	
+	private static Logger LOGGER = Logger.getLogger(DummyPerceptionComponent.class.getName());
 
 	private double beliefWeight;
 	private double evaluationWeight;
@@ -84,6 +88,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 
 	@Override
 	protected MemoryComponent createMemoryComponent() {
+		LOGGER.log(Level.INFO,"Memory component " + this.getID() + " " + this.initialFund + " ");
 		return new DummyMemoryComponent(this.getID(), this.initialFund, this.ownVehicles);
 	}
 

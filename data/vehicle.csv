@@ -1,0 +1,7 @@
+vehicle_id,name,speed_km_per_hr,cost_per_km
+1,train,20,4.5
+2,bus,7,2
+3,tram,12,2.5
+4,car,10,2.7
+5,walking,2,0
+6,biking,3,0
