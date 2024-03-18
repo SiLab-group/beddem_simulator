@@ -40,6 +40,11 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	private double intentionWeight;
 	private double habitWeight;
 	
+	private DummyMemoryComponent dummyMemory;
+	private DummyCommunicationComponent dummyCommunication;
+	private DummyDecisionComponent dummyDecision;
+	private DummyPerceptionComponent dummyPerception;
+	
 	private double initialFund;
 	private Set<Vehicle> ownVehicles;
 
@@ -65,6 +70,11 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		
 		this.initialFund = initialFund;
 		this.ownVehicles = ownVehicles;
+		
+		this.dummyMemory = (DummyMemoryComponent) this.memoryComponent;
+		this.dummyCommunication = (DummyCommunicationComponent) this.communicationComponent;
+		this.dummyDecision = (DummyDecisionComponent) this.decisionComponent;
+		this.dummyPerception = (DummyPerceptionComponent) this.perceptionComponent;
 	}
 	
 	@Override
@@ -74,7 +84,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 
 	@Override
 	protected MemoryComponent createMemoryComponent() {
-		return new DummyMemoryComponent(this.initialFund, this.ownVehicles);
+		return new DummyMemoryComponent(this.getID(), this.initialFund, this.ownVehicles);
 	}
 
 	@Override
@@ -96,6 +106,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 				 normWeight, roleWeight, selfWeight, emotionWeight, facilitatingWeight);
 	}
 
+	
 	/*******************************************************************************************/
 
 	private Determinant createBeliefDeterminant() {
