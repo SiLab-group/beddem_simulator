@@ -11,7 +11,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import dummy.agent.StandardDummyAgent;
 import dummy.context.AgentContext;
 import dummy.context.LocationContext;
 import dummy.database.CSVReader;
@@ -101,7 +100,7 @@ public class ContextManager implements ContextBuilder<Object> {
 			throw new RuntimeException("Could not create resources or locations,reason:  " + e1.toString(),e1);
 		}
 
-		mainContext.addSubContext(locationContext);
+		mainContext.add(locationContext);
 
 		// Now create the agents (note that their step methods are scheduled
 		// later).

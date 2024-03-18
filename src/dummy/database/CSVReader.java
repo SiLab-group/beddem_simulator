@@ -72,7 +72,7 @@ public class CSVReader {
 		while ((line = br.readLine()) != null) {
 			String[] inputs = line.split(",");
 			Vehicle vehicle = new Vehicle(inputs[0],inputs[1],Double.parseDouble(inputs[2]),Double.parseDouble(inputs[3]));
-			this.idToVehicleMap.put(inputs[0], vehicle);
+			this.idToVehicleMap.put(inputs[0], vehicle) ;
 		}
 		br.close();
 	}
@@ -120,11 +120,12 @@ public class CSVReader {
 		String csvDataDir = ContextManager.getProperty(GlobalVars.CSVDataDirectory);
 		String agentFile = csvDataDir + ContextManager.getProperty(GlobalVars.AgentCSVfile) + ".csv";
 
-		//this.idToAgentMap = new HashMap<String,IAgent>();
+		this.idToAgentMap = new HashMap<String,IAgent>();
 		BufferedReader br = getBufferReaderForFile(agentFile);
 		String line;
 		br.readLine();
 		while ((line = br.readLine()) != null) {
+			LOGGER.log(Level.INFO,"Line" + line);
 			String[] inputs = line.split(",");
 			double initialFund = Double.parseDouble(inputs[2]);
 			LOGGER.log(Level.INFO,"Initial fund of agent " + initialFund);
@@ -153,9 +154,10 @@ public class CSVReader {
 			
 			
 			StandardDummyAgent agent = new StandardDummyAgent(inputs[0], idToLocationMap.get(inputs[1]), initialFund, ownVehicles, beliefWeight, timeWeight, costWeight, normWeight, roleWeight, selfWeight, emotionWeight, facilitatingWeight, freqWeight, attitudeWeight, socialWeight, affectWeight, intentionWeight, habitWeight);
-			LOGGER.log(Level.INFO, "Agent id " + inputs[0] +" agent" + agent.toString());
+			LOGGER.log(Level.INFO, "Agent id " + inputs[0] +" agent " + agent.toString());
 			idToAgentMap.put(inputs[0], agent);
-			LOGGER.log(Level.INFO,"id TO Agent map"+ idToAgentMap.toString());
+			this.idToAgentMap = idToAgentMap;
+			LOGGER.log(Level.INFO,"id TO Agent map"+ this.idToAgentMap.toString());
 			agentContext.add(agent);
 		}
 		br.close();
@@ -184,9 +186,9 @@ public class CSVReader {
 			double purpose = Double.parseDouble(inputs[4]);
 			
 			double time = Double.parseDouble(inputs[1]);
-//			time += GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD * periodNum
-//					+ GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD
-//							* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * checkpointNum;
+			time += GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD * periodNum
+					+ GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD
+							* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * checkpointNum;
 			
 			MobilityTask task = new MobilityTask(time, Double.parseDouble(inputs[1]), distance, purpose, time_limit);
 			LOGGER.log(Level.INFO,"Before agent");

@@ -22,7 +22,7 @@ public class MobilityTask extends Task {
 		this.timeStart = timeStart;
 		this.purpose = purpose;
 		this.timeLimit = timeLimit;
-		//this.distance = distance;
+		this.distance = distance;
 		
 		LOGGER.log(Level.INFO, "New event is initialised: " + toString());
 
