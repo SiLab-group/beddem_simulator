@@ -127,6 +127,7 @@ public class CSVReader {
 		while ((line = br.readLine()) != null) {
 			String[] inputs = line.split(",");
 			double initialFund = Double.parseDouble(inputs[2]);
+			LOGGER.log(Level.INFO,"Initial fund of agent " + initialFund);
 			String[] vehicleIDs = inputs[3].split(";");
 			Set<Vehicle> ownVehicles = new HashSet<Vehicle>();
 			for (String vehicleID:vehicleIDs) {

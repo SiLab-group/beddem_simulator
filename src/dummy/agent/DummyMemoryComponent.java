@@ -22,14 +22,16 @@ public class DummyMemoryComponent implements MemoryComponent {
 	private static Logger LOGGER = Logger.getLogger(DummyMemoryComponent.class.getName());
 
 	private double currentFund;
+	private String agentID;
 	private Set<Vehicle> ownVehicles;
 	private Map<Vehicle, Double> lastExperience;
 	private Map<Vehicle, Integer> pastFreq;
 	private Map<Task, Option> decisionResults;
 
-	public DummyMemoryComponent(double currentFund, Set<Vehicle> ownVehicles) {
+	public DummyMemoryComponent(String agentID, double currentFund, Set<Vehicle> ownVehicles) {
 		this.currentFund = currentFund;
 		this.ownVehicles = ownVehicles;
+		this.agentID = agentID;
 		this.lastExperience = new HashMap<Vehicle, Double>();
 		this.pastFreq = new HashMap<Vehicle, Integer>();
 		this.decisionResults = new HashMap<Task, Option>();
@@ -37,23 +39,24 @@ public class DummyMemoryComponent implements MemoryComponent {
 	
 	@Override
 	public InternalState getInternalState() {
+		LOGGER.log(Level.INFO, "Agent Internal state " + this.currentFund + " and ownVehicles " + this.ownVehicles);
 		return new MobilityInternalState(this.currentFund, this.ownVehicles);
 	}
 
 	@Override
 	public void updateInternalState(Task task, Option option, Feedback feedback) {
-//		MobilityFeedback mobilityFeedBack = (MobilityFeedback) feedback;
+		MobilityFeedback mobilityFeedBack = (MobilityFeedback) feedback;
 		MobilityOption mobilityOption = (MobilityOption) option;
 		MobilityTask mobilityTask = (MobilityTask) task;
 		LOGGER.log(Level.INFO,"Current fund " + this.currentFund +" feedback ");
-//		this.currentFund -= mobilityFeedBack.getCost();
-//		Vehicle mainVehicle = mobilityOption.getMainVehicle();
-//		this.lastExperience.put(mainVehicle, mobilityFeedBack.getExperienceScore());
-//		if (!this.pastFreq.containsKey(mainVehicle)) {
-//			this.pastFreq.put(mainVehicle, 1);
-//		} else {
-//			this.pastFreq.put(mainVehicle, this.pastFreq.get(mainVehicle)+1);
-//		}
+		this.currentFund -= mobilityFeedBack.getCost();
+		Vehicle mainVehicle = mobilityOption.getMainVehicle();
+		this.lastExperience.put(mainVehicle, mobilityFeedBack.getExperienceScore());
+		if (!this.pastFreq.containsKey(mainVehicle)) {
+			this.pastFreq.put(mainVehicle, 1);
+		} else {
+			this.pastFreq.put(mainVehicle, this.pastFreq.get(mainVehicle)+1);
+		}
 		this.decisionResults.put(mobilityTask, mobilityOption);
 	}
 

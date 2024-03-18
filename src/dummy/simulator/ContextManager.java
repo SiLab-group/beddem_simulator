@@ -11,6 +11,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import dummy.agent.StandardDummyAgent;
 import dummy.context.AgentContext;
 import dummy.context.LocationContext;
 import dummy.database.CSVReader;
@@ -154,8 +155,9 @@ public class ContextManager implements ContextBuilder<Object> {
 
 				periodNum++;
 			}
-//			 for (IAgent agent : agentContext) {
-//			 agent.updateInternalState();
+//			 for (IAgent agent : idToAgentMap.values()) {
+//				StandardDummyAgent traveller = (StandardDummyAgent) agent;
+//				traveller.updateInternalState();
 //			 }
 
 			ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
