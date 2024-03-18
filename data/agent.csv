@@ -1,0 +1,2 @@
+id,loc_id,funding,resources,time_weight,cost_weight,norm_weight,role_weight,self_weight,emotion_weight,facilitating_weight,frequency_weight,attitude_weight,social_weight,affect_weight,intention_weight,habit_weight
+1,1,100,4;5,3,1,2,3,2,1,1,2,1,3,1,2,3
