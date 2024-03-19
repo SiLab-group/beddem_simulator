@@ -82,8 +82,8 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 
 	@Override
 	protected MemoryComponent createMemoryComponent() {
-		LOGGER.log(Level.INFO,"Memory component ere5rertwerwrtertet" + this.getID() + " " + this.getFund() + " ");
-		return new DummyMemoryComponent(this.getID(), this.getFund(), this.ownVehicles);
+		LOGGER.log(Level.INFO,"Memory component " + this.getID() + " " + this.initialFund + " ");
+		return new DummyMemoryComponent(this.getID(), this.initialFund, this.ownVehicles);
 	}
 
 	@Override
@@ -107,11 +107,6 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 
 	
 	/*******************************************************************************************/
-	
-	public double getFund() {
-		return this.initialFund;
-	}
-
 	private Determinant createBeliefDeterminant() {
 		// TODO Auto-generated method stub
 		return null;
@@ -124,6 +119,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 			@Override
 			protected double evalOpt(Option opt, Task task) {
 				MobilityOption mobilityOpt = (MobilityOption) opt;
+				LOGGER.log(Level.INFO, "Eval TIME option " + mobilityOpt.getTime());
 				return mobilityOpt.getTime();
 			}
 		});
@@ -132,9 +128,11 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 			@Override
 			protected double evalOpt(Option opt, Task task) {
 				MobilityOption mobilityOption = (MobilityOption) opt;
+				LOGGER.log(Level.INFO, "Eval COST option " + mobilityOption.getCost());
 				return mobilityOption.getCost();
 			}
 		});
+		LOGGER.log(Level.INFO," Evalutation " + evaluation.toString());
 		return evaluation;
 	}
 
