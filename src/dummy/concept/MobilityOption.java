@@ -10,6 +10,7 @@ public class MobilityOption implements Option {
 	public MobilityOption (Vehicle mainVehicle, double cost, double time) {
 		this.mainVehicle = mainVehicle;
 		this.cost = cost;
+		this.time = time;
 	}
 	
 	public Vehicle getMainVehicle() {
