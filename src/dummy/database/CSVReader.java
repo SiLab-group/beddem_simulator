@@ -72,7 +72,7 @@ public class CSVReader {
 		while ((line = br.readLine()) != null) {
 			String[] inputs = line.split(",");
 			Vehicle vehicle = new Vehicle(inputs[0],inputs[1],Double.parseDouble(inputs[2]),Double.parseDouble(inputs[3]));
-			this.idToVehicleMap.put(inputs[0], vehicle) ;
+			this.idToVehicleMap.put(inputs[0], vehicle);
 		}
 		br.close();
 	}
