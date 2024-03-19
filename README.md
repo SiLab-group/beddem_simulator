@@ -1,15 +1,10 @@
-# Behavior Demand Model simulator (BedDeM)
+# Behavior-driven Demand Model (BedDeM)
+Behavior-driven Demand Model using Repast Simphony as a based framework library implementing the Triandis' Theory of Interpersonal Behavior.
 
-## How to run
-1. To install RePast in Eclipse, follow the instruction at: https://repast.github.io/download.html
-2. Download the project using git.
-3. Import the project to Eclipse by going to File -> New -> Other -> Repast Simphony (you should see this folder if you install Repast correctly) -> Repast Simphony Project -> Select where you put the downloaded project and fill in a name for the project (your_project_name) -> Click finish.
-4. Setting up Repast parameters by copying all the files from "beddem_simulator.rs" folder to "your_project_name.rs" folder. This can also be done by go to Repast.setting file and change the .rs string to where you put the "beddem_simulator.rs".
-5. Start Repast interface by click the small arrow next to the run button and select "your_project_name Model" (you can click the run button for the next run).
-6. Click the run button to run the project. After it finishes, you should see a new output file in the project folder.
+![Beddem Model Theory of Interpersonal Behavior](docs/beddemTIB.PNG)
 
 ## Run individual simulation
-Install Reapst Simphony and compatible `eclipse committers IDE (2022-06)` the official page can be found [here](https://repast.github.io/download.html)
+Install Reapst Simphony and compatible `eclipse committers IDE (2022-06)` the official instruction page can be found [here](https://repast.github.io/download.html)
 
 1. Install Groovy in Eclipse: Help -> Install New Software -> Add new repository ->  `https://groovy.jfrog.io/artifactory/plugins-release/e4.24` -> Main package -> Eclipse Groovy Development tools
 2. Install Repast Simphony: Help -> Install New Software -> Add new repository -> `https://web.cels.anl.gov/projects/Repast/update_site` -> Repast Simphony
@@ -19,6 +14,8 @@ Install Reapst Simphony and compatible `eclipse committers IDE (2022-06)` the of
 6. Clone the beddem_simulator repository `git clone https://github.com/SiLab-group/beddem_simulator.git`
 7. Import project to eclipse: File -> New -> Other -> Repast Simphony -> Repast Simphony Project -> Select the folder of cloned repo (beddem) -> Name the project beddem -> Finish
 8. Repast parameters, context, scenarios should be stored in `<project name>.rs` folder. If you name project differently it is needed to copy the xml files or in `Repast.settings`
+9. Start Repast interface by click the small arrow next to the run button and select "your_project_name Model" (you can click the run button for the next run).
+10. Click the run button to run the project. After it finishes, you should see a new output file in the project folder.
  
 
 ## Project structure
