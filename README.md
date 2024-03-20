@@ -17,6 +17,29 @@ Install Repast Simphony and compatible `eclipse committers IDE (2022-06)` the of
 9. Start Repast interface by click the small arrow next to the run button and select "your_project_name Model" (you can click the run button for the next run).
 10. Click the run button to run the project. After it finishes, you should see a new output file in the project folder.
  
+ ## Example simulation run
+ This example simulation contains one agent with the simple schedule of two tasks. When changing the weight of the `time_weight` or `cost_weigt` in the `agent.csv` file. 
+ The output changes based on the agent priorities `weights`. When the cost is more important agent walks at `6am`, when the time is more important agent drives.
+ This properties can be adjusted in the example csv files located in the `data` folder.
+ 1. The properties file in `data/beddem_simulator.properties` should contain the files to be parsed 
+```bash
+AgentCSVfile=agent
+LocationCSVfile=location
+ScheduleCSVfile=schedule
+VehicleCSVfile=vehicle
+```
+2. Run the simulation with run green button `beddem_simulator Model`
+3. This opens Repast Simphony UI. Initialize context with `Initialize run` button.
+4. Run the simulation with `Start Run` button.
+![Repast Simphony UI](docs/contextSimphony.PNG)
+5. Output files should be created in the root folder and the output should be print into the console. Such as
+```bash
+printReport: "
+agentID,start_time,km,vehicle
+1,6.0,2.0,car
+1,12.0,10.0,car
+"
+```
 
 ## Project structure
 In this case we have example `<scenario>` called `dummy`. The directory structure:
