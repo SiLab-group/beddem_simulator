@@ -48,7 +48,7 @@ public class DummyPerceptionComponent implements PerceptionComponent {
 			double time = mobilityTask.getDistance()/vehicle.getSpeed();
 			if (time < mobilityTask.getTimeLimit()) {
 				double cost = vehicle.getCostPerKm()*mobilityTask.getDistance();
-				LOGGER.log(Level.INFO, " Time is less " + time + " than timelimit " + mobilityTask.getTimeLimit() + " Cost is " + cost);
+				LOGGER.log(Level.INFO, "For vehicle " + vehicle.getName() + ": Time me is less " + time + " than timelimit " + mobilityTask.getTimeLimit() + " Cost is " + cost);
 				if (cost<=mobilityInternalStat.getCurrentFund()) {
 					opts.add(new MobilityOption(vehicle,cost,time));
 				}
