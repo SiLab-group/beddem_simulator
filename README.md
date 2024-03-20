@@ -4,7 +4,7 @@ Behavior-driven Demand Model using Repast Simphony as a based framework library 
 ![Beddem Model Theory of Interpersonal Behavior](docs/beddemTIB.PNG)
 
 ## Run individual simulation
-Install Reapst Simphony and compatible `eclipse committers IDE (2022-06)` the official instruction page can be found [here](https://repast.github.io/download.html)
+Install Repast Simphony and compatible `eclipse committers IDE (2022-06)` the official instruction page can be found [here](https://repast.github.io/download.html)
 
 1. Install Groovy in Eclipse: Help -> Install New Software -> Add new repository ->  `https://groovy.jfrog.io/artifactory/plugins-release/e4.24` -> Main package -> Eclipse Groovy Development tools
 2. Install Repast Simphony: Help -> Install New Software -> Add new repository -> `https://web.cels.anl.gov/projects/Repast/update_site` -> Repast Simphony
