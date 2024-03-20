@@ -43,7 +43,7 @@ agentID,start_time,km,vehicle
 
 ## Project structure
 In this case we have example `<scenario>` called `dummy`. The directory structure:
-* src
+* **`src`**
 	- `<scenario>.agent`: specific implementation of all agents for scenario and external inputs for processing
 	   + CommunicationComponent: decision communication
 	   + DecisionComponent: decision determinants definition
@@ -88,11 +88,12 @@ In this case we have example `<scenario>` called `dummy`. The directory structur
 	    + Environment: interface for location of the agent its environment
 	- `framework.exception`: all the exceptions and how to handle them.
 	
-* data
-	- `csv_files`:
+* **`data`**
+	- `csv_files`: two scenario example files one with `dummy` prefix and one without. Both are containing schedule for only for next day.
 		+ agents: list of all the agent and their parameters.
-		+ transportation: list of all transportation mode and their parameters.
+		+ vehicle: list of all available transportation mode and their parameters.
 		+ schedule: list of all the events to be assigned to agents. At the moment, the price point of car is added at the end of the file name (ex: 0.0 mean car_price * 0.0). This is for when we want to run in batch mode where we want to define different price points in the demand curve.
+		+ location: list of all locations with available modes of transport
 	- testing: csv files for modular + system testing, will be generated if you run the testing classes.
 	- beddem_simulator.properties: locations of all the inputs, parameters and outputs of the model.
-* your_project_name.rs: Define the inputs, outputs, parameters and observers for the model 
+* **`your_project_name.rs`**: Define the inputs, outputs, parameters and observers for the model
