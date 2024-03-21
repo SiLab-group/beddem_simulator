@@ -1,5 +1,5 @@
 # Behavior-driven Demand Model (BedDeM)
-Behavior-driven Demand Model using Repast Simphony as a based framework library implementing the Triandis' Theory of Interpersonal Behavior.
+Behavior-driven Demand Model using Repast Simphony as a base framework library implementing the Triandis' Theory of Interpersonal Behavior.
 
 ![Beddem Model Theory of Interpersonal Behavior](docs/beddemTIB.PNG)
 
