@@ -9,3 +9,4 @@ icons/*
 .project*
 .settings*
 .classpath*
+/bin/
