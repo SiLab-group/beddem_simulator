@@ -83,7 +83,6 @@ public class CSVReader {
 		String csvDataDir = ContextManager.getProperty(GlobalVars.CSVDataDirectory);
 		String locationFile = csvDataDir + ContextManager.getProperty(GlobalVars.LocationCSVfile) + ".csv";
 		
-		//this.idToLocation = new HashMap<String,Location>();
 		BufferedReader br = getBufferReaderForFile(locationFile);
 		String line;
 		br.readLine();
@@ -157,7 +156,6 @@ public class CSVReader {
 			LOGGER.log(Level.INFO, "Agent id " + inputs[0] +" agent " + agent.toString());
 			idToAgentMap.put(inputs[0], agent);
 			this.idToAgentMap = idToAgentMap;
-			LOGGER.log(Level.INFO,"id TO Agent map"+ this.idToAgentMap.toString());
 			agentContext.add(agent);
 		}
 		br.close();
@@ -167,11 +165,8 @@ public class CSVReader {
 	public void createSchedule(Map<String, IAgent> idToAgentMap, int periodNum, int checkpointNum) throws IOException {
 	try {
 		String csvDataDir = ContextManager.getProperty(GlobalVars.CSVDataDirectory);
-//		String scheduleFile = csvDataDir + ContextManager.getProperty(GlobalVars.ScheduleCSVfile) + "." + periodNum
-//				+ ".csv";
-		
-		// Schedule dataset containing agent_id, start, km, time_limit, purpose
-		String scheduleFile = csvDataDir + ContextManager.getProperty(GlobalVars.ScheduleCSVfile) + ".csv";
+		String scheduleFile = csvDataDir + ContextManager.getProperty(GlobalVars.ScheduleCSVfile) + "." + periodNum
+				+ ".csv";
 
 		BufferedReader br = getBufferReaderForFile(scheduleFile);
 		String line;
@@ -179,13 +174,11 @@ public class CSVReader {
 		
 		while ((line = br.readLine()) != null) {
 			String[] inputs = line.split(",");
-			LOGGER.log(Level.INFO," time " + Arrays.toString(inputs));
-			//double time = Double.parseDouble(inputs[1]);
+			double time = Double.parseDouble(inputs[1]);
 			double distance = Double.parseDouble(inputs[2]);
 			double time_limit = Double.parseDouble(inputs[3]);
 			double purpose = Double.parseDouble(inputs[4]);
 			
-			double time = Double.parseDouble(inputs[1]);
 			time += GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD * periodNum
 					+ GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD
 							* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * checkpointNum;
