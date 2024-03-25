@@ -1,3 +1,11 @@
 /bin/
 output/
-Repast.settings
+*Repast.settings*
+model_log*
+velocity.log
+debug.log*
+freezedried_data/*
+icons/*
+.project*
+.settings*
+.classpath*
