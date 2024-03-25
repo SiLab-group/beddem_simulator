@@ -6,6 +6,6 @@
   <sourceIds class="linked-hash-set">
     <string>printReport</string>
   </sourceIds>
-  <fileName>DummyOutput.txt</fileName>
+  <fileName>output/DummyOutput.txt</fileName>
   <addTimeStamp>true</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>
