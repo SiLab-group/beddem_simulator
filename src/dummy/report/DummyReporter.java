@@ -34,7 +34,6 @@ public class DummyReporter implements IReporter {
 			for (Task task : results.keySet()) {
 				MobilityOption mobilityOption = (MobilityOption) results.get(task);
 				MobilityTask mobilityTask = (MobilityTask) task;
-//				System.out.println(mobilityOption.getMainVehicle().getName());
 				reportString += agent.getID() + "," + mobilityTask.getExecutingTime() + "," + mobilityTask.getDistance() +"," + mobilityOption.getMainVehicle().getName() + "\n";
 			}
 		}

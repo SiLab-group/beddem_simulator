@@ -6,7 +6,7 @@ Behavior-driven Demand Model using Repast Simphony as a base framework library i
 ## Run individual simulation
 Install Repast Simphony and compatible `eclipse committers IDE (2022-06)` the official instruction page can be found [here](https://repast.github.io/download.html)
 
-1. Install Groovy in Eclipse: Help -> Install New Software -> Add new repository ->  `https://groovy.jfrog.io/artifactory/plugins-release/e4.24` -> Main package -> Eclipse Groovy Development tools
+1. Install Groovy in Eclipse depending on the version of eclipse installed add the source URL can be found [here](https://github.com/groovy/groovy-eclipse/wiki). This is for the 2022-06 eclipse version: Help -> Install New Software -> Add new repository ->  `https://groovy.jfrog.io/artifactory/plugins-release/e4.24` -> Main package -> Eclipse Groovy Development tools
 2. Install Repast Simphony: Help -> Install New Software -> Add new repository -> `https://web.cels.anl.gov/projects/Repast/update_site` -> Repast Simphony
 3. Check Groovy compiler version is > than 3.0.x: Window -> Preferences -> Groovy compiler
 4. `Note:` If Surrogate issue UTF16 appears: Menu Window -> Preferences -> Java -> Mark occurences -> Untick
