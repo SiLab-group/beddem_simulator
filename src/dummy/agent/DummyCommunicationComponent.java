@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dummy.simulator.GlobalVars;
@@ -23,9 +24,11 @@ public class DummyCommunicationComponent implements CommunicationComponent {
 		Option pickedOpt;
 		
 		if (GlobalVars.SIMULATION_PARAMS.AGENT_PROBABILISTIC_DECISION == 0) {
+			LOGGER.log(Level.FINE, "Pick the best option");
 			pickedOpt =  pickBestOpt(evaluatedOptions);
 		} else {
 			pickedOpt =  pickWithProbability(evaluatedOptions);
+			LOGGER.log(Level.FINE, "Pick option with probability");
 		}
 		return pickedOpt;
 	}

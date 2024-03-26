@@ -102,7 +102,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		Determinant facilitatingCond = createFacilitatingDeterminant();
 		Determinant freq = createFreqDeterminant();
 		return new DummyDecisionComponent(belief, evaluation, norm, role, self_concept, emotion, facilitatingCond, freq,
-				 normWeight, roleWeight, selfWeight, emotionWeight, facilitatingWeight);
+				 this.normWeight, this.roleWeight, this.selfWeight, this.emotionWeight, this.facilitatingWeight);
 	}
 
 	
@@ -119,7 +119,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 			@Override
 			protected double evalOpt(Option opt, Task task) {
 				MobilityOption mobilityOpt = (MobilityOption) opt;
-				LOGGER.log(Level.INFO, "Eval TIME option " + mobilityOpt.getTime());
+				LOGGER.log(Level.FINE, "Evaluating TIME option " + mobilityOpt.getTime());
 				return mobilityOpt.getTime();
 			}
 		});
@@ -128,7 +128,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 			@Override
 			protected double evalOpt(Option opt, Task task) {
 				MobilityOption mobilityOption = (MobilityOption) opt;
-				LOGGER.log(Level.INFO, "Eval COST option " + mobilityOption.getCost());
+				LOGGER.log(Level.FINE, "Evaluating COST option " + mobilityOption.getCost());
 				return mobilityOption.getCost();
 			}
 		});

@@ -37,7 +37,7 @@ public class CSVReader {
 	private Logger LOGGER = Logger.getLogger(CSVReader.class.getName());
 	private Map<String, Vehicle> idToVehicleMap;
 	private Map<String, IAgent> idToAgentMap;
-	private Map<String, Location> idToLocation;
+	private Map<String, Environment> idToLocation;
 
 	/**
 	 * Read the file and return the list of all the row in the file.
@@ -153,6 +153,7 @@ public class CSVReader {
 			StandardDummyAgent agent = new StandardDummyAgent(inputs[0], idToLocationMap.get(inputs[1]), initialFund, ownVehicles, beliefWeight, timeWeight, costWeight, normWeight, roleWeight, selfWeight, emotionWeight, facilitatingWeight, freqWeight, attitudeWeight, socialWeight, affectWeight, intentionWeight, habitWeight);
 			LOGGER.log(Level.INFO, "Agent id " + inputs[0] +" agent " + agent.toString());
 			idToAgentMap.put(inputs[0], agent);
+			this.idToLocation = idToLocationMap;
 			this.idToAgentMap = idToAgentMap;
 			agentContext.add(agent);
 		}
