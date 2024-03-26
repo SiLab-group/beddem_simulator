@@ -6,7 +6,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import dummy.concept.MobilityFeedback;
+// Feedback is not defined yet
+//import dummy.concept.MobilityFeedback;
 import dummy.concept.MobilityInternalState;
 import dummy.concept.MobilityOption;
 import dummy.concept.MobilityTask;
@@ -45,7 +46,7 @@ public class DummyMemoryComponent implements MemoryComponent {
 
 	@Override
 	public void updateInternalState(Task task, Option option, Feedback feedback) {
-		MobilityFeedback mobilityFeedBack = (MobilityFeedback) feedback;
+		//MobilityFeedback mobilityFeedBack = (MobilityFeedback) feedback;
 		MobilityOption mobilityOption = (MobilityOption) option;
 		MobilityTask mobilityTask = (MobilityTask) task;
 		LOGGER.log(Level.INFO,"Current fund " + this.currentFund +" feedback ");

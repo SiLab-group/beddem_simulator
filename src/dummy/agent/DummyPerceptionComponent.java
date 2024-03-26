@@ -10,14 +10,11 @@ import dummy.concept.MobilityInternalState;
 import dummy.concept.MobilityOption;
 import dummy.concept.MobilityTask;
 import dummy.concept.Vehicle;
-import dummy.environment.Location;
 import framework.agent.core.PerceptionComponent;
 import framework.concept.EnvironmentalState;
-import framework.concept.Feedback;
 import framework.concept.InternalState;
 import framework.concept.Option;
 import framework.concept.Task;
-import framework.environment.Environment;
 
 public class DummyPerceptionComponent implements PerceptionComponent {
 

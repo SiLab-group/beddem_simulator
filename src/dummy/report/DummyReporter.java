@@ -1,7 +1,6 @@
 package dummy.report;
 
 import java.util.Map;
-import java.util.logging.Level;
 
 import dummy.agent.StandardDummyAgent;
 import dummy.concept.MobilityOption;
