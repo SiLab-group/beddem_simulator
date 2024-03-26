@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Arrays;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +24,6 @@ import dummy.simulator.ContextManager;
 import dummy.simulator.GlobalVars;
 import framework.agent.core.IAgent;
 import framework.environment.Environment;
-import dummy.simulator.GlobalVars;
 
 /**
  * The class that has the functions to read csv files and create agents,
