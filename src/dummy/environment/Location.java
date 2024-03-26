@@ -5,6 +5,8 @@ import java.util.Set;
 import dummy.concept.MobilityEnvironmentalState;
 import dummy.concept.Vehicle;
 import framework.concept.EnvironmentalState;
+import framework.concept.Feedback;
+import framework.concept.Task;
 import framework.environment.Environment;
 
 public class Location implements Environment {
