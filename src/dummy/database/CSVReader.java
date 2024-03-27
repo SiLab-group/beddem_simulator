@@ -134,6 +134,7 @@ public class CSVReader {
 			LOGGER.log(Level.INFO,"Owned vehicles" + ownVehicles.toString());
 			
 			double beliefWeight = 0;
+			double evaluationWeight = 1;
 			double timeWeight = Double.parseDouble(inputs[4]);
 			double costWeight = Double.parseDouble(inputs[5]);
 			double normWeight = Double.parseDouble(inputs[6]);
@@ -150,7 +151,7 @@ public class CSVReader {
 			
 			
 			
-			StandardDummyAgent agent = new StandardDummyAgent(inputs[0], idToLocationMap.get(inputs[1]), initialFund, ownVehicles, beliefWeight, timeWeight, costWeight, normWeight, roleWeight, selfWeight, emotionWeight, facilitatingWeight, freqWeight, attitudeWeight, socialWeight, affectWeight, intentionWeight, habitWeight);
+			StandardDummyAgent agent = new StandardDummyAgent(inputs[0], idToLocationMap.get(inputs[1]), initialFund, ownVehicles, beliefWeight, evaluationWeight, timeWeight, costWeight, normWeight, roleWeight, selfWeight, emotionWeight, facilitatingWeight, freqWeight, attitudeWeight, socialWeight, affectWeight, intentionWeight, habitWeight);
 			LOGGER.log(Level.INFO, "Agent id " + inputs[0] +" agent " + agent.toString());
 			idToAgentMap.put(inputs[0], agent);
 			this.idToLocation = idToLocationMap;

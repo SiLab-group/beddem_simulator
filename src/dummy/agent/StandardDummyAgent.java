@@ -20,12 +20,12 @@ import framework.environment.Environment;
 
 /**
  * A class represent a standard agent that has mobility demand.
- * 
+ *
  * @author khoa_nguyen
  *
  */
 public class StandardDummyAgent extends TaskExecutionAgent {
-	
+
 	private static Logger LOGGER = Logger.getLogger(StandardDummyAgent.class.getName());
 
 	private double beliefWeight;
@@ -43,16 +43,17 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	private double affectWeight;
 	private double intentionWeight;
 	private double habitWeight;
-	
+
 	private double initialFund;
 	private Set<Vehicle> ownVehicles;
 
-	public StandardDummyAgent(String id, Environment loc, double initialFund, Set<Vehicle> ownVehicles, double beliefWeight, double timeWeight, double costWeight,
+	public StandardDummyAgent(String id, Environment loc, double initialFund, Set<Vehicle> ownVehicles, double beliefWeight, double evaluationWeight, double timeWeight, double costWeight,
 			double normWeight, double roleWeight, double selfWeight, double emotionWeight, double facilitatingWeight,
 			double freqWeight, double attitudeWeight, double socialWeight, double affectWeight, double intentionWeight,
 			double habitWeight) {
 		super(id, loc);
 		this.beliefWeight = beliefWeight;
+		this.evaluationWeight = evaluationWeight;
 		this.timeWeight = timeWeight;
 		this.costWeight = costWeight;
 		this.normWeight = normWeight;
@@ -66,15 +67,15 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		this.affectWeight = affectWeight;
 		this.intentionWeight = intentionWeight;
 		this.habitWeight = habitWeight;
-		
+
 		this.initialFund = initialFund;
 		this.ownVehicles = ownVehicles;
-		
+
 		LOGGER.log(Level.INFO,"Agent constructor " + this.getID() + " " + this.initialFund + " ");
-		
+
 		this.setup_overrides();
 	}
-	
+
 	@Override
 	protected PerceptionComponent createPerceptionComponent() {
 		return new DummyPerceptionComponent(this.getID());
@@ -102,10 +103,9 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		Determinant facilitatingCond = createFacilitatingDeterminant();
 		Determinant freq = createFreqDeterminant();
 		return new DummyDecisionComponent(belief, evaluation, norm, role, self_concept, emotion, facilitatingCond, freq,
-				 this.normWeight, this.roleWeight, this.selfWeight, this.emotionWeight, this.facilitatingWeight);
+				 this.attitudeWeight, this.socialWeight, this.affectWeight, this.intentionWeight, this.habitWeight);
 	}
 
-	
 	/*******************************************************************************************/
 	private Determinant createBeliefDeterminant() {
 		// TODO Auto-generated method stub
@@ -124,7 +124,6 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 			}
 		});
 		evaluation.addDeterminantChild(new LeafDeterminant("cost",this.costWeight) {
-			
 			@Override
 			protected double evalOpt(Option opt, Task task) {
 				MobilityOption mobilityOption = (MobilityOption) opt;
@@ -160,7 +159,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	private Determinant createEmotionDeterminant() {
 		// TODO Auto-generated method stub
 		return null;
-	}		
+		}
 
 	private Determinant createFacilitatingDeterminant() {
 		// TODO Auto-generated method stub
@@ -171,7 +170,6 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 	/*******************************************************************************************/
 
 
