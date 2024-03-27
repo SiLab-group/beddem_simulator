@@ -91,7 +91,6 @@ public class CSVReader {
 			
 			// Add train to location
 			if (inputs[1].equals("1")) {
-				LOGGER.log(Level.INFO,"at 1 before add" + this.idToVehicleMap.get("1").toString());
 				publicTransports.add(this.idToVehicleMap.get("1"));
 			}
 			// Add bus to location
@@ -108,7 +107,7 @@ public class CSVReader {
 		}
 
 		br.close();
-		LOGGER.log(Level.INFO, "Locations " + idToLocationMap.toString());
+		LOGGER.log(Level.FINE, "Locations created: " + idToLocationMap.toString());
 	}
 
 	public void createAgents(AgentContext agentContext, HashMap<String, Environment> idToLocationMap,
@@ -122,16 +121,14 @@ public class CSVReader {
 		String line;
 		br.readLine();
 		while ((line = br.readLine()) != null) {
-			LOGGER.log(Level.INFO,"Line" + line);
+			LOGGER.log(Level.FINE,"Line" + line);
 			String[] inputs = line.split(",");
 			double initialFund = Double.parseDouble(inputs[2]);
-			LOGGER.log(Level.INFO,"Initial fund of agent " + initialFund);
 			String[] vehicleIDs = inputs[3].split(";");
 			Set<Vehicle> ownVehicles = new HashSet<Vehicle>();
 			for (String vehicleID:vehicleIDs) {
 				ownVehicles.add(this.idToVehicleMap.get(vehicleID));
 			}
-			LOGGER.log(Level.INFO,"Owned vehicles" + ownVehicles.toString());
 			
 			double beliefWeight = 0;
 			double evaluationWeight = 1;
@@ -152,7 +149,7 @@ public class CSVReader {
 			
 			
 			StandardDummyAgent agent = new StandardDummyAgent(inputs[0], idToLocationMap.get(inputs[1]), initialFund, ownVehicles, beliefWeight, evaluationWeight, timeWeight, costWeight, normWeight, roleWeight, selfWeight, emotionWeight, facilitatingWeight, freqWeight, attitudeWeight, socialWeight, affectWeight, intentionWeight, habitWeight);
-			LOGGER.log(Level.INFO, "Agent id " + inputs[0] +" agent " + agent.toString());
+			LOGGER.log(Level.FINE, "Agent id " + inputs[0] +" agent " + agent.toString());
 			idToAgentMap.put(inputs[0], agent);
 			this.idToLocation = idToLocationMap;
 			this.idToAgentMap = idToAgentMap;
@@ -184,14 +181,11 @@ public class CSVReader {
 							* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * checkpointNum;
 			
 			MobilityTask task = new MobilityTask(time, Double.parseDouble(inputs[1]), distance, purpose, time_limit);
-			LOGGER.log(Level.INFO,"Before agent");
 			StandardDummyAgent agent = (StandardDummyAgent) idToAgentMap.get(inputs[0]);
-			LOGGER.log(Level.INFO,"Before schedule" + idToAgentMap.toString());
 			agent.addToSchedule(task);
 			//agent.rememberLastTask(task);
-			LOGGER.log(Level.INFO,"After schedule");
 			ContextManager.scheduleNewTask(agent, time);
-			LOGGER.log(Level.INFO, "Scheduled demand at: " + time + "for agent: " + agent.getID());
+			LOGGER.log(Level.FINE, "Scheduled demand at: " + time + "for agent: " + agent.getID());
 		}
 
 		br.close();

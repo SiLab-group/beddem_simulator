@@ -71,8 +71,8 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		this.initialFund = initialFund;
 		this.ownVehicles = ownVehicles;
 
-		LOGGER.log(Level.INFO,"Agent constructor " + this.getID() + " " + this.initialFund + " ");
-
+		LOGGER.log(Level.FINE,"Agent constructor for agent " + this.getID() + " with " + this.initialFund + " and owned vehicles " + this.ownVehicles);
+		// Overriding perception/memory/communication methods after the agent is constructed
 		this.setup_overrides();
 	}
 
@@ -83,7 +83,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 
 	@Override
 	protected MemoryComponent createMemoryComponent() {
-		LOGGER.log(Level.INFO,"Memory component " + this.getID() + " " + this.initialFund + " ");
+		LOGGER.log(Level.FINE,"Memory component " + this.getID() + " fund: " + this.initialFund + " owned vehicles " + this.ownVehicles);
 		return new DummyMemoryComponent(this.getID(), this.initialFund, this.ownVehicles);
 	}
 
@@ -131,7 +131,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 				return mobilityOption.getCost();
 			}
 		});
-		LOGGER.log(Level.INFO," Evalutation " + evaluation.toString());
+		LOGGER.log(Level.FINE," Evalutation " + evaluation.toString());
 		return evaluation;
 	}
 

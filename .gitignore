@@ -10,3 +10,6 @@ icons/*
 .settings*
 .classpath*
 /bin/
+debug.log
+velocity.log*
+Repast.settings

@@ -24,7 +24,7 @@ public class MobilityTask extends Task {
 		this.timeLimit = timeLimit;
 		this.distance = distance;
 		
-		LOGGER.log(Level.INFO, "New event is initialised: " + toString());
+		LOGGER.log(Level.FINE, "New event/task is initialised: " + toString());
 
 	}
 

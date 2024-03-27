@@ -80,21 +80,15 @@ public abstract class TaskExecutionAgent implements IAgent {
 
 	@Override
 	public void step() throws Exception {
-		LOGGER.log(Level.INFO, "Agent " + this.id + " is stepping.");
+		LOGGER.log(Level.FINE, "Agent " + this.id + " is stepping.");
 		// Get the next event from schedule.
 		Task task = schedule.remove(0);
-		LOGGER.log(Level.INFO, "After remove from shedule");
 		EnvironmentalState environmentalState = loc.getEnvironmentalState();
 		InternalState internalState = this.memoryComponent.getInternalState();
-		LOGGER.log(Level.INFO,"After internal state");
 		Set<Option> options = this.perceptionComponent.generateOptions(task, environmentalState, internalState);
-		LOGGER.log(Level.INFO,"After option perception");
 		Map<Double, Set<Option>> evaluatedOptions = this.decisionComponent.evaluateOptions(options,task);
-		LOGGER.log(Level.INFO,"After evaluated options");
 		Option pickedOption = this.communicationComponent.pickOption(evaluatedOptions);
-		LOGGER.log(Level.INFO,"After picked option");
 		Feedback feedback = this.communicationComponent.getFeedback(task, pickedOption, internalState, this.loc);
-		LOGGER.log(Level.INFO,"After feedback");
 		this.memoryComponent.updateInternalState(task, pickedOption,feedback);
 	}
 
@@ -106,7 +100,7 @@ public abstract class TaskExecutionAgent implements IAgent {
 	 *            The task needed to be add to agent's schedule.
 	 */
 	public void addToSchedule(Task task) {
-		LOGGER.log(Level.INFO, "Inside of task "+ task.toString());
+		LOGGER.log(Level.FINE, "Adding task to schedule "+ task.toString());
 		ListIterator<Task> scheduleIt = this.schedule.listIterator(0);
 		if (!scheduleIt.hasNext()) {
 			this.schedule.add(task);
