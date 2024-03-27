@@ -114,7 +114,7 @@ public class ContextManager implements ContextBuilder<Object> {
 		}
 
 		mainContext.add(agentContext);
-		LOGGER.log(Level.INFO, "After create agents" + idToAgentMap.toString());
+		LOGGER.log(Level.FINE, "Agents created and added to the context. Agent map: " + idToAgentMap.toString());
 		// Read the schedule file and schedule all the agents' events.
 		updateSchedule();
 
@@ -135,7 +135,7 @@ public class ContextManager implements ContextBuilder<Object> {
 	 * The period is when agent need to read new file and update its timetable.
 	 */
 	public void updateSchedule() {
-		LOGGER.log(Level.INFO,"UpdateSchedule: before if: " + checkpointNum);
+		LOGGER.log(Level.FINE,"UpdateSchedule: for checkpointNumber  " + checkpointNum);
 		// If the simulator still hasn't reached the maximum checkpoints.
 		if (checkpointNum < GlobalVars.SIMULATION_PARAMS.CHECKPOINTS_IN_SIMULATE) {
 			// If the number of periods has reached the next checkpoints.

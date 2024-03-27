@@ -27,7 +27,7 @@ public class DummyDecisionComponent extends TIBModel implements DecisionComponen
 	@Override
 	public Map<Double, Set<Option>> evaluateOptions(Set<Option> options, Task task) {
 		// Get the list of all ranked options from agent's decision making model.
-		LOGGER.log(Level.INFO, "Rank options");
+		LOGGER.log(Level.FINE, "Rank options" + options.toString());
 		return rankOptions(options, task);
 	}
 

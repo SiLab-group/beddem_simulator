@@ -40,7 +40,7 @@ public class DummyMemoryComponent implements MemoryComponent {
 	
 	@Override
 	public InternalState getInternalState() {
-		LOGGER.log(Level.INFO, "Agent Internal state " + this.currentFund + " and ownVehicles " + this.ownVehicles);
+		LOGGER.log(Level.FINE, "Agent Internal state " + this.currentFund + " and ownVehicles " + this.ownVehicles);
 		return new MobilityInternalState(this.currentFund, this.ownVehicles);
 	}
 
@@ -49,7 +49,6 @@ public class DummyMemoryComponent implements MemoryComponent {
 		//MobilityFeedback mobilityFeedBack = (MobilityFeedback) feedback;
 		MobilityOption mobilityOption = (MobilityOption) option;
 		MobilityTask mobilityTask = (MobilityTask) task;
-		LOGGER.log(Level.INFO,"Current fund " + this.currentFund +" feedback ");
 //		this.currentFund -= mobilityFeedBack.getCost();
 		Vehicle mainVehicle = mobilityOption.getMainVehicle();
 //		this.lastExperience.put(mainVehicle, mobilityFeedBack.getExperienceScore());

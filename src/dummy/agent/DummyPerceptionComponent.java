@@ -38,14 +38,14 @@ public class DummyPerceptionComponent implements PerceptionComponent {
 		
 		String debugStr = "Task for agent" + this.agentID + "Task distance: " + mobilityTask.getDistance() + " Task maxtime: "
 				+ mobilityTask.getTimeLimit() + "\n";
-		LOGGER.log(Level.INFO,debugStr);
+		LOGGER.log(Level.FINE,debugStr);
 
 		Set<Option> opts = new HashSet<Option>();
 		for (Vehicle vehicle : accessileVehicles) {
 			double time = mobilityTask.getDistance()/vehicle.getSpeed();
 			if (time < mobilityTask.getTimeLimit()) {
 				double cost = vehicle.getCostPerKm()*mobilityTask.getDistance();
-				LOGGER.log(Level.INFO, "For vehicle " + vehicle.getName() + ": Time me is less " + time + " than timelimit " + mobilityTask.getTimeLimit() + " Cost is " + cost);
+				LOGGER.log(Level.FINE, "For vehicle " + vehicle.getName() + ": Time me is less " + time + " than timelimit " + mobilityTask.getTimeLimit() + " Cost is " + cost);
 				if (cost<=mobilityInternalStat.getCurrentFund()) {
 					opts.add(new MobilityOption(vehicle,cost,time));
 				}
