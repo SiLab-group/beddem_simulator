@@ -4,24 +4,34 @@ Behavior-driven Demand Model using Repast Simphony as a base framework library i
 ![Beddem Model Theory of Interpersonal Behavior](docs/beddemTIB.PNG)
 
 ## Run individual simulation
-Install Repast Simphony and compatible `eclipse committers IDE (2022-06)` the official instruction page can be found [here](https://repast.github.io/download.html)
+For simulation run the repast simphony and corresponding eclipse version has to be installed. Installing Repast Simphony and compatible `eclipse committers IDE (2022-06)` can be done via the official instruction page [here](https://repast.github.io/download.html) or following the steps desribed bellow.
 
-1. Install Groovy in Eclipse depending on the version of eclipse installed add the source URL can be found [here](https://github.com/groovy/groovy-eclipse/wiki). This is for the 2022-06 eclipse version: Help -> Install New Software -> Add new repository ->  `https://groovy.jfrog.io/artifactory/plugins-release/e4.24` -> Main package -> Eclipse Groovy Development tools
-2. Install Repast Simphony: Help -> Install New Software -> Add new repository -> `https://web.cels.anl.gov/projects/Repast/update_site` -> Repast Simphony
-3. Check Groovy compiler version is > than 3.0.x: Window -> Preferences -> Groovy compiler
-4. `Note:` If Surrogate issue UTF16 appears: Menu Window -> Preferences -> Java -> Mark occurences -> Untick
-5. Install openjdk-11 [here](https://jdk.java.net/archive/): Preferences -> Installed JREs -> Pick folder and Preferences -> Java -> Compiler-> Java 11
-6. Clone the beddem_simulator repository `git clone https://github.com/SiLab-group/beddem_simulator.git`
-7. Import project to eclipse: File -> New -> Other -> Repast Simphony -> Repast Simphony Project -> Select the folder of cloned repo (beddem) -> Name the project beddem -> Finish
-8. Repast parameters, context, scenarios should be stored in `<project name>.rs` folder. If you name project differently it is needed to copy the xml files or in `Repast.settings`
-9. Start Repast interface by click the small arrow next to the run button and select "your_project_name Model" (you can click the run button for the next run).
-10. Click the run button to run the project. After it finishes, you should see a new output file in the project folder.
+1. Install [Eclipse IDE for Eclipse Committers 2022-06](https://www.eclipse.org/downloads/packages/release/2022-06/r/eclipse-ide-eclipse-committers) for desired platform.
+2. **Install Groovy for Eclipse:** Depending on the version of eclipse add the source URL from [here](https://github.com/groovy/groovy-eclipse/wiki). For Example in eclipse version 2022-06: 
+     - Help -> Install New Software -> Add new repository ->  `https://groovy.jfrog.io/artifactory/plugins-release/e4.24` -> Main package -> Eclipse Groovy Development tools
+3. **Install Repast Simphony for Eclipse:**
+    - Help -> Install New Software -> Add new repository -> `https://web.cels.anl.gov/projects/Repast/update_site` -> Repast Simphony > Install package
+4. Check Groovy compiler version is higher than 3.0.x:
+    - Window -> Preferences -> Groovy compiler
+5. **Note**: If `Surrogate issue UTF16 appears`
+    - Menu Window -> Preferences -> Java -> Mark occurences -> Untick
+6. **Install openjdk-11** from [here](https://jdk.java.net/archive/):
+    - Preferences -> Installed JREs -> Pick folder
+    - Preferences -> Java -> Compiler-> Java 11
+7. **Clone the beddem_simulator repository**: `git clone https://github.com/SiLab-group/beddem_simulator.git`
+8. **Import project to eclipse**:
+    - File -> New -> Other -> Repast Simphony -> Repast Simphony Project -> Select the folder of cloned repo (beddem) -> Name the project beddem -> Finish
+9. Repast parameters, context, scenarios should be stored in `beddem_simulator.rs` folder. If you name project differently it is needed to copy the xml files or in `Repast.settings`.
+10. Start Repast interface by click the small arrow next to the run button and select "your_project_name Model" in default case `beddem_simulator Model`.
+11. Click the `Initialize and  run button` to run the project. These buttons are shown in the example simulation run bellow. After it finishes, you should see a new output file in the output folder.
  
- ## Example simulation run
- This example simulation contains one agent with the simple schedule of two tasks. When changing the weight of the `time_weight` or `cost_weigt` in the `agent.csv` file. 
- The output changes based on the agent priorities `weights`. When the cost is more important agent walks at `6am`, when the time is more important agent drives.
+
+## Example simulation run
+ This example simulation contains one agent with the simple schedule of two tasks. When changing the weight of the `time_weight` or `cost_weight` in the `agent.csv` file. 
+ The output changes based on the agent priorities (`weights`). When the cost is more important agent walks at `6am`, when the time is more important agent drives to save the time.
  This properties can be adjusted in the example csv files located in the `data` folder.
- 1. The properties file in `data/beddem_simulator.properties` should contain the files to be parsed 
+ 1. The properties file in `data/beddem_simulator.properties` should contain the files to be parsed
+ 
 ```bash
 AgentCSVfile=agent
 LocationCSVfile=location
@@ -32,7 +42,8 @@ VehicleCSVfile=vehicle
 3. This opens Repast Simphony UI. Initialize context with `Initialize run` button.
 4. Run the simulation with `Start Run` button.
 ![Repast Simphony UI](docs/contextSimphony.PNG)
-5. Output files should be created in the root folder and the output should be print into the console. Such as
+5. Output files should be created in the root folder and the output should be print into the console. Such as 
+
 ```bash
 printReport: "
 agentID,start_time,km,vehicle
@@ -40,6 +51,7 @@ agentID,start_time,km,vehicle
 1,12.0,10.0,car
 "
 ```
+This output corresponds to the `time_weight` set to 5 and `cost_weight` set to 1.
 
 ## Project structure
 In this case we have example `<scenario>` called `dummy`. The directory structure:
