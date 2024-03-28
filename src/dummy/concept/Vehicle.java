@@ -24,4 +24,8 @@ public class Vehicle {
 	public String getName() {
 		return this.name;
 	}
+	
+	public String getId() {
+		return this.id;
+	}
 }

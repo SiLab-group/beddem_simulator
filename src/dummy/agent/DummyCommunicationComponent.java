@@ -4,13 +4,16 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dummy.simulator.GlobalVars;
-import main.agent.core.CommunicationComponent;
-import main.concept.Opinion;
-import main.concept.Option;
-import main.concept.Task;
+import framework.agent.core.CommunicationComponent;
+import framework.concept.Feedback;
+import framework.concept.InternalState;
+import framework.concept.Option;
+import framework.concept.Task;
+import framework.environment.Environment;
 
 public class DummyCommunicationComponent implements CommunicationComponent {
 
@@ -21,9 +24,11 @@ public class DummyCommunicationComponent implements CommunicationComponent {
 		Option pickedOpt;
 		
 		if (GlobalVars.SIMULATION_PARAMS.AGENT_PROBABILISTIC_DECISION == 0) {
+			LOGGER.log(Level.FINE, "Pick the best option");
 			pickedOpt =  pickBestOpt(evaluatedOptions);
 		} else {
 			pickedOpt =  pickWithProbability(evaluatedOptions);
+			LOGGER.log(Level.FINE, "Pick option with probability");
 		}
 		return pickedOpt;
 	}
@@ -82,7 +87,7 @@ public class DummyCommunicationComponent implements CommunicationComponent {
 	}
 
 	@Override
-	public Opinion getOpinion(Option option, Task task) {
+	public Feedback getFeedback(Task task, Option pickedOption, InternalState internalState, Environment loc) {
 		// TODO Auto-generated method stub
 		return null;
 	}

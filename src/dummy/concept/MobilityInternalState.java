@@ -2,7 +2,7 @@ package dummy.concept;
 
 import java.util.Set;
 
-import main.concept.InternalState;
+import framework.concept.InternalState;
 
 public class MobilityInternalState implements InternalState {
 	private double currentFund;

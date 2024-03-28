@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,9 +15,9 @@ import dummy.context.AgentContext;
 import dummy.context.LocationContext;
 import dummy.database.CSVReader;
 import dummy.report.IReporter;
-import main.agent.core.IAgent;
-import main.environment.Environment;
-import main.exception.EnvironmentError;
+import framework.agent.core.IAgent;
+import framework.environment.Environment;
+import framework.exception.EnvironmentError;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
@@ -80,7 +79,6 @@ public class ContextManager implements ContextBuilder<Object> {
 			throw new RuntimeException("Could not read model properties, reason: " + ex.toString(), ex);
 		}
 
-		// generator = new CSVReader();
 		generator = new CSVReader();
 
 		// Keep a useful static link to the simulator context.
@@ -94,13 +92,15 @@ public class ContextManager implements ContextBuilder<Object> {
 		idToLocationMap = new HashMap<String, Environment>();
 
 		try {
+			generator.createResources();
 			generator.createLocations(locationContext, idToLocationMap);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw new RuntimeException("Could not create resources or locations,reason:  " + e1.toString(),e1);
 		}
 
-		mainContext.addSubContext(locationContext);
+		mainContext.add(locationContext);
 
 		// Now create the agents (note that their step methods are scheduled
 		// later).
@@ -113,14 +113,16 @@ public class ContextManager implements ContextBuilder<Object> {
 			LOGGER.log(Level.SEVERE, "IO exception.", e);
 		}
 
-		mainContext.addSubContext(agentContext);
-
+		mainContext.add(agentContext);
+		LOGGER.log(Level.FINE, "Agents created and added to the context. Agent map: " + idToAgentMap.toString());
 		// Read the schedule file and schedule all the agents' events.
 		updateSchedule();
 
 		// Create reporter for the simulation.
-		IReporter mobilityReporter = generator.createMobilityReporter(agentContext);
-		mainContext.add(mobilityReporter);
+		IReporter dummyReporter = generator.createDummyReporter(agentContext);
+		mainContext.add(dummyReporter);
+
+		LOGGER.log(Level.FINE,"Returning main context");
 		return mainContext;
 	}
 
@@ -130,10 +132,11 @@ public class ContextManager implements ContextBuilder<Object> {
 
 	/**
 	 * Check the schedule files and update the agents' events and scheduler. The
-	 * checkpoint is when agent need to update its scheduling files (if necessary).
-	 * The period is when agent need to read new file and update its timetable.
+	 * checkpoint is when agent needs to update its scheduling files (if necessary).
+	 * The period is when agent needs to read new file and update its timetable.
 	 */
 	public void updateSchedule() {
+		LOGGER.log(Level.FINE,"UpdateSchedule: for checkpointNumber  " + checkpointNum);
 		// If the simulator still hasn't reached the maximum checkpoints.
 		if (checkpointNum < GlobalVars.SIMULATION_PARAMS.CHECKPOINTS_IN_SIMULATE) {
 			// If the number of periods has reached the next checkpoints.
@@ -152,16 +155,18 @@ public class ContextManager implements ContextBuilder<Object> {
 
 				periodNum++;
 			}
-			// for (IAgent agent : agentContext) {
-			// agent.updateInternalState();
-			// }
+// Not needed for the scenario
+//			 for (IAgent agent : idToAgentMap.values()) {
+//				StandardDummyAgent traveller = (StandardDummyAgent) agent;
+//				traveller.updateInternalState();
+//			 }
 
 			ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
 			ScheduleParameters params = ScheduleParameters.createOneTime(
 					GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD * periodNum
 							+ GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD
-									* GlobalVars.SIMULATION_PARAMS.PERIODS_TO_NEXT_CHECKPOINT * checkpointNum,
-					PriorityType.LAST);
+									* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum()* checkpointNum,
+					PriorityType.FIRST);
 			schedule.schedule(params, this, "updateSchedule");
 		}
 	}

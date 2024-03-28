@@ -2,13 +2,14 @@ package dummy.agent;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import main.agent.core.DecisionComponent;
-import main.agent.reasoning.Determinant;
-import main.agent.reasoning.TIBModel;
-import main.concept.Option;
-import main.concept.Task;
+import framework.agent.core.DecisionComponent;
+import framework.agent.reasoning.Determinant;
+import framework.agent.reasoning.TIBModel;
+import framework.concept.Option;
+import framework.concept.Task;
 
 public class DummyDecisionComponent extends TIBModel implements DecisionComponent {
 
@@ -26,6 +27,7 @@ public class DummyDecisionComponent extends TIBModel implements DecisionComponen
 	@Override
 	public Map<Double, Set<Option>> evaluateOptions(Set<Option> options, Task task) {
 		// Get the list of all ranked options from agent's decision making model.
+		LOGGER.log(Level.FINE, "Rank options" + options.toString());
 		return rankOptions(options, task);
 	}
 

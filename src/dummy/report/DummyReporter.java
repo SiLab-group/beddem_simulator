@@ -6,9 +6,9 @@ import dummy.agent.StandardDummyAgent;
 import dummy.concept.MobilityOption;
 import dummy.concept.MobilityTask;
 import dummy.context.AgentContext;
-import main.agent.core.IAgent;
-import main.concept.Option;
-import main.concept.Task;
+import framework.agent.core.IAgent;
+import framework.concept.Option;
+import framework.concept.Task;
 
 /**
  * Decide output information of the simulator.
@@ -25,7 +25,8 @@ public class DummyReporter implements IReporter {
 
 	@Override
 	public String printReport() {
-		String reportString = "agentID,start_time,km,vehicle\n"; 
+		String reportString = "\n";
+		reportString += "agentID,start_time,km,vehicle\n"; 
 		for (IAgent agent: this.agentContext) {
 			StandardDummyAgent mobilityAgent = (StandardDummyAgent) agent;
 			Map<Task,Option> results = mobilityAgent.getDecisionResults();

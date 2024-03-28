@@ -1,0 +1,15 @@
+/bin/
+output/
+*Repast.settings*
+model_log*
+velocity.log
+debug.log*
+freezedried_data/*
+icons/*
+.project*
+.settings*
+.classpath*
+/bin/
+debug.log
+velocity.log*
+Repast.settings

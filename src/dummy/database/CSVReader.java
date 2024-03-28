@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dummy.agent.StandardDummyAgent;
+import dummy.concept.MobilityTask;
 import dummy.concept.Vehicle;
 import dummy.context.AgentContext;
 import dummy.context.LocationContext;
@@ -21,8 +22,8 @@ import dummy.report.DummyReporter;
 import dummy.report.IReporter;
 import dummy.simulator.ContextManager;
 import dummy.simulator.GlobalVars;
-import main.agent.core.IAgent;
-import main.environment.Environment;
+import framework.agent.core.IAgent;
+import framework.environment.Environment;
 
 /**
  * The class that has the functions to read csv files and create agents,
@@ -36,7 +37,7 @@ public class CSVReader {
 	private Logger LOGGER = Logger.getLogger(CSVReader.class.getName());
 	private Map<String, Vehicle> idToVehicleMap;
 	private Map<String, IAgent> idToAgentMap;
-	private Map<String, Location> idToLocation;
+	private Map<String, Environment> idToLocation;
 
 	/**
 	 * Read the file and return the list of all the row in the file.
@@ -80,7 +81,6 @@ public class CSVReader {
 		String csvDataDir = ContextManager.getProperty(GlobalVars.CSVDataDirectory);
 		String locationFile = csvDataDir + ContextManager.getProperty(GlobalVars.LocationCSVfile) + ".csv";
 		
-		this.idToLocation = new HashMap<String,Location>();
 		BufferedReader br = getBufferReaderForFile(locationFile);
 		String line;
 		br.readLine();
@@ -88,21 +88,26 @@ public class CSVReader {
 		while ((line = br.readLine()) != null) {
 			String[] inputs = line.split(",");
 			Set<Vehicle> publicTransports = new HashSet<Vehicle>();
+			
+			// Add train to location
 			if (inputs[1].equals("1")) {
 				publicTransports.add(this.idToVehicleMap.get("1"));
 			}
+			// Add bus to location
 			if (inputs[2].equals("1")) {
 				publicTransports.add(this.idToVehicleMap.get("2"));
 			}
+			// Add tram to location
 			if (inputs[3].equals("1")) {
 				publicTransports.add(this.idToVehicleMap.get("3"));
 			}
 			Location loc = new Location(inputs[0],publicTransports);
-			this.idToLocation.put(inputs[0], loc);
+			idToLocationMap.put(inputs[0], loc);
 			locContext.add(loc);
 		}
 
 		br.close();
+		LOGGER.log(Level.FINE, "Locations created: " + idToLocationMap.toString());
 	}
 
 	public void createAgents(AgentContext agentContext, HashMap<String, Environment> idToLocationMap,
@@ -116,6 +121,7 @@ public class CSVReader {
 		String line;
 		br.readLine();
 		while ((line = br.readLine()) != null) {
+			LOGGER.log(Level.FINE,"Line" + line);
 			String[] inputs = line.split(",");
 			double initialFund = Double.parseDouble(inputs[2]);
 			String[] vehicleIDs = inputs[3].split(";");
@@ -125,6 +131,7 @@ public class CSVReader {
 			}
 			
 			double beliefWeight = 0;
+			double evaluationWeight = 1;
 			double timeWeight = Double.parseDouble(inputs[4]);
 			double costWeight = Double.parseDouble(inputs[5]);
 			double normWeight = Double.parseDouble(inputs[6]);
@@ -140,15 +147,20 @@ public class CSVReader {
 			double habitWeight = Double.parseDouble(inputs[16]);
 			
 			
-			IAgent agent = new StandardDummyAgent(inputs[0], idToLocationMap.get(inputs[1]), initialFund, ownVehicles, beliefWeight, timeWeight, costWeight, normWeight, roleWeight, selfWeight, emotionWeight, facilitatingWeight, freqWeight, attitudeWeight, socialWeight, affectWeight, intentionWeight, habitWeight);
-			this.idToAgentMap.put(inputs[0], agent);
+			
+			StandardDummyAgent agent = new StandardDummyAgent(inputs[0], idToLocationMap.get(inputs[1]), initialFund, ownVehicles, beliefWeight, evaluationWeight, timeWeight, costWeight, normWeight, roleWeight, selfWeight, emotionWeight, facilitatingWeight, freqWeight, attitudeWeight, socialWeight, affectWeight, intentionWeight, habitWeight);
+			LOGGER.log(Level.FINE, "Agent id " + inputs[0] +" agent " + agent.toString());
+			idToAgentMap.put(inputs[0], agent);
+			this.idToLocation = idToLocationMap;
+			this.idToAgentMap = idToAgentMap;
 			agentContext.add(agent);
 		}
 		br.close();
+		
 	}
 
 	public void createSchedule(Map<String, IAgent> idToAgentMap, int periodNum, int checkpointNum) throws IOException {
-
+	try {
 		String csvDataDir = ContextManager.getProperty(GlobalVars.CSVDataDirectory);
 		String scheduleFile = csvDataDir + ContextManager.getProperty(GlobalVars.ScheduleCSVfile) + "." + periodNum
 				+ ".csv";
@@ -156,16 +168,33 @@ public class CSVReader {
 		BufferedReader br = getBufferReaderForFile(scheduleFile);
 		String line;
 		br.readLine();
-
+		
 		while ((line = br.readLine()) != null) {
 			String[] inputs = line.split(",");
+			double time = Double.parseDouble(inputs[1]);
+			double distance = Double.parseDouble(inputs[2]);
+			double time_limit = Double.parseDouble(inputs[3]);
+			double purpose = Double.parseDouble(inputs[4]);
 			
+			time += GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD * periodNum
+					+ GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD
+							* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * checkpointNum;
+			
+			MobilityTask task = new MobilityTask(time, Double.parseDouble(inputs[1]), distance, purpose, time_limit);
+			StandardDummyAgent agent = (StandardDummyAgent) idToAgentMap.get(inputs[0]);
+			agent.addToSchedule(task);
+			//agent.rememberLastTask(task);
+			ContextManager.scheduleNewTask(agent, time);
+			LOGGER.log(Level.FINE, "Scheduled demand at: " + time + "for agent: " + agent.getID());
 		}
 
 		br.close();
+		} catch (IOException ex ) {
+			LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+		}
 	}
 
-	public IReporter createMobilityReporter(AgentContext agentContext) {
+	public IReporter createDummyReporter(AgentContext agentContext) {
 		return new DummyReporter(agentContext);
 	}
 

@@ -1,31 +1,35 @@
 package dummy.agent;
 
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import dummy.concept.MobilityOption;
 import dummy.concept.Vehicle;
-import main.agent.core.CommunicationComponent;
-import main.agent.core.DecisionComponent;
-import main.agent.core.MemoryComponent;
-import main.agent.core.PerceptionComponent;
-import main.agent.core.TaskExecutionAgent;
-import main.agent.reasoning.Determinant;
-import main.agent.reasoning.LeafDeterminant;
-import main.agent.reasoning.ParentDeterminant;
-import main.concept.Option;
-import main.concept.Task;
-import main.environment.Environment;
+import framework.agent.core.CommunicationComponent;
+import framework.agent.core.DecisionComponent;
+import framework.agent.core.MemoryComponent;
+import framework.agent.core.PerceptionComponent;
+import framework.agent.core.TaskExecutionAgent;
+import framework.agent.reasoning.Determinant;
+import framework.agent.reasoning.LeafDeterminant;
+import framework.agent.reasoning.ParentDeterminant;
+import framework.concept.Option;
+import framework.concept.Task;
+import framework.environment.Environment;
 
 /**
  * A class represent a standard agent that has mobility demand.
- * 
+ *
  * @author khoa_nguyen
  *
  */
 public class StandardDummyAgent extends TaskExecutionAgent {
 
+	private static Logger LOGGER = Logger.getLogger(StandardDummyAgent.class.getName());
+
 	private double beliefWeight;
-	// private double evaluationWeight;
+	private double evaluationWeight;
 	private double timeWeight;
 	private double costWeight;
 	private double normWeight;
@@ -39,16 +43,17 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	private double affectWeight;
 	private double intentionWeight;
 	private double habitWeight;
-	
+
 	private double initialFund;
 	private Set<Vehicle> ownVehicles;
 
-	public StandardDummyAgent(String id, Environment loc, double initialFund, Set<Vehicle> ownVehicles, double beliefWeight, double timeWeight, double costWeight,
+	public StandardDummyAgent(String id, Environment loc, double initialFund, Set<Vehicle> ownVehicles, double beliefWeight, double evaluationWeight, double timeWeight, double costWeight,
 			double normWeight, double roleWeight, double selfWeight, double emotionWeight, double facilitatingWeight,
 			double freqWeight, double attitudeWeight, double socialWeight, double affectWeight, double intentionWeight,
 			double habitWeight) {
 		super(id, loc);
 		this.beliefWeight = beliefWeight;
+		this.evaluationWeight = evaluationWeight;
 		this.timeWeight = timeWeight;
 		this.costWeight = costWeight;
 		this.normWeight = normWeight;
@@ -62,19 +67,24 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		this.affectWeight = affectWeight;
 		this.intentionWeight = intentionWeight;
 		this.habitWeight = habitWeight;
-		
+
 		this.initialFund = initialFund;
 		this.ownVehicles = ownVehicles;
+
+		LOGGER.log(Level.FINE,"Agent constructor for agent " + this.getID() + " with " + this.initialFund + " and owned vehicles " + this.ownVehicles);
+		// Overriding perception/memory/communication methods after the agent is constructed
+		this.setup_overrides();
 	}
-	
+
 	@Override
 	protected PerceptionComponent createPerceptionComponent() {
-		return new DummyPerceptionComponent();
+		return new DummyPerceptionComponent(this.getID());
 	}
 
 	@Override
 	protected MemoryComponent createMemoryComponent() {
-		return new DummyMemoryComponent(initialFund,ownVehicles);
+		LOGGER.log(Level.FINE,"Memory component " + this.getID() + " fund: " + this.initialFund + " owned vehicles " + this.ownVehicles);
+		return new DummyMemoryComponent(this.getID(), this.initialFund, this.ownVehicles);
 	}
 
 	@Override
@@ -93,11 +103,10 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		Determinant facilitatingCond = createFacilitatingDeterminant();
 		Determinant freq = createFreqDeterminant();
 		return new DummyDecisionComponent(belief, evaluation, norm, role, self_concept, emotion, facilitatingCond, freq,
-				 normWeight, roleWeight, selfWeight, emotionWeight, facilitatingWeight);
+				 this.attitudeWeight, this.socialWeight, this.affectWeight, this.intentionWeight, this.habitWeight);
 	}
 
 	/*******************************************************************************************/
-
 	private Determinant createBeliefDeterminant() {
 		// TODO Auto-generated method stub
 		return null;
@@ -110,17 +119,19 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 			@Override
 			protected double evalOpt(Option opt, Task task) {
 				MobilityOption mobilityOpt = (MobilityOption) opt;
+				LOGGER.log(Level.FINE, "Evaluating TIME option " + mobilityOpt.getTime());
 				return mobilityOpt.getTime();
 			}
 		});
 		evaluation.addDeterminantChild(new LeafDeterminant("cost",this.costWeight) {
-			
 			@Override
 			protected double evalOpt(Option opt, Task task) {
 				MobilityOption mobilityOption = (MobilityOption) opt;
+				LOGGER.log(Level.FINE, "Evaluating COST option " + mobilityOption.getCost());
 				return mobilityOption.getCost();
 			}
 		});
+		LOGGER.log(Level.FINE," Evalutation " + evaluation.toString());
 		return evaluation;
 	}
 
@@ -148,7 +159,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	private Determinant createEmotionDeterminant() {
 		// TODO Auto-generated method stub
 		return null;
-	}		
+		}
 
 	private Determinant createFacilitatingDeterminant() {
 		// TODO Auto-generated method stub
@@ -159,7 +170,6 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 	/*******************************************************************************************/
 
 

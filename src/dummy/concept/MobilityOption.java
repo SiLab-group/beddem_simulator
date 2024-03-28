@@ -1,6 +1,6 @@
 package dummy.concept;
 
-import main.concept.Option;
+import framework.concept.Option;
 
 public class MobilityOption implements Option {
 	private Vehicle mainVehicle;
@@ -10,6 +10,7 @@ public class MobilityOption implements Option {
 	public MobilityOption (Vehicle mainVehicle, double cost, double time) {
 		this.mainVehicle = mainVehicle;
 		this.cost = cost;
+		this.time = time;
 	}
 	
 	public Vehicle getMainVehicle() {

@@ -2,6 +2,7 @@ package dummy.agent;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dummy.concept.MobilityEnvironmentalState;
@@ -9,18 +10,23 @@ import dummy.concept.MobilityInternalState;
 import dummy.concept.MobilityOption;
 import dummy.concept.MobilityTask;
 import dummy.concept.Vehicle;
-import dummy.environment.Location;
-import main.agent.core.PerceptionComponent;
-import main.concept.EnvironmentalState;
-import main.concept.Feedback;
-import main.concept.InternalState;
-import main.concept.Option;
-import main.concept.Task;
-import main.environment.Environment;
+import framework.agent.core.PerceptionComponent;
+import framework.concept.EnvironmentalState;
+import framework.concept.Feedback;
+import framework.concept.InternalState;
+import framework.concept.Option;
+import framework.concept.Task;
+import framework.environment.Environment;
 
 public class DummyPerceptionComponent implements PerceptionComponent {
 
 	private static Logger LOGGER = Logger.getLogger(DummyPerceptionComponent.class.getName());
+	private String agentID;
+	
+	public DummyPerceptionComponent(String agentID) {
+		super();
+		this.agentID = agentID;
+	}
 
 	@Override
 	public Set<Option> generateOptions(Task task, EnvironmentalState environmentalState,
@@ -31,12 +37,17 @@ public class DummyPerceptionComponent implements PerceptionComponent {
 		accessileVehicles.addAll(mobilityEnvStat.getPublicTransports());
 		MobilityInternalState mobilityInternalStat = (MobilityInternalState) internalState;
 		accessileVehicles.addAll(mobilityInternalStat.getOwnVehicles());
+		
+		String debugStr = "Task for agent" + this.agentID + "Task distance: " + mobilityTask.getDistance() + " Task maxtime: "
+				+ mobilityTask.getTimeLimit() + "\n";
+		LOGGER.log(Level.FINE,debugStr);
 
 		Set<Option> opts = new HashSet<Option>();
 		for (Vehicle vehicle : accessileVehicles) {
 			double time = mobilityTask.getDistance()/vehicle.getSpeed();
 			if (time < mobilityTask.getTimeLimit()) {
 				double cost = vehicle.getCostPerKm()*mobilityTask.getDistance();
+				LOGGER.log(Level.FINE, "For vehicle " + vehicle.getName() + ": Time me is less " + time + " than timelimit " + mobilityTask.getTimeLimit() + " Cost is " + cost);
 				if (cost<=mobilityInternalStat.getCurrentFund()) {
 					opts.add(new MobilityOption(vehicle,cost,time));
 				}
