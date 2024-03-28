@@ -12,9 +12,11 @@ import dummy.concept.MobilityTask;
 import dummy.concept.Vehicle;
 import framework.agent.core.PerceptionComponent;
 import framework.concept.EnvironmentalState;
+import framework.concept.Feedback;
 import framework.concept.InternalState;
 import framework.concept.Option;
 import framework.concept.Task;
+import framework.environment.Environment;
 
 public class DummyPerceptionComponent implements PerceptionComponent {
 
@@ -53,6 +55,11 @@ public class DummyPerceptionComponent implements PerceptionComponent {
 		}
 
 		return opts;
+	}
+
+	@Override
+	public Feedback getFeedback(Task task, Option pickedOption, Environment environment) {
+		return null;
 	}
 
 }
