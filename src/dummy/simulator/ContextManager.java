@@ -119,9 +119,10 @@ public class ContextManager implements ContextBuilder<Object> {
 		updateSchedule();
 
 		// Create reporter for the simulation.
-		IReporter mobilityReporter = generator.createMobilityReporter(agentContext);
-		mainContext.add(mobilityReporter);
-		LOGGER.log(Level.INFO," Returning main context");
+		IReporter dummyReporter = generator.createDummyReporter(agentContext);
+		mainContext.add(dummyReporter);
+
+		LOGGER.log(Level.FINE,"Returning main context");
 		return mainContext;
 	}
 
@@ -131,8 +132,8 @@ public class ContextManager implements ContextBuilder<Object> {
 
 	/**
 	 * Check the schedule files and update the agents' events and scheduler. The
-	 * checkpoint is when agent need to update its scheduling files (if necessary).
-	 * The period is when agent need to read new file and update its timetable.
+	 * checkpoint is when agent needs to update its scheduling files (if necessary).
+	 * The period is when agent needs to read new file and update its timetable.
 	 */
 	public void updateSchedule() {
 		LOGGER.log(Level.FINE,"UpdateSchedule: for checkpointNumber  " + checkpointNum);
@@ -154,6 +155,7 @@ public class ContextManager implements ContextBuilder<Object> {
 
 				periodNum++;
 			}
+// Not needed for the scenario
 //			 for (IAgent agent : idToAgentMap.values()) {
 //				StandardDummyAgent traveller = (StandardDummyAgent) agent;
 //				traveller.updateInternalState();

@@ -40,7 +40,7 @@ public class DummyMemoryComponent implements MemoryComponent {
 	
 	@Override
 	public InternalState getInternalState() {
-		LOGGER.log(Level.FINE, "Agent Internal state " + this.currentFund + " and ownVehicles " + this.ownVehicles);
+		LOGGER.log(Level.FINE, "Agent " + this.agentID + " Internal state " + this.currentFund + " and ownVehicles " + this.ownVehicles);
 		return new MobilityInternalState(this.currentFund, this.ownVehicles);
 	}
 

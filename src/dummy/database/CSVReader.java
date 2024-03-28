@@ -194,7 +194,7 @@ public class CSVReader {
 		}
 	}
 
-	public IReporter createMobilityReporter(AgentContext agentContext) {
+	public IReporter createDummyReporter(AgentContext agentContext) {
 		return new DummyReporter(agentContext);
 	}
 
