@@ -3,9 +3,11 @@ package framework.agent.core;
 import java.util.Set;
 
 import framework.concept.EnvironmentalState;
+import framework.concept.Feedback;
 import framework.concept.InternalState;
 import framework.concept.Option;
 import framework.concept.Task;
+import framework.environment.Environment;
 
 public interface PerceptionComponent {
 
@@ -26,4 +28,19 @@ public interface PerceptionComponent {
 	 */
 	Set<Option> generateOptions(Task task, EnvironmentalState environmentalState,
 			InternalState internalState);
+	/**
+	 * Get feedback from the environment about the action performed. The
+	 * information/properties storing in Feedback can be included in the
+	 * implementation of Feedback.
+	 *
+	 * @param task
+	 *            The current task that the agent wants to perform.
+	 * @param pickedOption
+	 *            The action that was chosen by the agent.
+	 * @param environment
+	 *            The environment where the agent lives.
+	 * @return The feedback from the environment about the action performed. (To be
+	 *         implemented)
+	 */
+	Feedback getFeedback(Task task, Option pickedOption, Environment environment);
 }

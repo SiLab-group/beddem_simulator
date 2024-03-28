@@ -11,7 +11,6 @@ public class MobilityTask extends Task {
 
 	private static Logger LOGGER = Logger.getLogger(MobilityTask.class.getName());
 	private double timeLimit;
-	// private double n_Passengers;
 	private double distance;
 	private double timeStart;
 	private double purpose;
@@ -31,10 +30,6 @@ public class MobilityTask extends Task {
 	public double getTimeLimit() {
 		return this.timeLimit;
 	}
-
-//	public double getNPassengers() {
-//		return this.n_Passengers;
-//	}
 
 	public double getDistance() {
 		return this.distance;
