@@ -47,7 +47,7 @@ public abstract class TaskExecutionAgent implements IAgent {
 		this.schedule = new LinkedList<Task>();
 	}
 
-	protected void setup_overrides() {
+	protected void setupOverrides() {
 		this.decisionComponent = createDecisionComponent();
 		this.memoryComponent = createMemoryComponent();
 		this.communicationComponent = createCommunicationComponent();
@@ -80,27 +80,26 @@ public abstract class TaskExecutionAgent implements IAgent {
 
 	@Override
 	public void step() throws Exception {
-		LOGGER.log(Level.FINE, "Agent " + this.id + " is stepping.");
+		LOGGER.log(Level.FINER, "Agent " + this.id + " is stepping.");
 		// Get the next event from schedule.
 		Task task = schedule.remove(0);
 		EnvironmentalState environmentalState = loc.getEnvironmentalState();
 		InternalState internalState = this.memoryComponent.getInternalState();
 		Set<Option> options = this.perceptionComponent.generateOptions(task, environmentalState, internalState);
-		Map<Double, Set<Option>> evaluatedOptions = this.decisionComponent.evaluateOptions(options,task);
+		Map<Double, Set<Option>> evaluatedOptions = this.decisionComponent.evaluateOptions(options, task);
 		Option pickedOption = this.communicationComponent.pickOption(evaluatedOptions);
 		Feedback feedback = this.communicationComponent.getFeedback(task, pickedOption, internalState, this.loc);
-		this.memoryComponent.updateInternalState(task, pickedOption,feedback);
+		this.memoryComponent.updateInternalState(task, pickedOption, feedback);
 	}
 
 	/**
 	 * Add a task to agent's schedule. The schedule is sorted in the order of
 	 * executing time of tasks.
 	 * 
-	 * @param task
-	 *            The task needed to be add to agent's schedule.
+	 * @param task The task needed to be add to agent's schedule.
 	 */
 	public void addToSchedule(Task task) {
-		LOGGER.log(Level.FINE, "Adding task to schedule "+ task.toString());
+		LOGGER.log(Level.FINER, "Adding task to schedule " + task.toString());
 		ListIterator<Task> scheduleIt = this.schedule.listIterator(0);
 		if (!scheduleIt.hasNext()) {
 			this.schedule.add(task);
@@ -120,17 +119,16 @@ public abstract class TaskExecutionAgent implements IAgent {
 	/**
 	 * Get this agent current location information.
 	 * 
-	 * @param task
-	 *            The task needed to be add to agent's schedule.
+	 * @param task The task needed to be add to agent's schedule.
 	 */
 	public Environment getLoc() {
 		return this.loc;
 	}
-	
+
 	public Map<Task, Option> getDecisionResults() {
 		return this.memoryComponent.getDecisionResults();
 	}
-	
+
 	@Override
 	public final boolean isThreadable() {
 		return true;

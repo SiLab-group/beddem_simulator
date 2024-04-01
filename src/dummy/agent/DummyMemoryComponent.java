@@ -37,16 +37,17 @@ public class DummyMemoryComponent implements MemoryComponent {
 		this.pastFreq = new HashMap<Vehicle, Integer>();
 		this.decisionResults = new HashMap<Task, Option>();
 	}
-	
+
 	@Override
 	public InternalState getInternalState() {
-		LOGGER.log(Level.FINE, "Agent " + this.agentID + " Internal state " + this.currentFund + " and ownVehicles " + this.ownVehicles);
+		LOGGER.log(Level.FINER, "Agent " + this.agentID + " Internal state " + this.currentFund + " and ownVehicles "
+				+ this.ownVehicles);
 		return new MobilityInternalState(this.currentFund, this.ownVehicles);
 	}
 
 	@Override
 	public void updateInternalState(Task task, Option option, Feedback feedback) {
-		//MobilityFeedback mobilityFeedBack = (MobilityFeedback) feedback;
+		// MobilityFeedback mobilityFeedBack = (MobilityFeedback) feedback;
 		MobilityOption mobilityOption = (MobilityOption) option;
 		MobilityTask mobilityTask = (MobilityTask) task;
 //		this.currentFund -= mobilityFeedBack.getCost();
@@ -55,7 +56,7 @@ public class DummyMemoryComponent implements MemoryComponent {
 		if (!this.pastFreq.containsKey(mainVehicle)) {
 			this.pastFreq.put(mainVehicle, 1);
 		} else {
-			this.pastFreq.put(mainVehicle, this.pastFreq.get(mainVehicle)+1);
+			this.pastFreq.put(mainVehicle, this.pastFreq.get(mainVehicle) + 1);
 		}
 		this.decisionResults.put(mobilityTask, mobilityOption);
 	}
@@ -65,5 +66,4 @@ public class DummyMemoryComponent implements MemoryComponent {
 		return this.decisionResults;
 	}
 
-	
 }
