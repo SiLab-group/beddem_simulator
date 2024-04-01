@@ -32,11 +32,9 @@ public abstract class Determinant {
 	 * Rank the input options and put into a list. All options that has the same
 	 * value are put into the same element set of the list.
 	 * 
-	 * @param inputOpts
-	 *            The set of options that needed to be ranked.
-	 * @param task
-	 *            The task needed to be done by the agent performing one of the
-	 *            option.
+	 * @param inputOpts The set of options that needed to be ranked.
+	 * @param task      The task needed to be done by the agent performing one of
+	 *                  the option.
 	 * @return List of set of option that organised according to their ranking. All
 	 *         options that has the same value are put into the same element set of
 	 *         the list.
@@ -60,7 +58,7 @@ public abstract class Determinant {
 			debugString += " \n";
 			rankingResult.put(entry.getKey() / sumValue, entry.getValue());
 		}
-		LOGGER.log(Level.FINE, debugString);
+		LOGGER.log(Level.FINER, debugString);
 		return rankingResult;
 	}
 
@@ -68,10 +66,8 @@ public abstract class Determinant {
 	 * This function evaluate the input option set and put product the result as a
 	 * map from value to option(s).
 	 * 
-	 * @param inputOpts
-	 *            The set of option to be evaluated.
-	 * @param task
-	 *            The task to be performed by the agent.
+	 * @param inputOpts The set of option to be evaluated.
+	 * @param task      The task to be performed by the agent.
 	 */
 	protected abstract Map<Double, Set<Option>> evalOpts(Set<Option> inputOpts, Task task);
 

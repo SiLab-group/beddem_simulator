@@ -46,7 +46,7 @@ public class ThreadedAgentScheduler {
 	 * threads to step agents) and waits for it to finish
 	 */
 	public synchronized void agentStep() {
-		LOGGER.log(Level.FINE, "" + ContextManager.getTicks());
+		LOGGER.log(Level.FINER, "" + ContextManager.getTicks());
 		this.agentsFinishedStepping = false;
 		(new Thread(new ThreadController(this))).start();
 		while (!this.agentsFinishedStepping) {
@@ -176,8 +176,7 @@ class ThreadController implements Runnable {
 	 * Tell this <code>ThreadController</code> that one of the CPUs is no free and
 	 * it can stop waiting
 	 * 
-	 * @param cpuNumber
-	 *            The CPU which is now free
+	 * @param cpuNumber The CPU which is now free
 	 */
 	public synchronized void setCPUFree(int cpuNumber) {
 		this.cpuStatus[cpuNumber] = true;
@@ -206,7 +205,7 @@ class AgentThread implements Runnable {
 	public void run() {
 		try {
 			this.theAgent.step();
-			LOGGER.log(Level.FINE, "Execute agent: " + theAgent.toString() + " step method");
+			LOGGER.log(Level.FINER, "Execute agent: " + theAgent.toString() + " step method");
 		} catch (Exception ex) {
 			LOGGER.log(Level.SEVERE, "ThreadedAgentScheduler caught an error, telling model to stop", ex);
 			ContextManager.stopSim(ex, this.getClass());

@@ -47,9 +47,10 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	private double initialFund;
 	private Set<Vehicle> ownVehicles;
 
-	public StandardDummyAgent(String id, Environment loc, double initialFund, Set<Vehicle> ownVehicles, double beliefWeight, double evaluationWeight, double timeWeight, double costWeight,
-			double normWeight, double roleWeight, double selfWeight, double emotionWeight, double facilitatingWeight,
-			double freqWeight, double attitudeWeight, double socialWeight, double affectWeight, double intentionWeight,
+	public StandardDummyAgent(String id, Environment loc, double initialFund, Set<Vehicle> ownVehicles,
+			double beliefWeight, double evaluationWeight, double timeWeight, double costWeight, double normWeight,
+			double roleWeight, double selfWeight, double emotionWeight, double facilitatingWeight, double freqWeight,
+			double attitudeWeight, double socialWeight, double affectWeight, double intentionWeight,
 			double habitWeight) {
 		super(id, loc);
 		this.beliefWeight = beliefWeight;
@@ -71,24 +72,29 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		this.initialFund = initialFund;
 		this.ownVehicles = ownVehicles;
 
-		LOGGER.log(Level.FINE,"Agent constructor for agent " + this.getID() + " with " + this.initialFund + " and owned vehicles " + this.ownVehicles);
-		// Overriding perception/memory/communication methods after the agent is constructed
-		this.setup_overrides();
+		LOGGER.log(Level.FINER, "Agent constructor for agent " + this.getID() + " with " + this.initialFund
+				+ " and owned vehicles " + this.ownVehicles);
+		// Overriding perception/memory/communication methods after the agent is
+		// constructed
+		this.setupOverrides();
 	}
 
 	@Override
 	protected PerceptionComponent createPerceptionComponent() {
+		LOGGER.log(Level.FINER, "Create perception component agent id " + this.getID());
 		return new DummyPerceptionComponent(this.getID());
 	}
 
 	@Override
 	protected MemoryComponent createMemoryComponent() {
-		LOGGER.log(Level.FINE,"Memory component " + this.getID() + " fund: " + this.initialFund + " owned vehicles " + this.ownVehicles);
+		LOGGER.log(Level.FINER, "Memory component " + this.getID() + " fund: " + this.initialFund + " owned vehicles "
+				+ this.ownVehicles);
 		return new DummyMemoryComponent(this.getID(), this.initialFund, this.ownVehicles);
 	}
 
 	@Override
 	protected CommunicationComponent createCommunicationComponent() {
+		LOGGER.log(Level.FINER, "Create communication component");
 		return new DummyCommunicationComponent();
 	}
 
@@ -98,12 +104,12 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		Determinant evaluation = createEvaluationDeterminant();
 		Determinant norm = createNormDeterminant();
 		Determinant role = createRoleDeterminant();
-		Determinant self_concept = createSelfDeterminant();
+		Determinant selfConcept = createSelfDeterminant();
 		Determinant emotion = createEmotionDeterminant();
 		Determinant facilitatingCond = createFacilitatingDeterminant();
 		Determinant freq = createFreqDeterminant();
-		return new DummyDecisionComponent(belief, evaluation, norm, role, self_concept, emotion, facilitatingCond, freq,
-				 this.attitudeWeight, this.socialWeight, this.affectWeight, this.intentionWeight, this.habitWeight);
+		return new DummyDecisionComponent(belief, evaluation, norm, role, selfConcept, emotion, facilitatingCond, freq,
+				this.attitudeWeight, this.socialWeight, this.affectWeight, this.intentionWeight, this.habitWeight);
 	}
 
 	/*******************************************************************************************/
@@ -113,25 +119,25 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	}
 
 	private Determinant createEvaluationDeterminant() {
-		ParentDeterminant evaluation = new ParentDeterminant("evaluation",1);
-		evaluation.addDeterminantChild(new LeafDeterminant("time",this.timeWeight) {
+		ParentDeterminant evaluation = new ParentDeterminant("evaluation", 1);
+		evaluation.addDeterminantChild(new LeafDeterminant("time", this.timeWeight) {
 
 			@Override
 			protected double evalOpt(Option opt, Task task) {
 				MobilityOption mobilityOpt = (MobilityOption) opt;
-				LOGGER.log(Level.FINE, "Evaluating TIME option " + mobilityOpt.getTime());
+				LOGGER.log(Level.FINER, "Evaluating TIME option " + mobilityOpt.getTime());
 				return mobilityOpt.getTime();
 			}
 		});
-		evaluation.addDeterminantChild(new LeafDeterminant("cost",this.costWeight) {
+		evaluation.addDeterminantChild(new LeafDeterminant("cost", this.costWeight) {
 			@Override
 			protected double evalOpt(Option opt, Task task) {
 				MobilityOption mobilityOption = (MobilityOption) opt;
-				LOGGER.log(Level.FINE, "Evaluating COST option " + mobilityOption.getCost());
+				LOGGER.log(Level.FINER, "Evaluating COST option " + mobilityOption.getCost());
 				return mobilityOption.getCost();
 			}
 		});
-		LOGGER.log(Level.FINE," Evalutation " + evaluation.toString());
+		LOGGER.log(Level.FINER, " Evalutation " + evaluation.toString());
 		return evaluation;
 	}
 
@@ -159,7 +165,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	private Determinant createEmotionDeterminant() {
 		// TODO Auto-generated method stub
 		return null;
-		}
+	}
 
 	private Determinant createFacilitatingDeterminant() {
 		// TODO Auto-generated method stub
@@ -171,6 +177,5 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		return null;
 	}
 	/*******************************************************************************************/
-
 
 }

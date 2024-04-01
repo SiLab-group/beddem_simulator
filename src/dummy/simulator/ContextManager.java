@@ -97,7 +97,7 @@ public class ContextManager implements ContextBuilder<Object> {
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-			throw new RuntimeException("Could not create resources or locations,reason:  " + e1.toString(),e1);
+			throw new RuntimeException("Could not create resources or locations,reason:  " + e1.toString(), e1);
 		}
 
 		mainContext.add(locationContext);
@@ -114,7 +114,7 @@ public class ContextManager implements ContextBuilder<Object> {
 		}
 
 		mainContext.add(agentContext);
-		LOGGER.log(Level.FINE, "Agents created and added to the context. Agent map: " + idToAgentMap.toString());
+		LOGGER.log(Level.FINER, "Agents created and added to the context. Agent map: " + idToAgentMap.toString());
 		// Read the schedule file and schedule all the agents' events.
 		updateSchedule();
 
@@ -122,7 +122,7 @@ public class ContextManager implements ContextBuilder<Object> {
 		IReporter dummyReporter = generator.createDummyReporter(agentContext);
 		mainContext.add(dummyReporter);
 
-		LOGGER.log(Level.FINE,"Returning main context");
+		LOGGER.log(Level.FINER, "Returning main context");
 		return mainContext;
 	}
 
@@ -136,7 +136,7 @@ public class ContextManager implements ContextBuilder<Object> {
 	 * The period is when agent needs to read new file and update its timetable.
 	 */
 	public void updateSchedule() {
-		LOGGER.log(Level.FINE,"UpdateSchedule: for checkpointNumber  " + checkpointNum);
+		LOGGER.log(Level.FINER, "UpdateSchedule: for checkpointNumber  " + checkpointNum);
 		// If the simulator still hasn't reached the maximum checkpoints.
 		if (checkpointNum < GlobalVars.SIMULATION_PARAMS.CHECKPOINTS_IN_SIMULATE) {
 			// If the number of periods has reached the next checkpoints.
@@ -165,7 +165,7 @@ public class ContextManager implements ContextBuilder<Object> {
 			ScheduleParameters params = ScheduleParameters.createOneTime(
 					GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD * periodNum
 							+ GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD
-									* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum()* checkpointNum,
+									* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * checkpointNum,
 					PriorityType.FIRST);
 			schedule.schedule(params, this, "updateSchedule");
 		}
@@ -177,8 +177,7 @@ public class ContextManager implements ContextBuilder<Object> {
 	/**
 	 * Get the next task in agent's schedule and schedule it to be run.
 	 * 
-	 * @param agent
-	 *            The agent that has the next task to be scheduled.
+	 * @param agent The agent that has the next task to be scheduled.
 	 */
 	public static void scheduleNewTask(IAgent agent, double timeToSchedule) {
 		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
@@ -210,8 +209,7 @@ public class ContextManager implements ContextBuilder<Object> {
 	 * null or if there is no property with a matching name, throw a
 	 * RuntimeException.
 	 * 
-	 * @param property
-	 *            The property to look for.
+	 * @param property The property to look for.
 	 * @return A value for the property with the given name.
 	 */
 	public static String getProperty(String property) {
@@ -240,7 +238,7 @@ public class ContextManager implements ContextBuilder<Object> {
 	 */
 	private void readProperties() throws FileNotFoundException, IOException {
 
-		LOGGER.log(Level.FINE, new File(".").getAbsolutePath());
+		LOGGER.log(Level.FINER, new File(".").getAbsolutePath());
 
 		File propFile = new File("./data/beddem_simulator.properties");
 		if (!propFile.exists()) {
@@ -248,7 +246,7 @@ public class ContextManager implements ContextBuilder<Object> {
 					"Could not find properties file in the default location: " + propFile.getAbsolutePath());
 		}
 
-		LOGGER.log(Level.FINE, "Initialising properties from file " + propFile.toString());
+		LOGGER.log(Level.FINER, "Initialising properties from file " + propFile.toString());
 
 		ContextManager.properties = new Properties();
 
@@ -274,8 +272,7 @@ public class ContextManager implements ContextBuilder<Object> {
 	/**
 	 * Count the number of items in the provided iterable
 	 * 
-	 * @param i
-	 *            The iterable list
+	 * @param i The iterable list
 	 * @return The number of items in the provided iterable
 	 */
 	private static int sizeOfIterable(Iterable<?> i) {
@@ -307,10 +304,8 @@ public class ContextManager implements ContextBuilder<Object> {
 	/**
 	 * Stop the simulation
 	 * 
-	 * @param ex
-	 *            Define the exception
-	 * @param clazz
-	 *            The class that call the simulation to stop
+	 * @param ex    Define the exception
+	 * @param clazz The class that call the simulation to stop
 	 */
 	public static void stopSim(Exception ex, Class<?> clazz) {
 		ISchedule sched = RunEnvironment.getInstance().getCurrentSchedule();

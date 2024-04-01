@@ -22,13 +22,13 @@ public class DummyCommunicationComponent implements CommunicationComponent {
 	@Override
 	public Option pickOption(Map<Double, Set<Option>> evaluatedOptions) {
 		Option pickedOpt;
-		
+
 		if (GlobalVars.SIMULATION_PARAMS.AGENT_PROBABILISTIC_DECISION == 0) {
-			LOGGER.log(Level.FINE, "Pick the best option");
-			pickedOpt =  pickBestOpt(evaluatedOptions);
+			LOGGER.log(Level.FINER, "Pick the best option");
+			pickedOpt = pickBestOpt(evaluatedOptions);
 		} else {
-			pickedOpt =  pickWithProbability(evaluatedOptions);
-			LOGGER.log(Level.FINE, "Pick option with probability");
+			pickedOpt = pickWithProbability(evaluatedOptions);
+			LOGGER.log(Level.FINER, "Pick option with probability");
 		}
 		return pickedOpt;
 	}
