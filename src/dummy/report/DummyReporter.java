@@ -17,26 +17,25 @@ import framework.concept.Task;
  */
 public class DummyReporter implements IReporter {
 	private AgentContext agentContext;
-	
+
 	public DummyReporter(AgentContext agentContext) {
 		this.agentContext = agentContext;
 	}
 
-
 	@Override
 	public String printReport() {
-		String reportString = "\n";
-		reportString += "agentID,start_time,km,vehicle\n"; 
-		for (IAgent agent: this.agentContext) {
+		String reportString = "\nagentID,start_time,km,vehicle\n";
+		for (IAgent agent : this.agentContext) {
 			StandardDummyAgent mobilityAgent = (StandardDummyAgent) agent;
-			Map<Task,Option> results = mobilityAgent.getDecisionResults();
+			Map<Task, Option> results = mobilityAgent.getDecisionResults();
 			for (Task task : results.keySet()) {
 				MobilityOption mobilityOption = (MobilityOption) results.get(task);
 				MobilityTask mobilityTask = (MobilityTask) task;
-				reportString += agent.getID() + "," + mobilityTask.getExecutingTime() + "," + mobilityTask.getDistance() +"," + mobilityOption.getMainVehicle().getName() + "\n";
+				reportString += agent.getID() + "," + mobilityTask.getExecutingTime() + "," + mobilityTask.getDistance()
+						+ "," + mobilityOption.getMainVehicle().getName() + "\n";
 			}
 		}
-		
+
 		return reportString;
 	}
 }

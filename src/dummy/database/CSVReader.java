@@ -36,8 +36,9 @@ public class CSVReader {
 
 	private Logger LOGGER = Logger.getLogger(CSVReader.class.getName());
 	private Map<String, Vehicle> idToVehicleMap;
-	private Map<String, IAgent> idToAgentMap;
-	private Map<String, Environment> idToLocation;
+//  Are these maps needed?
+//	private Map<String, IAgent> idToAgentMap;
+//	private Map<String, Location> idToLocation;
 
 	/**
 	 * Read the file and return the list of all the row in the file.
@@ -116,7 +117,7 @@ public class CSVReader {
 		String csvDataDir = ContextManager.getProperty(GlobalVars.CSVDataDirectory);
 		String agentFile = csvDataDir + ContextManager.getProperty(GlobalVars.AgentCSVfile) + ".csv";
 
-		this.idToAgentMap = new HashMap<String, IAgent>();
+		// this.idToAgentMap = new HashMap<String, IAgent>();
 		BufferedReader br = getBufferReaderForFile(agentFile);
 		String line;
 		br.readLine();
@@ -152,8 +153,6 @@ public class CSVReader {
 					affectWeight, intentionWeight, habitWeight);
 			LOGGER.log(Level.FINER, "Agent id " + inputs[0] + " agent " + agent.toString());
 			idToAgentMap.put(inputs[0], agent);
-			this.idToLocation = idToLocationMap;
-			this.idToAgentMap = idToAgentMap;
 			agentContext.add(agent);
 		}
 		br.close();
@@ -193,6 +192,7 @@ public class CSVReader {
 			br.close();
 		} catch (IOException ex) {
 			LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+			throw ex;
 		}
 	}
 

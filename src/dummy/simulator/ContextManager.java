@@ -58,7 +58,6 @@ public class ContextManager implements ContextBuilder<Object> {
 	private static AgentContext agentContext;
 	private static HashMap<String, IAgent> idToAgentMap;
 
-	// CSVReader generator;
 	CSVReader generator;
 
 	private static int periodNum;
