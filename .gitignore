@@ -13,3 +13,4 @@ icons/*
 debug.log
 velocity.log*
 Repast.settings
+/testbin/
