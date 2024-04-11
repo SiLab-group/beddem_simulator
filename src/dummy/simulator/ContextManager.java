@@ -190,7 +190,7 @@ public class ContextManager implements ContextBuilder<Object> {
 	 */
 	public void printTicks() {
 		LOGGER.info("Iterations: " + RunEnvironment.getInstance().getCurrentSchedule().getTickCount() + ". Speed: "
-				+ ((double) (System.currentTimeMillis() - ContextManager.speedTimer) / 1000.0) + "sec/ticks.");
+				+ ((System.currentTimeMillis() - ContextManager.speedTimer) / 1000.0) + "sec/ticks.");
 		ContextManager.speedTimer = System.currentTimeMillis();
 	}
 

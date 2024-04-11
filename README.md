@@ -23,8 +23,12 @@ For simulation run the repast simphony and corresponding eclipse version has to 
     - File -> New -> Other -> Repast Simphony -> Repast Simphony Project -> Select the folder of cloned repo (beddem) -> Name the project beddem -> Finish
 9. Repast parameters, context, scenarios should be stored in `beddem_simulator.rs` folder. If you name project differently it is needed to copy the xml files or in `Repast.settings`.
 10. Start Repast interface by click the small arrow next to the run button and select "your_project_name Model" in default case `beddem_simulator Model`.
-11. Click the `Initialize and  run button` to run the project. These buttons are shown in the example simulation run bellow. After it finishes, you should see a new output file in the output folder.
+11. Click the `Initialize and run button` to run the project. These buttons are shown in the example simulation run bellow. After it finishes, you should see a new output file in the output folder.
  
+## Build with ant
+1. Install ant depending on the OS.(Ubuntu: `sudo apt-get install ant`)
+2. Adjust the path of ECLIPSE_HOME in the build.xml or run `ant build -DECLIPSE_HOME=/your/path/to/plugins`
+3. Run model `ant run-model -DECLIPSE_HOME=/your/path/to/plugins`
 
 ## Example simulation run
  This example simulation contains one agent with the simple schedule of two tasks. When changing the weight of the `time_weight` or `cost_weight` in the `agent.csv` file. 
@@ -109,3 +113,10 @@ In this case we have example `<scenario>` called `dummy`. The directory structur
 	- testing: csv files for modular + system testing, will be generated if you run the testing classes.
 	- beddem_simulator.properties: locations of all the inputs, parameters and outputs of the model.
 * **`your_project_name.rs`**: Define the inputs, outputs, parameters and observers for the model
+
+
+## Tested with versions
+	- Eclipse: 2024-03
+	- Repast Simphony: 2.10
+	- Groovy: 4.31 (2024-03) https://groovy.jfrog.io/artifactory/plugins-snapshot/e4.31
+	- Ant: 1.10.12

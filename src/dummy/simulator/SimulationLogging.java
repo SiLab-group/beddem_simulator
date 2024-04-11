@@ -31,6 +31,7 @@ abstract class SimulationLogging {
 			// Get the root logger
 			Logger logger = Logger.getLogger("");
 			// Logger logger = Logger.getLogger("beddem_simulation");
+			// logger.setLevel(Level.FINER);
 
 			// Create handlers
 			File logFile = new File("model_log.txt");
