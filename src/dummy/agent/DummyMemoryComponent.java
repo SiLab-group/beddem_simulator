@@ -3,8 +3,8 @@ package dummy.agent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 // Feedback is not defined yet
 //import dummy.concept.MobilityFeedback;
@@ -40,7 +40,7 @@ public class DummyMemoryComponent implements MemoryComponent {
 
 	@Override
 	public InternalState getInternalState() {
-		LOGGER.log(Level.FINER, "Agent " + this.agentID + " Internal state " + this.currentFund + " and ownVehicles "
+		LOGGER.log(Level.DEBUG, "Agent " + this.agentID + " Internal state " + this.currentFund + " and ownVehicles "
 				+ this.ownVehicles);
 		return new MobilityInternalState(this.currentFund, this.ownVehicles);
 	}

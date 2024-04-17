@@ -8,8 +8,9 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import dummy.context.AgentContext;
 import dummy.context.LocationContext;
@@ -109,11 +110,11 @@ public class ContextManager implements ContextBuilder<Object> {
 		try {
 			generator.createAgents(agentContext, idToLocationMap, idToAgentMap);
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, "IO exception.", e);
+			LOGGER.log(Level.FATAL, "IO exception.", e);
 		}
 
 		mainContext.add(agentContext);
-		LOGGER.log(Level.FINER, "Agents created and added to the context. Agent map: " + idToAgentMap.toString());
+		LOGGER.log(Level.DEBUG, "Agents created and added to the context. Agent map: " + idToAgentMap.toString());
 		// Read the schedule file and schedule all the agents' events.
 		updateSchedule();
 
@@ -121,7 +122,7 @@ public class ContextManager implements ContextBuilder<Object> {
 		IReporter dummyReporter = generator.createDummyReporter(agentContext);
 		mainContext.add(dummyReporter);
 
-		LOGGER.log(Level.FINER, "Returning main context");
+		LOGGER.debug("Returning main context");
 		return mainContext;
 	}
 
@@ -135,7 +136,7 @@ public class ContextManager implements ContextBuilder<Object> {
 	 * The period is when agent needs to read new file and update its timetable.
 	 */
 	public void updateSchedule() {
-		LOGGER.log(Level.FINER, "UpdateSchedule: for checkpointNumber  " + checkpointNum);
+		LOGGER.log(Level.DEBUG, "UpdateSchedule: for checkpointNumber  " + checkpointNum);
 		// If the simulator still hasn't reached the maximum checkpoints.
 		if (checkpointNum < GlobalVars.SIMULATION_PARAMS.CHECKPOINTS_IN_SIMULATE) {
 			// If the number of periods has reached the next checkpoints.
@@ -237,7 +238,7 @@ public class ContextManager implements ContextBuilder<Object> {
 	 */
 	private void readProperties() throws FileNotFoundException, IOException {
 
-		LOGGER.log(Level.FINER, new File(".").getAbsolutePath());
+		LOGGER.log(Level.DEBUG, new File(".").getAbsolutePath());
 
 		File propFile = new File("./data/beddem_simulator.properties");
 		if (!propFile.exists()) {
@@ -245,7 +246,7 @@ public class ContextManager implements ContextBuilder<Object> {
 					"Could not find properties file in the default location: " + propFile.getAbsolutePath());
 		}
 
-		LOGGER.log(Level.FINER, "Initialising properties from file " + propFile.toString());
+		LOGGER.log(Level.DEBUG, "Initialising properties from file " + propFile.toString());
 
 		ContextManager.properties = new Properties();
 
@@ -310,7 +311,7 @@ public class ContextManager implements ContextBuilder<Object> {
 		ISchedule sched = RunEnvironment.getInstance().getCurrentSchedule();
 		sched.setFinishing(true);
 		sched.executeEndActions();
-		LOGGER.log(Level.SEVERE, "ContextManager has been told to stop by " + clazz.getName(), ex);
+		LOGGER.log(Level.FATAL, "ContextManager has been told to stop by " + clazz.getName(), ex);
 	}
 
 	/**

@@ -1,8 +1,8 @@
 package dummy.agent;
 
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import dummy.concept.MobilityOption;
 import dummy.concept.Vehicle;
@@ -72,7 +72,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 		this.initialFund = initialFund;
 		this.ownVehicles = ownVehicles;
 
-		LOGGER.log(Level.FINER, "Agent constructor for agent " + this.getID() + " with " + this.initialFund
+		LOGGER.log(Level.DEBUG, "Agent constructor for agent " + this.getID() + " with " + this.initialFund
 				+ " and owned vehicles " + this.ownVehicles);
 		// Overriding perception/memory/communication methods after the agent is
 		// constructed
@@ -81,20 +81,20 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 
 	@Override
 	protected PerceptionComponent createPerceptionComponent() {
-		LOGGER.log(Level.FINER, "Create perception component agent id " + this.getID());
+		LOGGER.log(Level.DEBUG, "Create perception component agent id " + this.getID());
 		return new DummyPerceptionComponent(this.getID());
 	}
 
 	@Override
 	protected MemoryComponent createMemoryComponent() {
-		LOGGER.log(Level.FINER, "Memory component " + this.getID() + " fund: " + this.initialFund + " owned vehicles "
+		LOGGER.log(Level.DEBUG, "Memory component " + this.getID() + " fund: " + this.initialFund + " owned vehicles "
 				+ this.ownVehicles);
 		return new DummyMemoryComponent(this.getID(), this.initialFund, this.ownVehicles);
 	}
 
 	@Override
 	protected CommunicationComponent createCommunicationComponent() {
-		LOGGER.log(Level.FINER, "Create communication component");
+		LOGGER.log(Level.DEBUG, "Create communication component");
 		return new DummyCommunicationComponent();
 	}
 
@@ -125,7 +125,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 			@Override
 			protected double evalOpt(Option opt, Task task) {
 				MobilityOption mobilityOpt = (MobilityOption) opt;
-				LOGGER.log(Level.FINER, "Evaluating TIME option " + mobilityOpt.getTime());
+				LOGGER.log(Level.DEBUG, "Evaluating TIME option " + mobilityOpt.getTime());
 				return mobilityOpt.getTime();
 			}
 		});
@@ -133,11 +133,11 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 			@Override
 			protected double evalOpt(Option opt, Task task) {
 				MobilityOption mobilityOption = (MobilityOption) opt;
-				LOGGER.log(Level.FINER, "Evaluating COST option " + mobilityOption.getCost());
+				LOGGER.log(Level.DEBUG, "Evaluating COST option " + mobilityOption.getCost());
 				return mobilityOption.getCost();
 			}
 		});
-		LOGGER.log(Level.FINER, " Evalutation " + evaluation.toString());
+		LOGGER.log(Level.DEBUG, " Evalutation " + evaluation.toString());
 		return evaluation;
 	}
 

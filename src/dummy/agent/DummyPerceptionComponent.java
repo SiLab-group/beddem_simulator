@@ -2,8 +2,8 @@ package dummy.agent;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import dummy.concept.MobilityEnvironmentalState;
 import dummy.concept.MobilityInternalState;
@@ -38,14 +38,14 @@ public class DummyPerceptionComponent implements PerceptionComponent {
 		accessileVehicles.addAll(mobilityInternalStat.getOwnVehicles());
 		String debugStr = "Task for agent" + this.agentID + "Task distance: " + mobilityTask.getDistance()
 				+ " Task maxtime: " + mobilityTask.getTimeLimit() + "\n";
-		LOGGER.log(Level.FINER, debugStr);
+		LOGGER.log(Level.DEBUG, debugStr);
 
 		Set<Option> opts = new HashSet<Option>();
 		for (Vehicle vehicle : accessileVehicles) {
 			double time = mobilityTask.getDistance() / vehicle.getSpeed();
 			if (time < mobilityTask.getTimeLimit()) {
 				double cost = vehicle.getCostPerKm() * mobilityTask.getDistance();
-				LOGGER.log(Level.FINER, "For vehicle " + vehicle.getName() + ": Time me is less " + time
+				LOGGER.log(Level.DEBUG, "For vehicle " + vehicle.getName() + ": Time me is less " + time
 						+ " than timelimit " + mobilityTask.getTimeLimit() + " Cost is " + cost);
 				if (cost <= mobilityInternalStat.getCurrentFund()) {
 					opts.add(new MobilityOption(vehicle, cost, time));

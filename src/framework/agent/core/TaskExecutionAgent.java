@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import framework.concept.EnvironmentalState;
 import framework.concept.Feedback;
@@ -80,7 +81,7 @@ public abstract class TaskExecutionAgent implements IAgent {
 
 	@Override
 	public void step() throws Exception {
-		LOGGER.log(Level.FINER, "Agent " + this.id + " is stepping.");
+		LOGGER.log(Level.DEBUG, "Agent " + this.id + " is stepping.");
 		// Get the next event from schedule.
 		Task task = schedule.remove(0);
 		EnvironmentalState environmentalState = loc.getEnvironmentalState();
@@ -99,7 +100,7 @@ public abstract class TaskExecutionAgent implements IAgent {
 	 * @param task The task needed to be add to agent's schedule.
 	 */
 	public void addToSchedule(Task task) {
-		LOGGER.log(Level.FINER, "Adding task to schedule " + task.toString());
+		LOGGER.log(Level.DEBUG, "Adding task to schedule " + task.toString());
 		ListIterator<Task> scheduleIt = this.schedule.listIterator(0);
 		if (!scheduleIt.hasNext()) {
 			this.schedule.add(task);

@@ -2,8 +2,8 @@ package dummy.simulator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import framework.agent.core.IAgent;
 
@@ -46,7 +46,7 @@ public class ThreadedAgentScheduler {
 	 * threads to step agents) and waits for it to finish
 	 */
 	public synchronized void agentStep() {
-		LOGGER.log(Level.FINER, "" + ContextManager.getTicks());
+		LOGGER.log(Level.DEBUG, "" + ContextManager.getTicks());
 		this.agentsFinishedStepping = false;
 		(new Thread(new ThreadController(this))).start();
 		while (!this.agentsFinishedStepping) {
@@ -55,7 +55,7 @@ public class ThreadedAgentScheduler {
 				// setAgentsFinishedStepping().
 				this.wait();
 			} catch (InterruptedException e) {
-				LOGGER.log(Level.SEVERE, "", e);
+				LOGGER.log(Level.FATAL, "", e);
 				ContextManager.stopSim(e, ThreadedAgentScheduler.class);
 			}
 			// Wait until the thread controller has finished
@@ -167,7 +167,7 @@ class ThreadController implements Runnable {
 		try {
 			this.wait();
 		} catch (InterruptedException e) {
-			LOGGER.log(Level.SEVERE, "", e);
+			LOGGER.log(Level.FATAL, "", e);
 			ContextManager.stopSim(e, ThreadedAgentScheduler.class);
 		} // Wait until the thread controller has finished
 
@@ -207,9 +207,9 @@ class AgentThread implements Runnable {
 	public void run() {
 		try {
 			this.theAgent.step();
-			LOGGER.log(Level.FINER, "Execute agent: " + theAgent.toString() + " step method");
+			LOGGER.log(Level.DEBUG, "Execute agent: " + theAgent.toString() + " step method");
 		} catch (Exception ex) {
-			LOGGER.log(Level.SEVERE, "ThreadedAgentScheduler caught an error, telling model to stop", ex);
+			LOGGER.log(Level.FATAL, "ThreadedAgentScheduler caught an error, telling model to stop", ex);
 			ContextManager.stopSim(ex, this.getClass());
 		}
 		// Tell the ThreadController that this thread has finished
