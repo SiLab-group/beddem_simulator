@@ -1,7 +1,7 @@
 package dummy.concept;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import framework.concept.Task;
 
@@ -20,7 +20,7 @@ public class MobilityTask extends Task {
 		this.timeLimit = timeLimit;
 		this.distance = distance;
 
-		LOGGER.log(Level.FINER, "New event/task is initialised: " + toString());
+		LOGGER.log(Level.DEBUG, "New event/task is initialised: " + toString());
 
 	}
 

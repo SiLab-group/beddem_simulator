@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import dummy.agent.StandardDummyAgent;
 import dummy.concept.MobilityTask;
@@ -51,7 +51,7 @@ public class CSVReader {
 		File file = null;
 		file = new File(fileLocation);
 		if (!file.exists()) {
-			LOGGER.log(Level.SEVERE, "Could not find the given file: " + file.getAbsolutePath());
+			LOGGER.log(Level.FATAL, "Could not find the given file: " + file.getAbsolutePath());
 			throw new FileNotFoundException("Could not find the given file: " + file.getAbsolutePath());
 		}
 		return new BufferedReader(new FileReader(file));
@@ -108,7 +108,7 @@ public class CSVReader {
 		}
 
 		br.close();
-		LOGGER.log(Level.FINER, "Locations created: " + idToLocationMap.toString());
+		LOGGER.log(Level.DEBUG, "Locations created: " + idToLocationMap.toString());
 	}
 
 	public void createAgents(AgentContext agentContext, HashMap<String, Environment> idToLocationMap,
@@ -122,7 +122,7 @@ public class CSVReader {
 		String line;
 		br.readLine();
 		while ((line = br.readLine()) != null) {
-			LOGGER.log(Level.FINER, "Line" + line);
+			LOGGER.log(Level.DEBUG, "Line" + line);
 			String[] inputs = line.split(",");
 			double initialFund = Double.parseDouble(inputs[2]);
 			String[] vehicleIDs = inputs[3].split(";");
@@ -151,7 +151,7 @@ public class CSVReader {
 					ownVehicles, beliefWeight, evaluationWeight, timeWeight, costWeight, normWeight, roleWeight,
 					selfWeight, emotionWeight, facilitatingWeight, freqWeight, attitudeWeight, socialWeight,
 					affectWeight, intentionWeight, habitWeight);
-			LOGGER.log(Level.FINER, "Agent id " + inputs[0] + " agent " + agent.toString());
+			LOGGER.log(Level.DEBUG, "Agent id " + inputs[0] + " agent " + agent.toString());
 			idToAgentMap.put(inputs[0], agent);
 			agentContext.add(agent);
 		}
@@ -186,12 +186,12 @@ public class CSVReader {
 				agent.addToSchedule(task);
 				// agent.rememberLastTask(task);
 				ContextManager.scheduleNewTask(agent, time);
-				LOGGER.log(Level.FINER, "Scheduled demand at: " + time + "for agent: " + agent.getID());
+				LOGGER.log(Level.DEBUG, "Scheduled demand at: " + time + "for agent: " + agent.getID());
 			}
 
 			br.close();
 		} catch (IOException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+			LOGGER.log(Level.FATAL, ex.getMessage(), ex);
 			throw ex;
 		}
 	}

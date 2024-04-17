@@ -3,8 +3,8 @@ package framework.agent.reasoning;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import framework.concept.Option;
 import framework.concept.Task;
@@ -58,7 +58,7 @@ public abstract class Determinant {
 			debugString += " \n";
 			rankingResult.put(entry.getKey() / sumValue, entry.getValue());
 		}
-		LOGGER.log(Level.FINER, debugString);
+		LOGGER.log(Level.DEBUG, debugString);
 		return rankingResult;
 	}
 
