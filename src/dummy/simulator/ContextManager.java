@@ -67,8 +67,6 @@ public class ContextManager implements ContextBuilder<Object> {
 	@Override
 	public Context<Object> build(Context<Object> con) {
 
-		SimulationLogging.init();
-
 		periodNum = 0;
 		checkpointNum = 0;
 
@@ -122,7 +120,7 @@ public class ContextManager implements ContextBuilder<Object> {
 		IReporter dummyReporter = generator.createDummyReporter(agentContext);
 		mainContext.add(dummyReporter);
 
-		LOGGER.debug("Returning main context");
+		LOGGER.info("Returning main context");
 		return mainContext;
 	}
 
@@ -165,9 +163,10 @@ public class ContextManager implements ContextBuilder<Object> {
 			ScheduleParameters params = ScheduleParameters.createOneTime(
 					GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD * periodNum
 							+ GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD
-									* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * checkpointNum,
+									* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * getCheckPointNum(),
 					PriorityType.FIRST);
 			schedule.schedule(params, this, "updateSchedule");
+			LOGGER.debug("Schedule  in update schedule time quantity" + schedule.getTimeQuantity());
 		}
 	}
 
