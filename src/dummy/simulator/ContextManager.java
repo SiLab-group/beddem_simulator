@@ -239,7 +239,7 @@ public class ContextManager implements ContextBuilder<Object> {
 
 		LOGGER.log(Level.DEBUG, new File(".").getAbsolutePath());
 
-		File propFile = new File("./data/beddem_simulator.properties");
+		File propFile = new File(GlobalVars.PropertiesFile);
 		if (!propFile.exists()) {
 			throw new FileNotFoundException(
 					"Could not find properties file in the default location: " + propFile.getAbsolutePath());

@@ -36,6 +36,7 @@ public abstract class GlobalVars {
 	public static final String TransportationTable = "TransportationTable";
 	public static final String TypeofvehiclesTable = "TypeofvehiclesTable";
 	public static final String Sociogram = "Sociogram";
+	public static final String PropertiesFile = "./data/beddem_simulator.properties";
 
 	// Names of contexts and projections. These names must match those in the
 	// parameters.xml file so that they can be displayed properly in the GUI.

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import dummy.context.AgentContext;
 import dummy.simulator.ContextManager;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
@@ -25,6 +26,7 @@ public class MyTest {
 		parm.addParameter("periods_to_checkpoint", "Periods to checkpoint", Integer.class, 1, true);
 		parm.addParameter("agent_made_probabilistic_decision", "Agent made probabilistic decision", Integer.class, 0,
 				true);
+		// Setup csv files
 
 		RunEnvironment.init(schedule, null, parm, false);
 		Context<Object> context = new DefaultContext<Object>();
@@ -44,6 +46,7 @@ public class MyTest {
 		Context<Object> returned_context = builder.build(new DefaultContext<Object>());
 		// Return 3 contexts AgentContext, LocationContext, MainContext
 		assertEquals("Number of contexts", 3, returned_context.size());
+		assertEquals("Number of agents", 1, returned_context.getObjects(AgentContext.class).size());
 		assertEquals("Number of actionCounts", 3, RunEnvironment.getInstance().getCurrentSchedule().getActionCount());
 	}
 
