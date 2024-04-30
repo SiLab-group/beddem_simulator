@@ -123,7 +123,9 @@ In this case we have example `<scenario>` called `dummy`. The directory structur
 
 ## Enable debug log
 To enable the debug logging for the BedDeM specific classes add or uncomment in the
-`MessageCenter.log4j.properties`. For example to enable debug output to the console and to the debug.log file for the `CSVReader.class` add following:```bash
+`MessageCenter.log4j.properties`. For example to enable debug output to the console and to the debug.log file for the `CSVReader.class` add following:
+
+```bash
 log4j.logger.dummy.database.CSVReader = DEBUG, stdout, R
 ```
 Logger levels and the description of log4j architecture can be find [here](https://logging.apache.org/log4j/2.x/manual/architecture.html)
