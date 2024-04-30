@@ -36,7 +36,6 @@ public abstract class GlobalVars {
 	public static final String TransportationTable = "TransportationTable";
 	public static final String TypeofvehiclesTable = "TypeofvehiclesTable";
 	public static final String Sociogram = "Sociogram";
-	public static final String PropertiesFile = "./data/beddem_simulator.properties";
 
 	// Names of contexts and projections. These names must match those in the
 	// parameters.xml file so that they can be displayed properly in the GUI.
@@ -71,6 +70,9 @@ public abstract class GlobalVars {
 		public static final double TIME_OF_EACH_SCHEDULE = 24;
 		public static final int NUMBER_OF_MODES = 6;
 		public static final double MAX_WEIGHT = 5.0;
+		// File path for the definition of input
+		// files"./data/beddem_simulator.properties";
+		public static final String PropertiesFile = "./data/" + params.getValueAsString("properties_file_name");
 
 		public static int getPeriodToNextCheckNum() {
 			Parameters params = RunEnvironment.getInstance().getParameters();

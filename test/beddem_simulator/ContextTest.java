@@ -15,7 +15,7 @@ import repast.simphony.engine.environment.RunState;
 import repast.simphony.engine.schedule.Schedule;
 import repast.simphony.parameter.DefaultParameters;
 
-public class MyTest {
+public class ContextTest {
 
 	@BeforeClass
 	public static void setUp() throws Exception {
@@ -26,6 +26,8 @@ public class MyTest {
 		parm.addParameter("periods_to_checkpoint", "Periods to checkpoint", Integer.class, 1, true);
 		parm.addParameter("agent_made_probabilistic_decision", "Agent made probabilistic decision", Integer.class, 0,
 				true);
+		parm.addParameter("properties_file_name", "Properties file name", String.class,
+				"beddem_simpleScenario.properties", true);
 		// Setup csv files
 
 		RunEnvironment.init(schedule, null, parm, false);
