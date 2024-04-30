@@ -20,6 +20,11 @@
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
+				<parameter name="properties_file_name" displayName="Properties file name" type="java.lang.String" 
+						defaultValue="beddem_simulator.properties" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
+											/>
 		</parameters>
 
 
