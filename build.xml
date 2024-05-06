@@ -5,7 +5,7 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. -->
     <!-- Set the ECLIPSE_HOME property to the Path of the Eclipse folder with the plugins. Example:
-        ant run-model "-DECLIPSE_HOME=/home/amy/tmp/eclipse" or uncomment and change property bellow
+        ant run-model "-DECLIPSE_HOME=/home/amy/tmp/eclipse/" or uncomment and change property bellow
     -->
     <project basedir="." default="build" name="beddem_simulator">
     <property environment="env"/>
@@ -14,256 +14,266 @@
     <property name="folder_prompt:the Folder to output the installer (setup.jar) file" value="../test"/>
     <property name="REPAST_VERSION" value="2.10.0"/>
     <property name="folder_prompt:the Folder to output the archive (model.zip) file" value="../test"/>
+    <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="11"/>
     <property name="source" value="11"/>
     <property name="message.center.props" location="./MessageCenter.log4j.properties" />
     <path id="Groovy DSL Support.libraryclasspath">
         <pathelement location="../../../.groovy/greclipse/global_dsld_support"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/org.codehaus.groovy_3.0.21.v202404012203-e2403/plugin_dsld_support/"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.codehaus.groovy_3.0.21.v202404012203-e2403/plugin_dsld_support/"/>
     </path>
     <path id="Groovy Libraries.libraryclasspath">
-        <pathelement location="${ECLIPSE_HOME}plugins/org.codehaus.groovy_3.0.21.v202404012203-e2403/lib/groovy-3.0.21-indy.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/org.codehaus.groovy_3.0.21.v202404012203-e2403/lib/ivy-2.5.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/org.codehaus.groovy_3.0.21.v202404012203-e2403/lib/groovy-test-3.0.21-indy.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.codehaus.groovy_3.0.21.v202404012203-e2403/lib/groovy-3.0.21-indy.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.codehaus.groovy_3.0.21.v202404012203-e2403/lib/ivy-2.5.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.codehaus.groovy_3.0.21.v202404012203-e2403/lib/groovy-test-3.0.21-indy.jar"/>
+    </path>
+    <path id="Repast ant">
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.distributed.batch_2.10.0/lib/ant-launcher.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.distributed.batch_2.10.0/lib/ant.jar"/>
     </path>
     <path id="Repast Simphony Development Libraries.libraryclasspath">
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.bsf_2.10.0/lib/bsf.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.bsf_2.10.0/lib/bsh-2.0b4.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-anim-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-awt-util-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-bridge-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-codec-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-css-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-dom-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-ext-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-extension-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-gui-util-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-gvt-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-parser-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-script-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-svg-dom-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-svggen-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-swing-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-transcoder-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-util-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/batik-xml-1.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/clibwrapper_jiio.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/gluegen-rt-natives-linux-amd64.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/gluegen-rt-natives-linux-i586.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/gluegen-rt-natives-macosx-aarch64.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/gluegen-rt-natives-macosx-amd64.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/gluegen-rt-natives-windows-amd64.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/gluegen-rt-natives-windows-i586.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/gluegen-rt.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/j3dcore.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/j3dutils.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/jai_codec.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/jai_core.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/jai_imageio.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/jogl-all-natives-linux-amd64.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/jogl-all-natives-linux-i586.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/jogl-all-natives-macosx-aarch64.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/jogl-all-natives-macosx-amd64.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/jogl-all-natives-windows-amd64.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/jogl-all-natives-windows-i586.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/jogl-all.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/mlibwrapper_jai.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/vecmath.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/xml-apis-1.3.04.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/xml-apis-ext-1.3.04.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.ext_2.10.0/lib/xmlgraphics-commons-2.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.piccolo_2.10.0/lib/piccolo2d-core-3.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/libs.piccolo_2.10.0/lib/piccolo2d-extras-3.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.batch_2.10.0/lib/batch_groovy.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.bin_and_src_2.10.0/repast.simphony.bin_and_src.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.chart_2.10.0/lib/jcommon-1.0.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.chart_2.10.0/lib/jfreechart-1.0.19.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/cglib-nodep-2.2.3.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/collections-generic-4.01.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/colt-1.2.0-no_hep.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/commons-collections-3.2.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/commons-io-2.5.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/commons-lang3-3.8.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/commons-math3-3.6.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/concurrent-1.3.4.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/dom4j-1.6.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/hsqldb-2.3.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/indriya-2.0.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/jbullet.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/jung-algorithms-2.0.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/jung-api-2.0.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/jung-graph-impl-2.0.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/jung-io-2.0.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/ooxml-schemas-1.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/opencsv-2.3.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/poi-3.9-20121203.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/poi-ooxml-3.9-20121203.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/si-quantity-2.0.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/si-units-2.0.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/stack-alloc.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/systems-common-2.0.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/unit-api-2.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/uom-lib-common-2.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/velocity-1.4.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/xmlbeans-2.3.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.distributed.batch_2.10.0/bin/fake_jar_to_avoid_watcher_init_warnings.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.distributed.batch_2.10.0/lib/ant-launcher.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.distributed.batch_2.10.0/lib/ant.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.distributed.batch_2.10.0/lib/jsch-0.1.48.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.distributed.batch_2.10.0/resources/fake_jar_to_avoid_watcher_init_warnings.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis.visualization_2.10.0/lib/gt-render-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis.visualization_2.10.0/lib/worldwind-2.2.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/GeographicLib-Java-1.49.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/disruptor-1.2.13.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/ejml-core-0.34.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/ejml-ddense-0.34.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-arcgrid-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-brewer-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-coverage-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-cql-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-epsg-hsql-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-geotiff-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-image-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-main-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-metadata-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-opengis-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-process-feature-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-process-geometry-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-process-raster-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-referencing-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-shapefile-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/gt-xml-26.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-arcgrid-1.3.13.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-cog-commons-1.3.13.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-cog-reader-1.3.13.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-cog-streams-1.3.13.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-geocore-1.3.13.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-streams-1.3.13.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-tiff-1.3.13.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-utilities-1.3.13.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jackson-annotations-2.13.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jackson-core-2.13.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jackson-databind-2.13.2.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jackson-dataformat-cbor-2.6.7.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jdom2-2.0.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-algebra-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-bandcombine-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-bandmerge-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-bandselect-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-binarize-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-border-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-buffer-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-classifier-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-colorconvert-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-colorindexer-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-contour-1.6.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-crop-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-errordiffusion-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-format-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-imagefunction-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-iterators-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-lookup-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-mosaic-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-nullop-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-orderdither-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-piecewise-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-rangelookup-1.6.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-rescale-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-rlookup-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-scale-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-shadedrelief-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-stats-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-translate-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-utilities-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-utils-1.6.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-vectorbin-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-vectorbinarize-1.6.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-vectorize-1.6.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-warp-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-zonal-1.1.23.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jt-zonalstats-1.6.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gis_2.10.0/lib/jts-core-1.18.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.groovy_2.10.0/lib/groovy-swing-3.0.11.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.groovy_2.10.0/lib/groovy-templates-3.0.11.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.groovy_2.10.0/lib/groovy-xml-3.0.11.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gui_2.10.0/lib/jgoodies-binding-2.9.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gui_2.10.0/lib/jgoodies-common-1.6.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gui_2.10.0/lib/jide-oss-3.7.4.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gui_2.10.0/lib/jmf.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.gui_2.10.0/lib/spark-1.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.integration_2.10.0/lib/commons-exec-1.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.integration_2.10.0/lib/commons-jxpath-1.3.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.integration_2.10.0/lib/jaxen-1.1.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.integration_2.10.0/lib/jdom-1.1.3.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.jasperreports_2.10.0/lib/commons-beanutils-1.8.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.jasperreports_2.10.0/lib/commons-digester-2.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.jasperreports_2.10.0/lib/iText-2.1.7.js2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.jasperreports_2.10.0/lib/jasperreports-5.1.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.jdbcfreezedryer_2.10.0/lib/commons-dbcp-1.4.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.jdbcfreezedryer_2.10.0/lib/commons-pool-1.6.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.relogo.builder_2.10.0/lib/ST-4.0.7.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.relogo.ide_2.10.0/libs/antlrworks-1.1.7.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.relogo.runtime_2.10.0/dsldFolder/ReLogoDSLD.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.relogo.runtime_2.10.0/lib/asm-3.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/commons-cli-1.3.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/commons-logging-1.1.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/javassist-3.17.1-GA.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/jpf-boot.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/jpf.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/log4j-1.2-api-2.17.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/log4j-api-2.17.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/log4j-core-2.17.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/saf.core.runtime.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/xmlpull-1.1.3.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/xpp3_min-1.1.4c.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/xstream-1.4.19.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/testlib/cenquatasks.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/testlib/jmock-1.0.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/testlib/jmock-cglib-1.0.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/testlib/junit-3.8.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/testlib/junit-addons-1.4.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/annotations-13.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/jackson-annotations-2.9.9.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/jackson-core-2.9.9.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/jackson-databind-2.9.9.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/javalin-3.0.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/javax.servlet-api-3.1.0.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/jeromq-0.5.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/jetty-client-9.4.17.v20190418.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/jetty-http-9.4.17.v20190418.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/jetty-io-9.4.17.v20190418.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/jetty-security-9.4.17.v20190418.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/jetty-server-9.4.17.v20190418.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/jetty-servlet-9.4.17.v20190418.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/jetty-util-9.4.17.v20190418.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/jetty-webapp-9.4.17.v20190418.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/jetty-xml-9.4.17.v20190418.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/kotlin-stdlib-1.3.31.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/kotlin-stdlib-common-1.3.31.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/kotlin-stdlib-jdk7-1.3.31.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/kotlin-stdlib-jdk8-1.3.31.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/saf.core.v3d.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/slf4j-api-1.7.26.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/slf4j-simple-1.7.26.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/websocket-api-9.4.17.v20190418.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/websocket-client-9.4.17.v20190418.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/websocket-common-9.4.17.v20190418.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/websocket-server-9.4.17.v20190418.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/lib/websocket-servlet-9.4.17.v20190418.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.sql_2.10.0/lib/JoSQL-2.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.sql_2.10.0/lib/gentlyWEB-utils-1.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.visualization_2.10.0/lib/MS3DLoader-1.0.8.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.visualization_2.10.0/lib/jung-visualization-2.0.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/saf.core.ui_2.10.0/lib/TableLayout.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/saf.core.ui_2.10.0/lib/dockingFrames-1.0.8p3a-saf.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/saf.core.ui_2.10.0/lib/jgoodies-forms-1.7.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/saf.core.ui_2.10.0/lib/jh.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/saf.core.ui_2.10.0/lib/l2fprod-common-all.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/saf.core.ui_2.10.0/lib/osx.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/saf.core.ui_2.10.0/lib/wizard-0.1.12.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/saf.core.ui_2.10.0/saf.core.ui.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/saf.core.ui_2.10.0/saf.core.v3d.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.bsf_2.10.0/lib/bsf.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.bsf_2.10.0/lib/bsh-2.0b4.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-anim-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-awt-util-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-bridge-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-codec-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-css-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-dom-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-ext-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-extension-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-gui-util-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-gvt-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-parser-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-script-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-svg-dom-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-svggen-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-swing-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-transcoder-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-util-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/batik-xml-1.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/clibwrapper_jiio.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/gluegen-rt-natives-linux-amd64.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/gluegen-rt-natives-linux-i586.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/gluegen-rt-natives-macosx-aarch64.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/gluegen-rt-natives-macosx-amd64.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/gluegen-rt-natives-windows-amd64.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/gluegen-rt-natives-windows-i586.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/gluegen-rt.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/j3dcore.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/j3dutils.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/jai_codec.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/jai_core.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/jai_imageio.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/jogl-all-natives-linux-amd64.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/jogl-all-natives-linux-i586.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/jogl-all-natives-macosx-aarch64.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/jogl-all-natives-macosx-amd64.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/jogl-all-natives-windows-amd64.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/jogl-all-natives-windows-i586.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/jogl-all.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/mlibwrapper_jai.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/vecmath.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/xml-apis-1.3.04.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/xml-apis-ext-1.3.04.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.ext_2.10.0/lib/xmlgraphics-commons-2.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.piccolo_2.10.0/lib/piccolo2d-core-3.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/libs.piccolo_2.10.0/lib/piccolo2d-extras-3.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.batch_2.10.0/lib/batch_groovy.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.bin_and_src_2.10.0/repast.simphony.bin_and_src.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.chart_2.10.0/lib/jcommon-1.0.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.chart_2.10.0/lib/jfreechart-1.0.19.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/cglib-nodep-2.2.3.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/collections-generic-4.01.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/colt-1.2.0-no_hep.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/commons-collections-3.2.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/commons-io-2.5.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/commons-lang3-3.8.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/commons-math3-3.6.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/concurrent-1.3.4.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/dom4j-1.6.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/hsqldb-2.3.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/indriya-2.0.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/jbullet.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/jung-algorithms-2.0.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/jung-api-2.0.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/jung-graph-impl-2.0.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/jung-io-2.0.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/ooxml-schemas-1.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/opencsv-2.3.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/poi-3.9-20121203.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/poi-ooxml-3.9-20121203.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/si-quantity-2.0.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/si-units-2.0.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/stack-alloc.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/systems-common-2.0.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/unit-api-2.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/uom-lib-common-2.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/velocity-1.4.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/xmlbeans-2.3.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.distributed.batch_2.10.0/bin/fake_jar_to_avoid_watcher_init_warnings.jar"/>
+<!--         <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.distributed.batch_2.10.0/lib/ant-launcher.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.distributed.batch_2.10.0/lib/ant.jar"/> -->
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.distributed.batch_2.10.0/lib/jsch-0.1.48.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.distributed.batch_2.10.0/resources/fake_jar_to_avoid_watcher_init_warnings.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis.visualization_2.10.0/lib/gt-render-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis.visualization_2.10.0/lib/worldwind-2.2.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/GeographicLib-Java-1.49.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/disruptor-1.2.13.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/ejml-core-0.34.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/ejml-ddense-0.34.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-arcgrid-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-brewer-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-coverage-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-cql-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-epsg-hsql-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-geotiff-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-image-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-main-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-metadata-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-opengis-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-process-feature-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-process-geometry-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-process-raster-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-referencing-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-shapefile-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/gt-xml-26.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-arcgrid-1.3.13.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-cog-commons-1.3.13.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-cog-reader-1.3.13.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-cog-streams-1.3.13.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-geocore-1.3.13.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-streams-1.3.13.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-tiff-1.3.13.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/imageio-ext-utilities-1.3.13.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jackson-annotations-2.13.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jackson-core-2.13.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jackson-databind-2.13.2.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jackson-dataformat-cbor-2.6.7.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jdom2-2.0.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-algebra-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-bandcombine-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-bandmerge-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-bandselect-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-binarize-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-border-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-buffer-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-classifier-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-colorconvert-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-colorindexer-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-contour-1.6.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-crop-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-errordiffusion-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-format-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-imagefunction-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-iterators-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-lookup-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-mosaic-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-nullop-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-orderdither-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-piecewise-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-rangelookup-1.6.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-rescale-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-rlookup-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-scale-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-shadedrelief-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-stats-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-translate-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-utilities-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-utils-1.6.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-vectorbin-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-vectorbinarize-1.6.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-vectorize-1.6.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-warp-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-zonal-1.1.23.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jt-zonalstats-1.6.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gis_2.10.0/lib/jts-core-1.18.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.groovy_2.10.0/lib/groovy-swing-3.0.11.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.groovy_2.10.0/lib/groovy-templates-3.0.11.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.groovy_2.10.0/lib/groovy-xml-3.0.11.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gui_2.10.0/lib/jgoodies-binding-2.9.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gui_2.10.0/lib/jgoodies-common-1.6.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gui_2.10.0/lib/jide-oss-3.7.4.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gui_2.10.0/lib/jmf.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.gui_2.10.0/lib/spark-1.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.integration_2.10.0/lib/commons-exec-1.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.integration_2.10.0/lib/commons-jxpath-1.3.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.integration_2.10.0/lib/jaxen-1.1.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.integration_2.10.0/lib/jdom-1.1.3.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.jasperreports_2.10.0/lib/commons-beanutils-1.8.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.jasperreports_2.10.0/lib/commons-digester-2.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.jasperreports_2.10.0/lib/iText-2.1.7.js2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.jasperreports_2.10.0/lib/jasperreports-5.1.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.jdbcfreezedryer_2.10.0/lib/commons-dbcp-1.4.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.jdbcfreezedryer_2.10.0/lib/commons-pool-1.6.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.relogo.builder_2.10.0/lib/ST-4.0.7.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.relogo.ide_2.10.0/libs/antlrworks-1.1.7.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.relogo.runtime_2.10.0/dsldFolder/ReLogoDSLD.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.relogo.runtime_2.10.0/lib/asm-3.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/commons-cli-1.3.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/commons-logging-1.1.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/javassist-3.17.1-GA.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/jpf-boot.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/jpf.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/log4j-1.2-api-2.17.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/log4j-api-2.17.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/log4j-core-2.17.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/saf.core.runtime.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/xmlpull-1.1.3.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/xpp3_min-1.1.4c.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/xstream-1.4.19.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/testlib/cenquatasks.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/testlib/jmock-1.0.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/testlib/jmock-cglib-1.0.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/testlib/junit-3.8.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/testlib/junit-addons-1.4.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/annotations-13.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/jackson-annotations-2.9.9.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/jackson-core-2.9.9.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/jackson-databind-2.9.9.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/javalin-3.0.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/javax.servlet-api-3.1.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/jeromq-0.5.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/jetty-client-9.4.17.v20190418.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/jetty-http-9.4.17.v20190418.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/jetty-io-9.4.17.v20190418.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/jetty-security-9.4.17.v20190418.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/jetty-server-9.4.17.v20190418.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/jetty-servlet-9.4.17.v20190418.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/jetty-util-9.4.17.v20190418.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/jetty-webapp-9.4.17.v20190418.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/jetty-xml-9.4.17.v20190418.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/kotlin-stdlib-1.3.31.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/kotlin-stdlib-common-1.3.31.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/kotlin-stdlib-jdk7-1.3.31.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/kotlin-stdlib-jdk8-1.3.31.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/saf.core.v3d.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/slf4j-api-1.7.26.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/slf4j-simple-1.7.26.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/websocket-api-9.4.17.v20190418.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/websocket-client-9.4.17.v20190418.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/websocket-common-9.4.17.v20190418.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/websocket-server-9.4.17.v20190418.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/lib/websocket-servlet-9.4.17.v20190418.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.sql_2.10.0/lib/JoSQL-2.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.sql_2.10.0/lib/gentlyWEB-utils-1.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.visualization_2.10.0/lib/MS3DLoader-1.0.8.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.visualization_2.10.0/lib/jung-visualization-2.0.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/saf.core.ui_2.10.0/lib/TableLayout.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/saf.core.ui_2.10.0/lib/dockingFrames-1.0.8p3a-saf.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/saf.core.ui_2.10.0/lib/jgoodies-forms-1.7.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/saf.core.ui_2.10.0/lib/jh.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/saf.core.ui_2.10.0/lib/l2fprod-common-all.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/saf.core.ui_2.10.0/lib/osx.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/saf.core.ui_2.10.0/lib/wizard-0.1.12.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/saf.core.ui_2.10.0/saf.core.ui.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/saf.core.ui_2.10.0/saf.core.v3d.jar"/>
+    </path>
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.junit_4.13.2.v20230809-1000.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.hamcrest_2.2.0.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.hamcrest.core_2.2.0.v20230809-1000.jar"/>
     </path>
     <path id="beddem_simulator.classpath">
         <pathelement location="bin"/>
@@ -271,10 +281,18 @@
         <path refid="Groovy Libraries.libraryclasspath"/>
         <path refid="Repast Simphony Development Libraries.libraryclasspath"/>
     </path>
+    <path id="run.Test.classpath">
+        <pathelement location="testbin"/>
+        <path refid="beddem_simulator.classpath"/>
+        <path refid="Groovy DSL Support.libraryclasspath"/>
+        <path refid="Groovy Libraries.libraryclasspath"/>
+        <path refid="Repast Simphony Development Libraries.libraryclasspath"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+    </path>
     <path id="Stand Alone Batch Classpath.libraryclasspath">
-        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.distributed.batch.ui_2.10.0/bin-standalone"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/commons-cli-1.3.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/lib/commons-lang3-3.8.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}//plugins/repast.simphony.distributed.batch.ui_2.10.0/bin-standalone"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/commons-cli-1.3.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/lib/commons-lang3-3.8.1.jar"/>
     </path>
     <path id="run.Batch beddem_simulator Model.classpath">
         <path refid="Stand Alone Batch Classpath.libraryclasspath"/>
@@ -283,38 +301,47 @@
     <path id="run.Build Installer for beddem_simulator Model.classpath"/>
     <path id="run.Build Portable Archive for beddem_simulator Model.classpath"/>
     <path id="Repast Simphony Interactive Runtime Libraries.libraryclasspath">
-        <pathelement location="${ECLIPSE_HOME}plugins/org.codehaus.groovy_3.0.21.v202404012203-e2403/lib/groovy-3.0.21-indy.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/org.codehaus.groovy_3.0.21.v202404012203-e2403/lib/ivy-2.5.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/org.codehaus.groovy_3.0.21.v202404012203-e2403/lib/groovy-test-3.0.21-indy.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.codehaus.groovy_3.0.21.v202404012203-e2403/lib/groovy-3.0.21-indy.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.codehaus.groovy_3.0.21.v202404012203-e2403/lib/ivy-2.5.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.codehaus.groovy_3.0.21.v202404012203-e2403/lib/groovy-test-3.0.21-indy.jar"/>
         <pathelement location="${workspace_loc:project_name}/bin"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/bin"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/saf.core.runtime.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/commons-logging-1.1.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/javassist-3.17.1-GA.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/jpf.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/jpf-boot.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/log4j-1.2-api-2.17.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/log4j-api-2.17.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/log4j-core-2.17.2.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/xpp3_min-1.1.4c.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/xstream-1.4.19.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/xmlpull-1.1.3.1.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/lib/commons-cli-1.3.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}//plugins/repast.simphony.runtime_2.10.0/bin"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/saf.core.runtime.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/commons-logging-1.1.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/javassist-3.17.1-GA.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/jpf.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/jpf-boot.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/log4j-1.2-api-2.17.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/log4j-api-2.17.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/log4j-core-2.17.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/xpp3_min-1.1.4c.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/xstream-1.4.19.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/xmlpull-1.1.3.1.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/lib/commons-cli-1.3.1.jar"/>
     </path>
     <path id="run.beddem_simulator Model.classpath">
         <path refid="Repast Simphony Interactive Runtime Libraries.libraryclasspath"/>
+        <path refid="Repast ant"/>
     </path>
     <path id="run.beddem_simulator Server.classpath">
         <path refid="Repast Simphony Interactive Runtime Libraries.libraryclasspath"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.runtime_2.10.0/bin"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.server_2.10.0/bin"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.core_2.10.0/bin"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/repast.simphony.scenario_2.10.0/bin"/>
+        <path refid="Repast ant"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.runtime_2.10.0/bin"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.server_2.10.0/bin"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.core_2.10.0/bin"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/repast.simphony.scenario_2.10.0/bin"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
+        <mkdir dir="testbin"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="testbin">
+            <fileset dir="test">
                 <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
@@ -322,6 +349,7 @@
     </target>
     <target name="clean">
         <delete dir="bin"/>
+        <delete dir="testbin"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
@@ -330,6 +358,10 @@
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
+            <classpath refid="beddem_simulator.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="testbin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="test"/>
             <classpath refid="beddem_simulator.classpath"/>
         </javac>
     </target>
@@ -347,6 +379,15 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
+    <target name="run-test">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="yes">
+            <formatter type="xml"/>
+            <test name="beddem_simulator.ContextTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="run.Test.classpath"/>
+        </junit>
+    </target>
     <target name="batch-model">
         <java classname="repast.simphony.batch.standalone.StandAloneMain" failonerror="true" fork="yes">
             <arg line="-model_dir &quot;${workspace_loc:beddem_simulator}&quot;"/>
@@ -356,14 +397,14 @@
     <target name="build-installer">
         <java classname="org.apache.tools.ant.launch.Launcher" failonerror="true" fork="yes">
             <jvmarg line="-XX:+IgnoreUnrecognizedVMOptions --add-modules=ALL-SYSTEM --add-exports=java.base/jdk.internal.ref=ALL-UNNAMED"/>
-            <arg line="-buildfile &quot;${workspace_loc:beddem_simulator}/installer/installation_coordinator.xml&quot; -DoutputInstallationFile=&quot;${folder_prompt:the Folder to output the installer (setup.jar) file}/setup.jar&quot; -DEclipsePluginsDirectory=&quot;${eclipse_home}plugins&quot; -DREPAST_VERSION=${REPAST_VERSION}"/>
+            <arg line="-buildfile &quot;${workspace_loc:beddem_simulator}/installer/installation_coordinator.xml&quot; -DoutputInstallationFile=&quot;${folder_prompt:the Folder to output the installer (setup.jar) file}/setup.jar&quot; -DEclipsePluginsDirectory=&quot;${eclipse_home}/plugins&quot; -DREPAST_VERSION=${REPAST_VERSION}"/>
             <classpath refid="run.Build Installer for beddem_simulator Model.classpath"/>
         </java>
     </target>
     <target name="build-portable-archive">
         <java classname="org.apache.tools.ant.launch.Launcher" failonerror="true" fork="yes">
             <jvmarg line="-XX:+IgnoreUnrecognizedVMOptions --add-modules=ALL-SYSTEM --add-exports=java.base/jdk.internal.ref=ALL-UNNAMED"/>
-            <arg line="-buildfile &quot;${workspace_loc:beddem_simulator}/installer/create_model_archive.xml&quot; -DoutputInstallationFile=&quot;${folder_prompt:the Folder to output the archive (model.zip) file}&quot; -DEclipsePluginsDirectory=&quot;${eclipse_home}plugins&quot; -DREPAST_VERSION=${REPAST_VERSION}"/>
+            <arg line="-buildfile &quot;${workspace_loc:beddem_simulator}/installer/create_model_archive.xml&quot; -DoutputInstallationFile=&quot;${folder_prompt:the Folder to output the archive (model.zip) file}&quot; -DEclipsePluginsDirectory=&quot;${eclipse_home}/plugins&quot; -DREPAST_VERSION=${REPAST_VERSION}"/>
             <classpath refid="run.Build Portable Archive for beddem_simulator Model.classpath"/>
         </java>
     </target>
@@ -380,5 +421,13 @@
             <arg line="5000 &quot;${workspace_loc:beddem_simulator}/beddem_simulator.rs&quot; true"/>
             <classpath refid="run.beddem_simulator Server.classpath"/>
         </java>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
     </target>
 </project>

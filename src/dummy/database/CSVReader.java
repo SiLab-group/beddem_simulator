@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -180,7 +181,7 @@ public class CSVReader {
 				time += GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD * periodNum
 						+ GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD
 								* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * checkpointNum;
-
+				LOGGER.debug("Create schedule time:  " + time);
 				MobilityTask task = new MobilityTask(time, Double.parseDouble(inputs[1]), distance, purpose, timeLimit);
 				StandardDummyAgent agent = (StandardDummyAgent) idToAgentMap.get(agentId);
 				agent.addToSchedule(task);

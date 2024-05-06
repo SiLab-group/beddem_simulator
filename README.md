@@ -25,10 +25,11 @@ For simulation run the repast simphony and corresponding eclipse version has to 
 10. Start Repast interface by click the small arrow next to the run button and select "your_project_name Model" in default case `beddem_simulator Model`.
 11. Click the `Initialize and run button` to run the project. These buttons are shown in the example simulation run bellow. After it finishes, you should see a new output file in the output folder.
  
-## Build with ant
+## Build and run with ant
 1. Install ant depending on the OS.(Ubuntu: `sudo apt-get install ant`)
-2. Adjust the path of ECLIPSE_HOME in the build.xml or run `ant build -DECLIPSE_HOME=/your/path/to/plugins`
-3. Run model `ant run-model -DECLIPSE_HOME=/your/path/to/plugins`
+2. Adjust the path of ECLIPSE_HOME in the build.xml or run `ant build "-DECLIPSE_HOME=/your/path/to/eclipse"`
+3. Run model `ant run-model "-DECLIPSE_HOME=/your/path/to/eclipse/"`
+4. Runt tests with ant `ant run-test "-DECLIPSE_HOME=/your/path/to/eclipse/"`
 
 ## Example simulation run
  This example simulation contains one agent with the simple schedule of two tasks. When changing the weight of the `time_weight` or `cost_weight` in the `agent.csv` file. 

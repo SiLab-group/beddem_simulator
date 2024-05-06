@@ -166,7 +166,8 @@ public class ContextManager implements ContextBuilder<Object> {
 									* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * getCheckPointNum(),
 					PriorityType.FIRST);
 			schedule.schedule(params, this, "updateSchedule");
-			LOGGER.debug("Schedule  in update schedule time quantity" + schedule.getTimeQuantity());
+			LOGGER.debug("Schedule  in update schedule model action counts " + schedule.getActionCount());
+			LOGGER.debug("Current user time unit " + schedule.getTimeQuantity());
 		}
 	}
 

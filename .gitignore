@@ -14,3 +14,5 @@ debug.log
 velocity.log*
 Repast.settings
 /testbin/
+junit/*
+.idea/*
