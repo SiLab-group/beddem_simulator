@@ -280,6 +280,7 @@
         <path refid="Groovy DSL Support.libraryclasspath"/>
         <path refid="Groovy Libraries.libraryclasspath"/>
         <path refid="Repast Simphony Development Libraries.libraryclasspath"/>
+        <path refid="JUnit 4.libraryclasspath"/>
     </path>
     <path id="run.Test.classpath">
         <pathelement location="testbin"/>
