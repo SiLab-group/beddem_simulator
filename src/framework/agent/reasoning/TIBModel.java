@@ -18,7 +18,7 @@ public class TIBModel extends ParentDeterminant {
 		ParentDeterminant intention = new ParentDeterminant("intention", intentionWeight);
 		ParentDeterminant habits = new ParentDeterminant("habits", habitWeight);
 
-		ParentDeterminant attitude = new ParentDeterminant("attitude", affectWeight);
+		ParentDeterminant attitude = new ParentDeterminant("attitude", attitudeWeight);
 		ParentDeterminant socialFactors = new ParentDeterminant("social", socialWeight);
 		ParentDeterminant affect = new ParentDeterminant("affect", affectWeight);
 
