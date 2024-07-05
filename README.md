@@ -16,8 +16,8 @@ For simulation run the repast simphony and corresponding eclipse version has to 
 5. **Note**: If `Surrogate issue UTF16 appears`
     - Menu Window -> Preferences -> Java -> Mark occurences -> Untick
 6. **Install openjdk-11** from [here](https://jdk.java.net/archive/):
-    - Preferences -> Installed JREs -> Pick folder
-    - Preferences -> Java -> Compiler-> Java 11
+    - Window -> Preferences -> Java -> Installed JREs -> Pick folder
+    - Window -> Preferences -> Java -> Compiler-> Java 11
 7. **Clone the beddem_simulator repository**: `git clone https://github.com/SiLab-group/beddem_simulator.git`
 8. **Import project to eclipse**:
     - File -> New -> Other -> Repast Simphony -> Repast Simphony Project -> Select the folder of cloned repo (beddem) -> Name the project beddem -> Finish
