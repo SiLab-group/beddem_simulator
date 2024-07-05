@@ -14,7 +14,7 @@ For simulation run the repast simphony and corresponding eclipse version has to 
 4. Check Groovy compiler version is higher than 3.0.x:
     - Window -> Preferences -> Groovy compiler
 5. **Note**: If `Surrogate issue UTF16 appears`
-    - Menu Window -> Preferences -> Java -> Mark occurences -> Untick
+    - Menu Window -> Preferences -> Java -> Editor -> Mark occurences -> Untick
 6. **Install openjdk-11** from [here](https://jdk.java.net/archive/):
     - Window -> Preferences -> Java -> Installed JREs -> Pick folder
     - Window -> Preferences -> Java -> Compiler-> Java 11
