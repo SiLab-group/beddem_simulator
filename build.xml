@@ -385,6 +385,7 @@
         <junit fork="yes" printsummary="yes">
             <formatter type="xml"/>
             <test name="beddem_simulator.ContextTest" todir="${junit.output.dir}"/>
+            <test name="example.SionToSierreTest" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
             <classpath refid="run.Test.classpath"/>
         </junit>
