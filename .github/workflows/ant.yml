@@ -14,6 +14,12 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    # Needed so the test-results step can post a check + comment on the PR.
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: read
+
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 11
@@ -33,7 +39,14 @@ jobs:
         ant junitreport
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()          # publish even when a test fails
       with:
         files: |
           junit/**/*.xml
+    - name: Upload JUnit report
+      uses: actions/upload-artifact@v4
+      if: always()          # keep the HTML/XML report even on failure
+      with:
+        name: junit-report
+        path: junit/
 
