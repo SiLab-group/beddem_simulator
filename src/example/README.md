@@ -39,59 +39,65 @@ Expected EU (paper Table 1):
 
 Ranking: **Car < Train < Bike**, so the agent picks the **car**.
 
-## How to run the test
+## How to run
 
-### Option A — standalone, no Repast (quickest)
+The example depends only on `framework.*` + `example.*` (and JUnit 4 for the
+test), so it compiles and runs **without Repast/Eclipse**. Run all commands
+from the repository root.
 
-The example depends only on `framework.*` + `example.*` and JUnit 4, so it
-compiles without Repast/Eclipse. From the repository root:
+### 1. Run the example (prints the EU table, no JUnit needed)
 
 ```bash
-# Point these at a working JDK and a JUnit 4 jar (+ hamcrest).
-# JUnit 4.13.2 and hamcrest ship with the Repast/Eclipse plugins, e.g.:
-#   org.junit_4.13.2.v20230809-1000.jar, org.hamcrest.core_2.2.0*.jar
+mkdir -p out
+javac -d out $(find src/framework src/example -name '*.java')
+java  -cp out example.SionToSierreExample
+```
+
+Expected output (EU ≈, computed by the engine):
+
+```
+=== Sion -> Sierre (18 km) | EU, lower = better ===
+  Car    EU ≈ 1.13
+  Train  EU ≈ 3.07
+  Bike   EU ≈ 4.81
+Chosen (lowest EU): Car
+```
+
+### 2. Run the JUnit test
+
+Standalone — needs a JUnit 4 jar + hamcrest (both ship with the Repast/Eclipse
+plugins, e.g. `org.junit_4.13.2.v20230809-1000.jar`,
+`org.hamcrest.core_2.2.0*.jar`):
+
+```bash
 JUNIT=/path/to/junit-4.13.2.jar
 HAMCREST=/path/to/hamcrest-core.jar
 
 mkdir -p out
-# compile the engine, the example, and the test
-javac -d out \
-  $(find src/framework src/example -name '*.java') \
+javac -d out $(find src/framework src/example -name '*.java') \
   -cp "$JUNIT:$HAMCREST" test/example/SionToSierreTest.java
 
-# run the JUnit 4 test
 java -cp "out:$JUNIT:$HAMCREST" org.junit.runner.JUnitCore example.SionToSierreTest
-
-# or just print the EU table without JUnit:
-java -cp out example.SionToSierreExample
 ```
 
-Expected `main()` output:
+A passing run prints `OK (5 tests)`. The test asserts the paper EU values to
+±0.05.
 
-```
-=== Sion -> Sierre (18 km) | EU, lower = better ===
-  Car    EU = 1.1268
-  Train  EU = 3.0675
-  Bike   EU = 4.8056
-Chosen (lowest EU): Car
-```
-
-(EU values are shown to 4 dp; the test asserts them to ±0.05.)
-
-### Option B — with ant / Repast (the CI pipeline)
+### 3. Run inside the full build / CI (ant + Repast)
 
 The test is registered in `build.xml`'s `run-test` target, so it runs with the
-existing pipeline. This path compiles the whole project, so it needs Repast
+existing pipeline. This path compiles the whole project and needs Repast
 Simphony + Eclipse configured (see the top-level `README.md`):
 
 ```bash
-ant build   "-DECLIPSE_HOME=/path/to/eclipse"
+ant build    "-DECLIPSE_HOME=/path/to/eclipse"
 ant run-test "-DECLIPSE_HOME=/path/to/eclipse"
 ```
 
-Results are written as JUnit XML under `junit/`.
+Results are written as JUnit XML under `junit/`. In GitHub Actions this runs
+automatically on pull requests to `master`.
 
-### Option C — Eclipse
+### 4. Eclipse
 
 Right-click `test/example/SionToSierreTest.java` → **Run As → JUnit Test**.
 
