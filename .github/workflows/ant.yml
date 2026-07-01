@@ -43,6 +43,9 @@ jobs:
       with:
         files: |
           junit/**/*.xml
+        check_name: "Test Results"
+        comment_mode: always        # always post/update a comment on the PR
+        comment_title: "BedDeM test results"
     - name: Upload JUnit report
       uses: actions/upload-artifact@v4
       if: always()          # keep the HTML/XML report even on failure
