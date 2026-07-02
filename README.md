@@ -58,63 +58,22 @@ agentID,start_time,km,vehicle
 ```
 This output corresponds to the `time_weight` set to 5 and `cost_weight` set to 1.
 
-## Project structure
-In this case we have example `<scenario>` called `dummy`. The directory structure:
-* **`src`**
-	- `<scenario>.agent`: specific implementation of all agents for scenario and external inputs for processing
-	   + CommunicationComponent: decision communication
-	   + DecisionComponent: decision determinants definition
-	   + MemoryComponent: memory definition and feelings
-	   + PerceptionComponent: perception component of possibilities
-	   + StandardDummyAgent: definition of the agent and its functions
-	- `<scenario>.concept`: basic concepts used around model such as Task and Option available for agent
-	   + EnvironmentalState: state of the environment and availability
-	   + Feedback: feedback of the environment
-	   + InternalState: state of the environment
-	   + Option: environment options
-	   + Task: one task in the agent schedule with all its constraints
-	   + Vehicle: vehicle definition and properties
-	- `<scenario>.context`: context definitions usually taken from the GlobVariables file
-	   + AgentContext: context definition for agent
-	   + LocationContext: context definition for location
-	- `<scenario>.database`: data retrievers
-	   + CSVReader: reader for csv files
-	- `<scenario>.environment`: definitions of the environment
-	- `<scenario>.report`: contains scenario specific reporter classes.
-		+ Reporter classes: describes how what we want from the model. We can select which method to be run in Repast interface.
-	- `<scenario>.simulator`: contain the Repast controller, scheduler and logger of the project. This is the core function of Repast and you should not modify it. The two simulator classes here are ContextManager (the simulator controller and entry points of the simulator) and ThreadAgentScheduler (schedules the Tasks and execute them).
-		+ ContextManager: describes how the input should be read and can be modified to fit the project. Container of all the agents and locations.
-	- `framework.agent.core`: anything that is related to the agent's operation
-		+ IAgent: the Interface of agent. Contains some methods that an agent should have. 
-		+ DefaultAgent: the standard agent that can be extended depend on the type of project. Its simulator operation is described in the step() method which is controlled by the Scheduler mentioned above.
-		+ StandardTraveller: the class used specific for transportation demand. Contains the logic to evaluate an option. 
-	- `framework.agent.reasoning`: containing the TPB and TIB model and determinant interfaces
-		+ Determinant: standard determinant for evaluation of options
-		+ LeafDeterminant: base determinant node in decision making 
-		+ ParentDeterminant: parent determinant in decision making model defines ranking options
-		+ TIBModel: Triandis decision making model, definition all base determinants according to this model
-		+ TPBModel: Theory of planned behavior model
-	- `framework.concept`: some basic concepts that are used around the model (i.e Task and Option available for the agent). Note that at the moment time is setup as hour and distance is in km. Also some classes that are implemented specifically for transportation demand.
-	    + EnvironmentalState: state of environment
-	    + Feedback: interface definition of feedback
-	    + InternalState: interface for agent state 
-	    + Opinion: interface for agent opinion
-	    + Option: option interface
-	    + Task: task interface
-	- `framework.environment`: information of the environment where the agents reside in. (ex: available transportations, total demand, kms, spending for each mode, etc.).
-	    + Environment: interface for location of the agent its environment
-	- `framework.exception`: all the exceptions and how to handle them.
-	
-* **`data`**
-	- `csv_files`: two scenario example files one with `dummy` prefix and one without. Both are containing schedule for only for next day.
-		+ agents: list of all the agent and their parameters.
-		+ vehicle: list of all available transportation mode and their parameters.
-		+ schedule: list of all the events to be assigned to agents. At the moment, the price point of car is added at the end of the file name (ex: 0.0 mean car_price * 0.0). This is for when we want to run in batch mode where we want to define different price points in the demand curve.
-		+ location: list of all locations with available modes of transport
-	- testing: csv files for modular + system testing, will be generated if you run the testing classes.
-	- beddem_simulator.properties: locations of all the inputs, parameters and outputs of the model.
-* **`your_project_name.rs`**: Define the inputs, outputs, parameters and observers for the model
+## Worked example: Sion → Sierre (TIB)
+A small, self-contained TIB example (no Repast needed) that reproduces the BedDeM paper Table 1: an 18 km trip with three modes. Every determinant is a **cost** (lower = better), so the agent picks the option with the lowest expected utility (EU):
 
+| Mode | EU (lower = better) |
+|------|---------------------|
+| **Car** | **≈ 1.13** ← chosen |
+| Train | ≈ 3.07 |
+| Bike | ≈ 4.81 |
+
+```bash
+mkdir -p out
+javac -d out $(find src/framework src/example -name '*.java')
+java -cp out example.SionToSierreExample
+```
+
+More detail (JUnit test, CI): [`src/example/README.md`](src/example/README.md).
 
 ## Tested with versions
 	- Eclipse: 2024-03
@@ -129,5 +88,3 @@ To enable the debug logging for the BedDeM specific classes add or uncomment in 
 ```bash
 log4j.logger.dummy.database.CSVReader = DEBUG, stdout, R
 ```
-Logger levels and the description of log4j architecture can be find [here](https://logging.apache.org/log4j/2.x/manual/architecture.html)
-
