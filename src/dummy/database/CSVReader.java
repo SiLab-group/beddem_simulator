@@ -103,9 +103,12 @@ public class CSVReader {
 			if (inputs[3].equals("1")) {
 				publicTransports.add(this.idToVehicleMap.get("3"));
 			}
-			Location loc = new Location(inputs[0], publicTransports);
+			// Optional location name in the last column (e.g. Sion, Sierre).
+			String name = (inputs.length > 4) ? inputs[4] : inputs[0];
+			Location loc = new Location(inputs[0], name, publicTransports);
 			idToLocationMap.put(inputs[0], loc);
 			locContext.add(loc);
+			LOGGER.log(Level.DEBUG, "Location created: " + name + " (id " + inputs[0] + ")");
 		}
 
 		br.close();

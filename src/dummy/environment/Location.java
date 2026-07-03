@@ -11,9 +11,11 @@ public class Location implements Environment {
 
 	private Set<Vehicle> publicTransports;
 	private String id;
+	private String name;
 
-	public Location(String id, Set<Vehicle> publicTransports) {
+	public Location(String id, String name, Set<Vehicle> publicTransports) {
 		this.id = id;
+		this.name = name;
 		this.publicTransports = publicTransports;
 	}
 
@@ -24,6 +26,10 @@ public class Location implements Environment {
 
 	public String getId() {
 		return this.id;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 }

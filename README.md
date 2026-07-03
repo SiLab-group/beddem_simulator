@@ -58,22 +58,16 @@ agentID,start_time,km,vehicle
 ```
 This output corresponds to the `time_weight` set to 5 and `cost_weight` set to 1.
 
-## Worked example: Sion → Sierre (TIB)
-A small, self-contained TIB example (no Repast needed) that reproduces the BedDeM paper Table 1: an 18 km trip with three modes. Every determinant is a **cost** (lower = better), so the agent picks the option with the lowest expected utility (EU):
+## Scenario: Sion ↔ Sierre
+The bundled scenario models a full TIB decision with **two locations** — Sion (`loc_id 1`) and Sierre (`loc_id 2`), both offering train + bus — and several agents with different attributes (weights and owned vehicles). Every TIB determinant is implemented in `StandardDummyAgent` (norm, role, self-concept, emotion, facilitating, habit, plus time/cost), each expressed as a **cost** (lower = better), so an agent picks the option with the lowest expected utility.
 
-| Mode | EU (lower = better) |
-|------|---------------------|
-| **Car** | **≈ 1.13** ← chosen |
-| Train | ≈ 3.07 |
-| Bike | ≈ 4.81 |
+Everything is data-driven from `data/`:
+- `agent.csv` — one row per agent: home location, funding, owned vehicles (`resources`), and the TIB weights.
+- `location.csv` — `loc_id, train, bus, tram, name` (which transit each location offers).
+- `schedule.0.csv` — the trips (`agent_id, start, km, time_limit, purpose`); a Sion↔Sierre trip is an 18 km row.
+- `vehicle.csv` — the modes and their speed/cost.
 
-```bash
-mkdir -p out
-javac -d out $(find src/framework src/example -name '*.java')
-java -cp out example.SionToSierreExample
-```
-
-More detail (JUnit test, CI): [`src/example/README.md`](src/example/README.md).
+Add agents, locations, or trips by editing those CSVs — the `ContextManager` loads them at startup. To see each determinant's score per mode, enable `dummy.agent.StandardDummyAgent = DEBUG` in `MessageCenter.log4j.properties`.
 
 ## Tested with versions
 	- Eclipse: 2024-03

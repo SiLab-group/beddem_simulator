@@ -1,2 +1,3 @@
-loc_id,train,bus,tram
-1,0,0,0
+loc_id,train,bus,tram,name
+1,1,1,0,Sion
+2,1,1,0,Sierre

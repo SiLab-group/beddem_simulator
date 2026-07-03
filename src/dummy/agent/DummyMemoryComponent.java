@@ -66,4 +66,16 @@ public class DummyMemoryComponent implements MemoryComponent {
 		return this.decisionResults;
 	}
 
+	/**
+	 * Number of times the given vehicle/mode has been chosen so far. Used by the
+	 * habit (frequency) determinant.
+	 *
+	 * @param vehicle the mode to look up
+	 * @return how often it has been picked (0 if never)
+	 */
+	public int getPastFrequency(Vehicle vehicle) {
+		Integer count = this.pastFreq.get(vehicle);
+		return (count == null) ? 0 : count;
+	}
+
 }
