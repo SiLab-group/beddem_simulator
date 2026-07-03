@@ -16,3 +16,6 @@ Repast.settings
 /testbin/
 junit/*
 .idea/*
+
+# Generated TIB charts
+analysis/*.png

@@ -53,3 +53,23 @@ jobs:
         name: junit-report
         path: junit/
 
+  visualize:
+    # Fast, standalone job: renders the TIB decision charts from data/*.csv.
+    # No Repast needed, so it does not depend on the build job.
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Render TIB decision charts
+      run: |
+        pip install matplotlib
+        for a in 1 2 3 4; do python analysis/plot_tib.py $a 0; done
+    - name: Upload TIB charts
+      uses: actions/upload-artifact@v4
+      with:
+        name: tib-charts
+        path: analysis/tib_decision_agent*.png
+
