@@ -65,9 +65,17 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-    - name: Summarise decisions to run summary
+    - name: Summarise decisions
       if: always()          # still report (or note "no output") if the run failed
-      run: python analysis/summarize_decisions.py >> "$GITHUB_STEP_SUMMARY"
+      run: |
+        python analysis/summarize_decisions.py > decision_summary.md
+        cat decision_summary.md >> "$GITHUB_STEP_SUMMARY"
+    - name: Post decision results to PR
+      if: always() && github.event_name == 'pull_request'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: tib-decisions          # one comment, updated on each run
+        path: decision_summary.md
     - name: Render decision chart
       if: always()
       run: |
