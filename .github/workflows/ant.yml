@@ -1,4 +1,5 @@
-# This workflow will build a Java project with Ant
+# This workflow builds the Java project with Ant, runs the tests, then runs the
+# model headlessly and renders its real decision output onto the run summary.
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-ant
 
 name: BedDeM CI
@@ -53,23 +54,29 @@ jobs:
         name: junit-report
         path: junit/
 
-  visualize:
-    # Fast, standalone job: renders the TIB decision charts from data/*.csv.
-    # No Repast needed, so it does not depend on the build job.
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
+    # ---- Run the model and show its real decision output ---------------------
+    # The batch (headless) run drives DummyReporter, which writes
+    # output/decisions.csv. output/ is gitignored, so this is produced fresh in
+    # the pipeline on every run -- nothing is committed.
+    - name: Run model (batch)
+      run: ant batch-model "-DECLIPSE_HOME=$(pwd)"
     - name: Set up Python
+      if: always()
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-    - name: Render TIB decision charts
+    - name: Summarise decisions to run summary
+      if: always()          # still report (or note "no output") if the run failed
+      run: python analysis/summarize_decisions.py >> "$GITHUB_STEP_SUMMARY"
+    - name: Render decision chart
+      if: always()
       run: |
         pip install matplotlib
-        for a in 1 2 3 4; do python analysis/plot_tib.py $a 0; done
-    - name: Upload TIB charts
+        python analysis/plot_tib.py
+    - name: Upload decision chart
+      if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: tib-charts
-        path: analysis/tib_decision_agent*.png
-
+        name: tib-decisions
+        path: analysis/tib_decisions.png
+        if-no-files-found: ignore
