@@ -59,14 +59,15 @@ jobs:
     # The batch (headless) run drives DummyReporter, which writes
     # output/decisions.csv. output/ is gitignored, so this is produced fresh in
     # the pipeline on every run -- nothing is committed.
-    - name: Run model (headless batch)
+    - name: Run model (headless)
       continue-on-error: true          # keep going so we can locate output + diagnose
       timeout-minutes: 10              # don't hang the job if the run stalls
       run: |
-        # Uses the batch-headless target (repast.simphony.batch.BatchMain), which
-        # runs with no Swing GUI -- so it works on the display-less CI runner.
+        # Runs the dummy (CSV) model headless via the run-headless target
+        # (beddem_simulator.HeadlessRun) -- no Swing GUI, so it works with no
+        # display. Produces output/decisions.csv.
         rm -f output/decisions.csv
-        ant batch-headless "-DECLIPSE_HOME=$(pwd)"
+        ant run-headless "-DECLIPSE_HOME=$(pwd)"
     - name: Locate decision output
       if: always()
       # Repast's batch runner executes each run in its own instance directory, so

@@ -395,13 +395,12 @@
             <classpath refid="run.Batch beddem_simulator Model.classpath"/>
         </java>
     </target>
-    <!-- Headless batch run for CI: uses BatchMain (no Swing GUI) so it works with
-         no display. Reuses the same classpath as the batch-model target. -->
-    <target name="batch-headless">
-        <java classname="repast.simphony.batch.BatchMain" failonerror="true" fork="yes">
-            <jvmarg line="-Djava.awt.headless=true -XX:+IgnoreUnrecognizedVMOptions --add-modules=ALL-SYSTEM --add-exports=java.base/jdk.internal.ref=ALL-UNNAMED"/>
-            <arg line="-pxml &quot;${workspace_loc:beddem_simulator}/batch/batch_params.xml&quot; &quot;${workspace_loc:beddem_simulator}/beddem_simulator.rs&quot;"/>
-            <classpath refid="run.Batch beddem_simulator Model.classpath"/>
+    <!-- Headless run for CI: runs the dummy (CSV) model with no Swing GUI, using
+         the same classpath as the JUnit tests. Produces output/decisions.csv. -->
+    <target name="run-headless">
+        <java classname="beddem_simulator.HeadlessRun" failonerror="true" fork="yes">
+            <jvmarg line="-ea -Djava.awt.headless=true -XX:+IgnoreUnrecognizedVMOptions --add-modules=ALL-SYSTEM --add-exports=java.base/jdk.internal.ref=ALL-UNNAMED"/>
+            <classpath refid="run.Test.classpath"/>
         </java>
     </target>
     <target name="build-installer">
