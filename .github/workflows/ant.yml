@@ -19,6 +19,7 @@ jobs:
     permissions:
       checks: write
       pull-requests: write
+      issues: write
       contents: read
 
     steps:
@@ -71,7 +72,10 @@ jobs:
         python analysis/summarize_decisions.py > decision_summary.md
         cat decision_summary.md >> "$GITHUB_STEP_SUMMARY"
     - name: Post decision results to PR
-      if: always() && github.event_name == 'pull_request'
+      # Skipped automatically for PRs from forks (their token is read-only and
+      # cannot comment); the results still appear in the run summary + artifact.
+      if: always() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
+      continue-on-error: true          # never fail the build just over the comment
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         header: tib-decisions          # one comment, updated on each run
