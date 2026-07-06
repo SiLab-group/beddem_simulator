@@ -1,8 +1,7 @@
 package framework.agent.reasoning;
 
 public class TPBModel extends ParentDeterminant {
-	public TPBModel(Determinant attitude, Determinant norm, Determinant behaviouralControl, double attitudeWeight,
-			double behaviouralControlWeight, double normWeight, double intentionWeight) {
+	public TPBModel(Determinant attitude, Determinant norm, Determinant behaviouralControl, double intentionWeight) {
 		super("FishbeinAndAjzen", 1);
 		ParentDeterminant intention = new ParentDeterminant("intention", intentionWeight);
 

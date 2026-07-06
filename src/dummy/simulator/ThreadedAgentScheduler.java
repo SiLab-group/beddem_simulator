@@ -114,6 +114,19 @@ class ThreadController implements Runnable {
 
 		for (IAgent b : this.cc.getScheduledAgentList()) {
 
+			if (!b.isThreadable()) {
+				// Agents that opt out of threading (e.g. because they have inter-agent
+				// state, such as social-network influence) are stepped synchronously here,
+				// rather than being handed to a thread on a free CPU.
+				try {
+					b.step();
+				} catch (Exception ex) {
+					LOGGER.log(Level.FATAL, "ThreadedAgentScheduler caught an error, telling model to stop", ex);
+					ContextManager.stopSim(ex, this.getClass());
+				}
+				continue;
+			}
+
 			// Find a free cpu to exectue on
 			boolean foundFreeCPU = false;
 			// Determine if there are no free CPUs so thread can wait for one to

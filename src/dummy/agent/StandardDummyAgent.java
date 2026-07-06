@@ -114,29 +114,39 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 				this.attitudeWeight, this.socialWeight, this.affectWeight, this.intentionWeight, this.habitWeight);
 	}
 
+	/**
+	 * Expected utility per mode for each trip (task executing time -&gt; mode -&gt; EU),
+	 * as computed by this agent's decision component. Used by the reporter to
+	 * export the full decision, not just the chosen mode.
+	 */
+	public Map<Double, Map<String, Double>> getEuByTime() {
+		return ((DummyDecisionComponent) this.decisionComponent).getEuByTime();
+	}
+
 	/*******************************************************************************************/
 	private Determinant createBeliefDeterminant() {
-		// TODO Auto-generated method stub
-		return null;
+		// Belief: how reliably the agent expects this mode to work as intended
+		// (e.g. arriving on time, no breakdown/cancellation risk).
+		return new LeafDeterminant("belief", this.beliefWeight) {
+			@Override
+			protected double evalOpt(Option opt, Task task) {
+				return logged("BELIEF", opt, lookup(RELIABILITY, modeOf(opt)));
+			}
+		};
 	}
 
 	private Determinant createEvaluationDeterminant() {
 		ParentDeterminant evaluation = new ParentDeterminant("evaluation", this.evaluationWeight);
 		evaluation.addDeterminantChild(new LeafDeterminant("time", this.timeWeight) {
-
 			@Override
 			protected double evalOpt(Option opt, Task task) {
-				MobilityOption mobilityOpt = (MobilityOption) opt;
-				LOGGER.log(Level.DEBUG, "Evaluating TIME option " + mobilityOpt.getTime());
-				return mobilityOpt.getTime();
+				return logged("TIME", opt, ((MobilityOption) opt).getTime());
 			}
 		});
 		evaluation.addDeterminantChild(new LeafDeterminant("cost", this.costWeight) {
 			@Override
 			protected double evalOpt(Option opt, Task task) {
-				MobilityOption mobilityOption = (MobilityOption) opt;
-				LOGGER.log(Level.DEBUG, "Evaluating COST option " + mobilityOption.getCost());
-				return mobilityOption.getCost();
+				return logged("COST", opt, ((MobilityOption) opt).getCost());
 			}
 		});
 		LOGGER.log(Level.DEBUG, " Evalutation " + evaluation.toString());
@@ -234,6 +244,7 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	private static final Map<String, Double> EMISSIONS     = penalties(1, 2, 1, 3, 0, 0);
 	private static final Map<String, Double> DISCOMFORT    = penalties(1, 2, 1, 0, 3, 2);
 	private static final Map<String, Double> INCONVENIENCE = penalties(1, 2, 1, 0, 0, 0);
+	private static final Map<String, Double> RELIABILITY   = penalties(1, 2, 1, 1, 0, 0);
 
 	private static Map<String, Double> penalties(double train, double bus, double tram, double car, double walking,
 			double biking) {
