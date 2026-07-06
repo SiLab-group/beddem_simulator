@@ -24,7 +24,10 @@ public class HeadlessRun {
 		Schedule schedule = new Schedule();
 
 		DefaultParameters parm = new DefaultParameters();
-		parm.addParameter("checkpoints_in_simulate", "Checkpoints in Simulate", Integer.class, 10, true);
+		// Number of days simulated. Each checkpoint replays the daily schedule
+		// (data/schedule.0.csv) offset by +24h, so trips per agent = daily trips x
+		// this value. 1 = a single day; raise it to show multi-day habit dynamics.
+		parm.addParameter("checkpoints_in_simulate", "Checkpoints in Simulate", Integer.class, 1, true);
 		parm.addParameter("periods_to_checkpoint", "Periods to checkpoint", Integer.class, 1, true);
 		parm.addParameter("agent_made_probabilistic_decision", "Agent made probabilistic decision", Integer.class, 0,
 				true);
