@@ -59,15 +59,14 @@ jobs:
     # The batch (headless) run drives DummyReporter, which writes
     # output/decisions.csv. output/ is gitignored, so this is produced fresh in
     # the pipeline on every run -- nothing is committed.
-    - name: Run model (batch)
+    - name: Run model (headless batch)
       continue-on-error: true          # keep going so we can locate output + diagnose
-      timeout-minutes: 10              # the batch GUI shouldn't idle; don't hang the job
+      timeout-minutes: 10              # don't hang the job if the run stalls
       run: |
-        # Repast's batch runner opens a Swing window, which throws HeadlessException
-        # with no display. xvfb gives it a virtual X11 display so it can run in CI.
-        sudo apt-get update && sudo apt-get install -y xvfb
+        # Uses the batch-headless target (repast.simphony.batch.BatchMain), which
+        # runs with no Swing GUI -- so it works on the display-less CI runner.
         rm -f output/decisions.csv
-        xvfb-run -a ant batch-model "-DECLIPSE_HOME=$(pwd)"
+        ant batch-headless "-DECLIPSE_HOME=$(pwd)"
     - name: Locate decision output
       if: always()
       # Repast's batch runner executes each run in its own instance directory, so
