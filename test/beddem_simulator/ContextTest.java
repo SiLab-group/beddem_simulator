@@ -49,7 +49,8 @@ public class ContextTest {
 		// Return 3 contexts AgentContext, LocationContext, MainContext
 		assertEquals("Number of contexts", 3, returned_context.size());
 		assertEquals("Number of agents", 1, returned_context.getObjects(AgentContext.class).size());
-		assertEquals("Number of actionCounts", 3, RunEnvironment.getInstance().getCurrentSchedule().getActionCount());
+		// 4 agents x 2 trips scheduled + 1 reporter action = 9 (see data/schedule.0.csv).
+		assertEquals("Number of actionCounts", 9, RunEnvironment.getInstance().getCurrentSchedule().getActionCount());
 	}
 
 }

@@ -60,7 +60,24 @@ jobs:
     # output/decisions.csv. output/ is gitignored, so this is produced fresh in
     # the pipeline on every run -- nothing is committed.
     - name: Run model (batch)
-      run: ant batch-model "-DECLIPSE_HOME=$(pwd)"
+      continue-on-error: true          # keep going so we can locate output + diagnose
+      run: |
+        rm -f output/decisions.csv
+        ant batch-model "-DECLIPSE_HOME=$(pwd)"
+    - name: Locate decision output
+      if: always()
+      # Repast's batch runner executes each run in its own instance directory, so
+      # DummyReporter's relative "output/decisions.csv" may land there rather than
+      # at the repo root. Find whatever the run produced and bring it back.
+      run: |
+        echo "Files produced by the run:"
+        find . -name 'decisions.csv' -o -name 'DummyOutput*.txt' 2>/dev/null || true
+        latest=$(find . -name 'decisions.csv' -printf '%T@ %p\n' 2>/dev/null | sort -nr | head -1 | cut -d' ' -f2-)
+        if [ -n "$latest" ] && [ "$latest" != "./output/decisions.csv" ]; then
+          mkdir -p output && cp "$latest" output/decisions.csv
+          echo "Copied $latest -> output/decisions.csv"
+        fi
+        echo "--- output/ ---"; ls -la output/ 2>&1 || echo "(no output dir)"
     - name: Set up Python
       if: always()
       uses: actions/setup-python@v5
