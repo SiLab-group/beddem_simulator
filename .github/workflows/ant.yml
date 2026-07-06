@@ -61,9 +61,13 @@ jobs:
     # the pipeline on every run -- nothing is committed.
     - name: Run model (batch)
       continue-on-error: true          # keep going so we can locate output + diagnose
+      timeout-minutes: 10              # the batch GUI shouldn't idle; don't hang the job
       run: |
+        # Repast's batch runner opens a Swing window, which throws HeadlessException
+        # with no display. xvfb gives it a virtual X11 display so it can run in CI.
+        sudo apt-get update && sudo apt-get install -y xvfb
         rm -f output/decisions.csv
-        ant batch-model "-DECLIPSE_HOME=$(pwd)"
+        xvfb-run -a ant batch-model "-DECLIPSE_HOME=$(pwd)"
     - name: Locate decision output
       if: always()
       # Repast's batch runner executes each run in its own instance directory, so
