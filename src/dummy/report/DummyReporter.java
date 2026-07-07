@@ -34,16 +34,16 @@ public class DummyReporter implements IReporter {
 
 	@Override
 	public String printReport() {
-		String reportString = "\nagentID,location,start_time,km,vehicle\n";
+		String reportString = "\nagentID,from,to,start_time,km,vehicle\n";
 		for (IAgent agent : this.agentContext) {
 			StandardDummyAgent mobilityAgent = (StandardDummyAgent) agent;
-			String location = ((Location) mobilityAgent.getLoc()).getName();
 			Map<Task, Option> results = mobilityAgent.getDecisionResults();
 			for (Task task : results.keySet()) {
 				MobilityOption mobilityOption = (MobilityOption) results.get(task);
 				MobilityTask mobilityTask = (MobilityTask) task;
-				reportString += agent.getID() + "," + location + "," + mobilityTask.getExecutingTime() + ","
-						+ mobilityTask.getDistance() + "," + mobilityOption.getMainVehicle().getName() + "\n";
+				reportString += agent.getID() + "," + mobilityTask.getFromLoc() + "," + mobilityTask.getToLoc() + ","
+						+ mobilityTask.getExecutingTime() + "," + mobilityTask.getDistance() + ","
+						+ mobilityOption.getMainVehicle().getName() + "\n";
 			}
 		}
 		writeDecisionsCsv();
@@ -62,28 +62,34 @@ public class DummyReporter implements IReporter {
 			dir.mkdirs();
 		}
 		try (FileWriter w = new FileWriter(new File(dir, "decisions.csv"))) {
-			w.write("agent,location,start_time,km,mode,eu,chosen\n");
+			w.write("agent,location,from,to,start_time,km,mode,eu,chosen\n");
 			for (IAgent agent : this.agentContext) {
 				StandardDummyAgent a = (StandardDummyAgent) agent;
 				String location = ((Location) a.getLoc()).getName();
 				Map<Double, Map<String, Double>> euByTime = a.getEuByTime();
 
-				// From the chosen decisions: trip distance and the picked mode per trip.
+				// From the chosen decisions: trip distance, route and the picked mode per trip.
 				Map<Double, Double> kmByTime = new HashMap<Double, Double>();
 				Map<Double, String> chosenByTime = new HashMap<Double, String>();
+				Map<Double, String> fromByTime = new HashMap<Double, String>();
+				Map<Double, String> toByTime = new HashMap<Double, String>();
 				for (Map.Entry<Task, Option> e : a.getDecisionResults().entrySet()) {
 					MobilityTask t = (MobilityTask) e.getKey();
 					kmByTime.put(t.getExecutingTime(), t.getDistance());
 					chosenByTime.put(t.getExecutingTime(), ((MobilityOption) e.getValue()).getMainVehicle().getName());
+					fromByTime.put(t.getExecutingTime(), t.getFromLoc());
+					toByTime.put(t.getExecutingTime(), t.getToLoc());
 				}
 
 				for (Map.Entry<Double, Map<String, Double>> trip : euByTime.entrySet()) {
 					double time = trip.getKey();
 					Double km = kmByTime.get(time);
 					String chosen = chosenByTime.get(time);
+					String from = fromByTime.getOrDefault(time, "");
+					String to = toByTime.getOrDefault(time, "");
 					for (Map.Entry<String, Double> mode : trip.getValue().entrySet()) {
-						w.write(agent.getID() + "," + location + "," + time + "," + (km == null ? "" : km) + ","
-								+ mode.getKey() + "," + mode.getValue() + ","
+						w.write(agent.getID() + "," + location + "," + from + "," + to + "," + time + ","
+								+ (km == null ? "" : km) + "," + mode.getKey() + "," + mode.getValue() + ","
 								+ (mode.getKey().equals(chosen) ? "1" : "0") + "\n");
 					}
 				}

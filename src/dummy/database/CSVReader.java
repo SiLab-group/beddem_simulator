@@ -163,7 +163,8 @@ public class CSVReader {
 
 	}
 
-	public void createSchedule(Map<String, IAgent> idToAgentMap, int periodNum, int checkpointNum) throws IOException {
+	public void createSchedule(Map<String, IAgent> idToAgentMap, HashMap<String, Environment> idToLocationMap,
+			int periodNum, int checkpointNum) throws IOException {
 		try {
 			String csvDataDir = ContextManager.getProperty(GlobalVars.CSVDataDirectory);
 			String scheduleFile = csvDataDir + ContextManager.getProperty(GlobalVars.ScheduleCSVfile) + "." + periodNum
@@ -173,19 +174,24 @@ public class CSVReader {
 			String line;
 			br.readLine();
 
+			// Columns: agent_id, start, from_loc, to_loc, km, time_limit, purpose
 			while ((line = br.readLine()) != null) {
 				String[] inputs = line.split(",");
 				String agentId = inputs[0];
-				double time = Double.parseDouble(inputs[1]);
-				double distance = Double.parseDouble(inputs[2]);
-				double timeLimit = Double.parseDouble(inputs[3]);
-				double purpose = Double.parseDouble(inputs[4]);
+				double timeStart = Double.parseDouble(inputs[1]);
+				String fromLoc = locationName(idToLocationMap, inputs[2]);
+				String toLoc = locationName(idToLocationMap, inputs[3]);
+				Set<Vehicle> originTransports = locationTransports(idToLocationMap, inputs[2]);
+				double distance = Double.parseDouble(inputs[4]);
+				double timeLimit = Double.parseDouble(inputs[5]);
+				double purpose = Double.parseDouble(inputs[6]);
 
-				time += GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD * periodNum
+				double time = timeStart + GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD * periodNum
 						+ GlobalVars.SIMULATION_PARAMS.TIME_STEPS_IN_PERIOD
 								* GlobalVars.SIMULATION_PARAMS.getPeriodToNextCheckNum() * checkpointNum;
 				LOGGER.debug("Create schedule time:  " + time);
-				MobilityTask task = new MobilityTask(time, Double.parseDouble(inputs[1]), distance, purpose, timeLimit);
+				MobilityTask task = new MobilityTask(time, timeStart, fromLoc, toLoc, originTransports, distance, purpose,
+						timeLimit);
 				StandardDummyAgent agent = (StandardDummyAgent) idToAgentMap.get(agentId);
 				agent.addToSchedule(task);
 				// agent.rememberLastTask(task);
@@ -198,6 +204,18 @@ public class CSVReader {
 			LOGGER.log(Level.FATAL, ex.getMessage(), ex);
 			throw ex;
 		}
+	}
+
+	/** Resolve a location id to its name; falls back to the id if unknown. */
+	private static String locationName(HashMap<String, Environment> idToLocationMap, String locId) {
+		Environment loc = idToLocationMap.get(locId);
+		return (loc instanceof Location) ? ((Location) loc).getName() : locId;
+	}
+
+	/** Public transport available at a location; empty if the location is unknown. */
+	private static Set<Vehicle> locationTransports(HashMap<String, Environment> idToLocationMap, String locId) {
+		Environment loc = idToLocationMap.get(locId);
+		return (loc instanceof Location) ? ((Location) loc).getPublicTransports() : new HashSet<Vehicle>();
 	}
 
 	public IReporter createDummyReporter(AgentContext agentContext) {

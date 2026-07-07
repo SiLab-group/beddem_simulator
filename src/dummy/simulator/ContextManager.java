@@ -145,7 +145,7 @@ public class ContextManager implements ContextBuilder<Object> {
 				// Add tasks to the agent's schedule.
 
 				try {
-					generator.createSchedule(idToAgentMap, periodNum, checkpointNum);
+					generator.createSchedule(idToAgentMap, idToLocationMap, periodNum, checkpointNum);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

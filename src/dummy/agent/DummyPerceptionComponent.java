@@ -30,8 +30,9 @@ public class DummyPerceptionComponent implements PerceptionComponent {
 	public Set<Option> generateOptions(Task task, EnvironmentalState environmentalState, InternalState internalState) {
 		Set<Vehicle> accessileVehicles = new HashSet<Vehicle>();
 		MobilityTask mobilityTask = (MobilityTask) task;
-		MobilityEnvironmentalState mobilityEnvStat = (MobilityEnvironmentalState) environmentalState;
-		accessileVehicles.addAll(mobilityEnvStat.getPublicTransports());
+		// Public transport available at the trip's ORIGIN (from_loc), not the
+		// agent's home location, so an evening return boards where it starts.
+		accessileVehicles.addAll(mobilityTask.getOriginTransports());
 		MobilityInternalState mobilityInternalStat = (MobilityInternalState) internalState;
 		accessileVehicles.addAll(mobilityInternalStat.getOwnVehicles());
 		String debugStr = "Task for agent" + this.agentID + "Task distance: " + mobilityTask.getDistance()

@@ -26,16 +26,19 @@ def load():
     loc = {}
     # agent -> start_time -> {mode: (eu, chosen)}
     trips = defaultdict(lambda: defaultdict(dict))
+    route = defaultdict(dict)   # agent -> start_time -> "From -> To"
     for r in rows:
         loc[r["agent"]] = r["location"]
-        trips[r["agent"]][float(r["start_time"])][r["mode"]] = (
-            float(r["eu"]), r["chosen"] == "1")
-    return loc, trips
+        t = float(r["start_time"])
+        trips[r["agent"]][t][r["mode"]] = (float(r["eu"]), r["chosen"] == "1")
+        if r.get("from") and r.get("to"):
+            route[r["agent"]][t] = "%s → %s" % (r["from"], r["to"])
+    return loc, trips, route
 
 
-def table(loc, trips):
-    out = ["| Agent | Location | Trip start | Modes considered (EU) | Chosen |",
-           "|:-----:|:---------|:----------:|:----------------------|:------:|"]
+def table(loc, trips, route):
+    out = ["| Agent | Home | Route | Trip start | Modes considered (EU) | Chosen |",
+           "|:-----:|:-----|:------|:----------:|:----------------------|:------:|"]
     for a in sorted(trips, key=lambda x: int(x)):
         for t in sorted(trips[a]):
             modes = trips[a][t]
@@ -47,19 +50,22 @@ def table(loc, trips):
                 cells.append("**%s %.2f**" % (name, eu) if c
                              else "%s %.2f" % (name, eu))
             chosen_lbl = LABEL.get(chosen, chosen) if chosen else "—"
-            out.append("| %s | %s | %g | %s | **%s** |"
-                       % (a, loc[a], t, ", ".join(cells), chosen_lbl))
+            r = route.get(a, {}).get(t, "—")
+            out.append("| %s | %s | %s | %g | %s | **%s** |"
+                       % (a, loc[a], r, t, ", ".join(cells), chosen_lbl))
     return "\n".join(out)
 
 
-def bars(loc, trips):
+def bars(loc, trips, route):
     out = []
     for a in sorted(trips, key=lambda x: int(x)):
         for t in sorted(trips[a]):
             modes = trips[a][t]
             ranked = sorted(modes.items(), key=lambda kv: kv[1][0])
             mx = max(eu for _, (eu, _) in ranked) or 1.0
-            out.append("Agent %s (%s) — trip start %g" % (a, loc[a], t))
+            r = route.get(a, {}).get(t)
+            head = "Agent %s (%s)" % (a, r) if r else "Agent %s (%s)" % (a, loc[a])
+            out.append("%s — trip start %g" % (head, t))
             for m, (eu, c) in ranked:
                 fill = max(1, round(eu / mx * BAR_WIDTH))
                 name = LABEL.get(m, m).ljust(5)
@@ -74,7 +80,7 @@ def main():
         print("> **No decision output found.** `output/decisions.csv` was not "
               "produced by the run — nothing to summarise.")
         return
-    loc, trips = load()
+    loc, trips, route = load()
     if not trips:
         print("> **`output/decisions.csv` is empty** — nothing to summarise.")
         return
@@ -82,9 +88,9 @@ def main():
     print("## TIB decision results\n")
     print("Expected utility per mode (**lower = chosen**), from the batch "
           "run's `output/decisions.csv`.\n")
-    print(table(loc, trips))
+    print(table(loc, trips, route))
     print("\n### Decision charts (EU per mode, shorter = preferred)\n")
-    print(bars(loc, trips))
+    print(bars(loc, trips, route))
     print("\n_A higher-resolution `tib_decisions.png` chart is attached to this "
           "workflow run under **Artifacts**._")
 

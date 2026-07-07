@@ -1,5 +1,8 @@
 package dummy.concept;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -12,10 +15,17 @@ public class MobilityTask extends Task {
 	private double distance;
 	private double timeStart;
 	private double purpose;
+	private String fromLoc;
+	private String toLoc;
+	private Set<Vehicle> originTransports;
 
-	public MobilityTask(double executingTime, double timeStart, double distance, double purpose, double timeLimit) {
+	public MobilityTask(double executingTime, double timeStart, String fromLoc, String toLoc,
+			Set<Vehicle> originTransports, double distance, double purpose, double timeLimit) {
 		super(executingTime);
 		this.timeStart = timeStart;
+		this.fromLoc = fromLoc;
+		this.toLoc = toLoc;
+		this.originTransports = (originTransports == null) ? new HashSet<Vehicle>() : originTransports;
 		this.purpose = purpose;
 		this.timeLimit = timeLimit;
 		this.distance = distance;
@@ -40,10 +50,24 @@ public class MobilityTask extends Task {
 		return this.timeStart;
 	}
 
+	/** Origin location of the trip. */
+	public String getFromLoc() {
+		return this.fromLoc;
+	}
+
+	/** Destination location of the trip. */
+	public String getToLoc() {
+		return this.toLoc;
+	}
+
+	/** Public transport available at the trip's origin. */
+	public Set<Vehicle> getOriginTransports() {
+		return this.originTransports;
+	}
+
 	@Override
 	public String toString() {
-		String result = "TransportTask, starting time: " + this.executingTime;
-		return result;
+		return "TransportTask " + this.fromLoc + " -> " + this.toLoc + ", starting time: " + this.executingTime;
 	}
 
 	@Override

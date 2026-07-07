@@ -32,4 +32,8 @@ public class Location implements Environment {
 		return this.name;
 	}
 
+	public Set<Vehicle> getPublicTransports() {
+		return this.publicTransports;
+	}
+
 }
