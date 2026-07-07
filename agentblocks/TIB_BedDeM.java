@@ -149,71 +149,34 @@ class TIBModel extends ParentDeterminant {
     }
 }
 
-/** Convenience builder for the eight base determinants and five aggregate weights. */
-class TIBBuilder {
-    private final Map<String, Double> base = new HashMap<>();
-    private final Map<String, Double> agg  = new HashMap<>();
-    private static final String[] BASE = {
-        "belief","evaluation","norm","role","selfConcept","emotion","facilitating","frequency" };
-
-    public TIBBuilder() {
-        for (String b : BASE) base.put(b, 1.0);
-        agg.put("attitude", 2.0); agg.put("social", 3.0); agg.put("affect", 2.5);
-        agg.put("intention", 4.0); agg.put("habit", 1.5);
-    }
-    /** Set one of the eight known base-determinant weights. */
-    public TIBBuilder setBaseWeight(String determinant, double weight) {
-        if (!base.containsKey(determinant))
-            throw new IllegalArgumentException("Unknown base determinant: " + determinant);
-        base.put(determinant, weight); return this;
-    }
-    public TIBBuilder setAggregateWeight(String determinant, double weight) {
-        if (!agg.containsKey(determinant))
-            throw new IllegalArgumentException("Unknown aggregate determinant: " + determinant);
-        agg.put(determinant, weight); return this;
-    }
-    public TIBModel build() {
-        return new TIBModel(
-            new LeafDeterminant("belief",      base.get("belief")),
-            new LeafDeterminant("evaluation",  base.get("evaluation")),
-            new LeafDeterminant("norm",        base.get("norm")),
-            new LeafDeterminant("role",        base.get("role")),
-            new LeafDeterminant("selfConcept", base.get("selfConcept")),
-            new LeafDeterminant("emotion",     base.get("emotion")),
-            new LeafDeterminant("facilitating",base.get("facilitating")),
-            new LeafDeterminant("frequency",   base.get("frequency")),
-            agg.get("attitude"), agg.get("social"), agg.get("affect"),
-            agg.get("intention"), agg.get("habit"));
-    }
-}
-
 class TIBExample {
-    // Sion -> Sierre (18 km), Car / Train / Bike. We only set the weights and the
-    // per-option determinant values; the agent block itself (TIBModel) does the
-    // whole calculation -- normalising each determinant across options, weighting,
-    // aggregating up the tree, and selecting the minimum-EU option.
-    //
-    // The block's two attitude determinants are named "belief" and "evaluation";
-    // here they carry the mobility values price and time (belief=price,
-    // evaluation=time, selfConcept=self, frequency=freq).
+    // Sion -> Sierre (18 km), Car / Train / Bike.
+    // All 13 weights are supplied from outside, exactly as in the BedDeM model:
+    // the eight base determinants are each constructed with their weight, and the
+    // five aggregate weights are passed straight into the TIBModel constructor.
+    // We only set weights + per-option values; TIBModel does the whole calculation
+    // (normalise each determinant, weight, aggregate up the tree, pick minimum EU).
     public static void main(String[] args) {
-        TIBModel tib = new TIBBuilder()
-            .setBaseWeight("belief", 2.0)        // price
-            .setBaseWeight("evaluation", 4.0)    // time
-            .setBaseWeight("norm", 3.0)
-            .setBaseWeight("role", 2.0)
-            .setBaseWeight("selfConcept", 3.0)   // self
-            .setBaseWeight("emotion", 1.0)
-            .setBaseWeight("facilitating", 2.0)
-            .setBaseWeight("frequency", 3.0)     // freq
-            .setAggregateWeight("attitude", 4.0)
-            .setAggregateWeight("social", 2.0)
-            .setAggregateWeight("affect", 2.0)
-            .setAggregateWeight("intention", 4.0)
-            .setAggregateWeight("habit", 3.0)
-            .build();
+        // Base determinants (leaf), each carrying its own weight.
+        LeafDeterminant price = new LeafDeterminant("price", 2.0);
+        LeafDeterminant time  = new LeafDeterminant("time", 4.0);
+        LeafDeterminant norm  = new LeafDeterminant("norm", 3.0);
+        LeafDeterminant role  = new LeafDeterminant("role", 2.0);
+        LeafDeterminant self  = new LeafDeterminant("self", 3.0);
+        LeafDeterminant emotion = new LeafDeterminant("emotion", 1.0);
+        LeafDeterminant facilitating = new LeafDeterminant("facilitating", 2.0);
+        LeafDeterminant freq  = new LeafDeterminant("freq", 3.0);
 
-        String[] p = {"belief","evaluation","norm","role","selfConcept","emotion","facilitating","frequency"};
+        // Aggregate weights, also supplied from outside.
+        TIBModel tib = new TIBModel(
+            price, time, norm, role, self, emotion, facilitating, freq,
+            4.0,   // attitude
+            2.0,   // social
+            2.0,   // affect
+            4.0,   // intention
+            3.0);  // habit
+
+        String[] p = {"price","time","norm","role","self","emotion","facilitating","freq"};
         //                          price time norm role self emo facil freq
         SimpleOption car   = option("Car",   p, new double[]{4.0, 0.3, 2, 3, 1, 1, 0, 0});
         SimpleOption train = option("Train", p, new double[]{3.0, 0.2, 1, 2, 2, 2, 1, 0});
