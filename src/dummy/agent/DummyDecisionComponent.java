@@ -34,9 +34,12 @@ public class DummyDecisionComponent extends TIBModel implements DecisionComponen
 
 	@Override
 	public Map<Double, Set<Option>> evaluateOptions(Set<Option> options, Task task) {
-		// Get the list of all ranked options from agent's decision making model.
-		LOGGER.log(Level.DEBUG, "Rank options" + options.toString());
-		Map<Double, Set<Option>> result = rankOptions(options, task);
+		// The behaviour-output utility per option. We use evalOpts (the raw
+		// aggregate) rather than rankOptions here: children are already
+		// normalised at every level inside the tree, and the thesis does NOT
+		// apply a further normalisation to the top-level behaviour output.
+		LOGGER.log(Level.DEBUG, "Evaluate options " + options.toString());
+		Map<Double, Set<Option>> result = evalOpts(options, task);
 		// Record the expected utility (map key) of each option for this trip.
 		Map<String, Double> perMode = new HashMap<String, Double>();
 		for (Map.Entry<Double, Set<Option>> entry : result.entrySet()) {

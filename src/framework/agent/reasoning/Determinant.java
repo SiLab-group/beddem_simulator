@@ -42,9 +42,13 @@ public abstract class Determinant {
 	public Map<Double, Set<Option>> rankOptions(Set<Option> inputOpts, Task task) {
 		Map<Double, Set<Option>> rankingResult = new HashMap<Double, Set<Option>>();
 		Map<Double, Set<Option>> valueToOptsMap = evalOpts(inputOpts, task);
+		// Normalise by the sum over ALL options (thesis Eq. 4.7: Sum_o U_o(c)),
+		// counting each distinct value once per option that holds it. (The
+		// earlier version summed distinct values only, which diverged whenever
+		// two options shared a value.)
 		double sumValue = 0;
-		for (Double v : valueToOptsMap.keySet()) {
-			sumValue += v;
+		for (Map.Entry<Double, Set<Option>> entry : valueToOptsMap.entrySet()) {
+			sumValue += entry.getKey() * entry.getValue().size();
 		}
 		if (Double.compare(sumValue, 0.0) == 0)
 			sumValue = 1;

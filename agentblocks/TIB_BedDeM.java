@@ -7,8 +7,9 @@
  *     EU_d(option) = Σ_a ( EU_a(option) / Σ_o EU_a(o) ) · w_a
  *
  * i.e. every determinant's value is normalised across all options BEFORE it is
- * weighted into its parent. This normalisation is applied at every level, exactly
- * as the production engine does via Determinant.rankOptions().
+ * weighted into its parent (the Σ_o EU_a(o) term). The behaviour output itself
+ * is the raw weighted aggregate and is NOT re-normalised, matching the thesis
+ * (Nguyen 2023, Eq. 4.7 and Table 4.2).
  *
  * Reference: https://github.com/SiLab-group/beddem_simulator
  */
@@ -78,14 +79,19 @@ class LeafDeterminant extends AbstractDeterminant {
     }
 }
 
-/** Aggregates children: Σ_child ( normalised child score · child weight ), then normalises. */
+/** Aggregates children: Σ_child ( normalised child score · child weight ). */
 class ParentDeterminant extends AbstractDeterminant {
     private final List<Determinant> children = new ArrayList<>();
     public ParentDeterminant(String name, double weight) { super(name, weight); }
     public void addDeterminantChild(Determinant child) { children.add(child); }
     public List<Determinant> getChildren() { return children; }
-    @Override
-    public Map<Option, Double> evaluate(List<? extends Option> options) {
+
+    /**
+     * Raw weighted aggregate of the (already-normalised) children. This is
+     * U_o(d) in the EU equation; it is NOT normalised here. A parent normalises
+     * its children, not its own output.
+     */
+    protected Map<Option, Double> aggregate(List<? extends Option> options) {
         Map<Option, Double> agg = new HashMap<>();
         for (Option opt : options) agg.put(opt, 0.0);
         for (Determinant child : children) {
@@ -93,7 +99,13 @@ class ParentDeterminant extends AbstractDeterminant {
             for (Option opt : options)
                 agg.put(opt, agg.get(opt) + child.getWeight() * childScores.get(opt));
         }
-        return normalise(agg);
+        return agg;
+    }
+
+    @Override
+    public Map<Option, Double> evaluate(List<? extends Option> options) {
+        // Normalised so this node can, in turn, be a normalised child of its parent.
+        return normalise(aggregate(options));
     }
 }
 
@@ -130,16 +142,20 @@ class TIBModel extends ParentDeterminant {
         attitude.addDeterminantChild(evaluation);
     }
 
-    /** Expected utility per option (normalised). */
+    /**
+     * Behaviour-output expected utility per option. This is the raw aggregate
+     * of the (normalised) top-level determinants; the thesis does NOT
+     * re-normalise the behaviour output, so we use aggregate(), not evaluate().
+     */
     public Map<Option, Double> evaluateOptions(List<? extends Option> options) {
-        return evaluate(options);
+        return aggregate(options);
     }
 
     /** Select the option with the minimum expected utility, as in BedDeM. */
     public Option selectOption(List<? extends Option> options) {
         if (options == null || options.isEmpty())
             throw new IllegalArgumentException("Options list cannot be empty");
-        Map<Option, Double> eu = evaluate(options);
+        Map<Option, Double> eu = aggregate(options);
         Option best = null; double min = Double.MAX_VALUE;
         for (Option opt : options) {
             double u = eu.get(opt);
