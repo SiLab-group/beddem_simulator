@@ -188,26 +188,51 @@ class TIBBuilder {
 }
 
 class TIBExample {
+    // Sion -> Sierre (18 km), Car / Train / Bike. We only set the weights and the
+    // per-option determinant values; the agent block itself (TIBModel) does the
+    // whole calculation -- normalising each determinant across options, weighting,
+    // aggregating up the tree, and selecting the minimum-EU option.
+    //
+    // The block's two attitude determinants are named "belief" and "evaluation";
+    // here they carry the mobility values price and time (belief=price,
+    // evaluation=time, selfConcept=self, frequency=freq).
     public static void main(String[] args) {
         TIBModel tib = new TIBBuilder()
-            .setAggregateWeight("attitude", 2.0)
-            .setAggregateWeight("social", 3.0)
-            .setAggregateWeight("affect", 2.5)
+            .setBaseWeight("belief", 2.0)        // price
+            .setBaseWeight("evaluation", 4.0)    // time
+            .setBaseWeight("norm", 3.0)
+            .setBaseWeight("role", 2.0)
+            .setBaseWeight("selfConcept", 3.0)   // self
+            .setBaseWeight("emotion", 1.0)
+            .setBaseWeight("facilitating", 2.0)
+            .setBaseWeight("frequency", 3.0)     // freq
+            .setAggregateWeight("attitude", 4.0)
+            .setAggregateWeight("social", 2.0)
+            .setAggregateWeight("affect", 2.0)
             .setAggregateWeight("intention", 4.0)
-            .setAggregateWeight("habit", 1.5)
+            .setAggregateWeight("habit", 3.0)
             .build();
 
         String[] p = {"belief","evaluation","norm","role","selfConcept","emotion","facilitating","frequency"};
-        SimpleOption car   = option("car",   p, new double[]{1.0, 4.0, 2.0, 3.0, 2.0, 4.0, 1.0, 10.0});
-        SimpleOption train = option("train", p, new double[]{0.9, 3.0, 1.0, 2.0, 1.0, 3.5, 1.0,  5.0});
-        SimpleOption bike  = option("bike",  p, new double[]{1.1, 0.0, 3.0, 1.0, 3.0, 3.0, 0.8,  2.0});
-
+        //                          price time norm role self emo facil freq
+        SimpleOption car   = option("Car",   p, new double[]{4.0, 0.3, 2, 3, 1, 1, 0, 0});
+        SimpleOption train = option("Train", p, new double[]{3.0, 0.2, 1, 2, 2, 2, 1, 0});
+        SimpleOption bike  = option("Bike",  p, new double[]{0.0, 1.0, 3, 1, 3, 3, 0, 1});
         List<Option> options = Arrays.asList(car, train, bike);
-        System.out.println("Chosen: " + tib.selectOption(options).getName());
+
+        // Inputs
+        System.out.println("Sion -> Sierre (18 km): Car / Train / Bike\n");
+        System.out.printf("  %-14s%8s%8s%8s%n", "determinant", "Car", "Train", "Bike");
+        for (String d : p)
+            System.out.printf("  %-14s%8.2f%8.2f%8.2f%n", d,
+                car.getProperty(d), train.getProperty(d), bike.getProperty(d));
+
+        // Let the block do the calculation.
         Map<Option, Double> eu = tib.evaluateOptions(options);
-        System.out.println("Expected utilities (lower = better):");
+        System.out.println("\nExpected utility (computed by the TIB block):");
         for (Option o : options)
-            System.out.printf("  %s: %.3f%n", o.getName(), eu.get(o));
+            System.out.printf("  %-6s %.4f%n", o.getName() + ":", eu.get(o));
+        System.out.println("\nChosen: " + tib.selectOption(options).getName());
     }
 
     private static SimpleOption option(String name, String[] props, double[] vals) {
