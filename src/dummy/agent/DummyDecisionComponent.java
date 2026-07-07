@@ -34,10 +34,8 @@ public class DummyDecisionComponent extends TIBModel implements DecisionComponen
 
 	@Override
 	public Map<Double, Set<Option>> evaluateOptions(Set<Option> options, Task task) {
-		// The behaviour-output utility per option. We use evalOpts (the raw
-		// aggregate) rather than rankOptions here: children are already
-		// normalised at every level inside the tree, and the thesis does NOT
-		// apply a further normalisation to the top-level behaviour output.
+		// Aggregated utility per option. Children are normalised at each level;
+		// the top level is the weighted aggregate.
 		LOGGER.log(Level.DEBUG, "Evaluate options " + options.toString());
 		Map<Double, Set<Option>> result = evalOpts(options, task);
 		// Record the expected utility (map key) of each option for this trip.

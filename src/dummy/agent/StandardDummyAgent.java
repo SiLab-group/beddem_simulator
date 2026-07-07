@@ -219,10 +219,8 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	}
 
 	/*
-	 * Helper penalty tables. Every determinant above returns a cost-like value in
-	 * which LOWER == more preferred, matching the engine's selection rule
-	 * (DummyCommunicationComponent picks the option with the lowest EU). The six
-	 * columns are the modes defined in data/vehicle.csv.
+	 * Helper penalty tables. Each determinant returns a cost value (a lower value
+	 * is preferred). The six columns are the modes defined in data/vehicle.csv.
 	 */
 	private static String modeOf(Option opt) {
 		return ((MobilityOption) opt).getMainVehicle().getName().toLowerCase();

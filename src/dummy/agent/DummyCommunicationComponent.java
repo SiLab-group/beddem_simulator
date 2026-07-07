@@ -35,9 +35,7 @@ public class DummyCommunicationComponent implements CommunicationComponent {
 
 	private Option pickBestOpt(Map<Double, Set<Option>> evaluatedOptions) {
 		if (evaluatedOptions.size() != 0) {
-			// The behaviour-output utilities are no longer normalised to <= 1
-			// (see DummyDecisionComponent), so start from +infinity and keep the
-			// minimum (U is a cost function: lowest is preferred).
+			// Keep the option with the smallest utility.
 			double bestVal = Double.MAX_VALUE;
 			for (Double val : evaluatedOptions.keySet()) {
 				if (val < bestVal) {
