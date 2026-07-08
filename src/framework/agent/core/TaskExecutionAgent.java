@@ -82,6 +82,9 @@ public abstract class TaskExecutionAgent implements IAgent {
 	@Override
 	public void step() throws Exception {
 		LOGGER.log(Level.DEBUG, "Agent " + this.id + " is stepping.");
+		if (schedule.isEmpty()) {
+			return;
+		}
 		// Get the next event from schedule.
 		Task task = schedule.remove(0);
 		EnvironmentalState environmentalState = loc.getEnvironmentalState();
@@ -89,6 +92,10 @@ public abstract class TaskExecutionAgent implements IAgent {
 		Set<Option> options = this.perceptionComponent.generateOptions(task, environmentalState, internalState);
 		Map<Double, Set<Option>> evaluatedOptions = this.decisionComponent.evaluateOptions(options, task);
 		Option pickedOption = this.communicationComponent.pickOption(evaluatedOptions);
+		if (pickedOption == null) {
+			LOGGER.log(Level.WARN, "Agent " + this.id + " had no viable option for task " + task + "; skipping.");
+			return;
+		}
 		Feedback feedback = this.communicationComponent.getFeedback(task, pickedOption, internalState, this.loc);
 		this.memoryComponent.updateInternalState(task, pickedOption, feedback);
 	}
@@ -131,7 +138,7 @@ public abstract class TaskExecutionAgent implements IAgent {
 	}
 
 	@Override
-	public final boolean isThreadable() {
+	public boolean isThreadable() {
 		return true;
 	}
 

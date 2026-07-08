@@ -395,6 +395,14 @@
             <classpath refid="run.Batch beddem_simulator Model.classpath"/>
         </java>
     </target>
+    <!-- Headless run for CI: runs the dummy (CSV) model with no Swing GUI, using
+         the same classpath as the JUnit tests. Produces output/decisions.csv. -->
+    <target name="run-headless">
+        <java classname="beddem_simulator.HeadlessRun" failonerror="true" fork="yes">
+            <jvmarg line="-ea -Djava.awt.headless=true -XX:+IgnoreUnrecognizedVMOptions --add-modules=ALL-SYSTEM --add-exports=java.base/jdk.internal.ref=ALL-UNNAMED"/>
+            <classpath refid="run.Test.classpath"/>
+        </java>
+    </target>
     <target name="build-installer">
         <java classname="org.apache.tools.ant.launch.Launcher" failonerror="true" fork="yes">
             <jvmarg line="-XX:+IgnoreUnrecognizedVMOptions --add-modules=ALL-SYSTEM --add-exports=java.base/jdk.internal.ref=ALL-UNNAMED"/>

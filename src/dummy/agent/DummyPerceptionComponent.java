@@ -5,18 +5,15 @@ import java.util.Set;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import dummy.concept.MobilityEnvironmentalState;
 import dummy.concept.MobilityInternalState;
 import dummy.concept.MobilityOption;
 import dummy.concept.MobilityTask;
 import dummy.concept.Vehicle;
 import framework.agent.core.PerceptionComponent;
 import framework.concept.EnvironmentalState;
-import framework.concept.Feedback;
 import framework.concept.InternalState;
 import framework.concept.Option;
 import framework.concept.Task;
-import framework.environment.Environment;
 
 public class DummyPerceptionComponent implements PerceptionComponent {
 
@@ -32,8 +29,8 @@ public class DummyPerceptionComponent implements PerceptionComponent {
 	public Set<Option> generateOptions(Task task, EnvironmentalState environmentalState, InternalState internalState) {
 		Set<Vehicle> accessileVehicles = new HashSet<Vehicle>();
 		MobilityTask mobilityTask = (MobilityTask) task;
-		MobilityEnvironmentalState mobilityEnvStat = (MobilityEnvironmentalState) environmentalState;
-		accessileVehicles.addAll(mobilityEnvStat.getPublicTransports());
+		// Public transport available at the trip's origin.
+		accessileVehicles.addAll(mobilityTask.getOriginTransports());
 		MobilityInternalState mobilityInternalStat = (MobilityInternalState) internalState;
 		accessileVehicles.addAll(mobilityInternalStat.getOwnVehicles());
 		String debugStr = "Task for agent" + this.agentID + "Task distance: " + mobilityTask.getDistance()
@@ -54,11 +51,6 @@ public class DummyPerceptionComponent implements PerceptionComponent {
 		}
 
 		return opts;
-	}
-
-	@Override
-	public Feedback getFeedback(Task task, Option pickedOption, Environment environment) {
-		return null;
 	}
 
 }

@@ -42,9 +42,10 @@ public abstract class Determinant {
 	public Map<Double, Set<Option>> rankOptions(Set<Option> inputOpts, Task task) {
 		Map<Double, Set<Option>> rankingResult = new HashMap<Double, Set<Option>>();
 		Map<Double, Set<Option>> valueToOptsMap = evalOpts(inputOpts, task);
+		// Sum of the values over all options.
 		double sumValue = 0;
-		for (Double v : valueToOptsMap.keySet()) {
-			sumValue += v;
+		for (Map.Entry<Double, Set<Option>> entry : valueToOptsMap.entrySet()) {
+			sumValue += entry.getKey() * entry.getValue().size();
 		}
 		if (Double.compare(sumValue, 0.0) == 0)
 			sumValue = 1;

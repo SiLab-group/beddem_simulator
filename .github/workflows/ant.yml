@@ -1,4 +1,5 @@
-# This workflow will build a Java project with Ant
+# This workflow builds the Java project with Ant, runs the tests, then runs the
+# model headlessly and renders its real decision output onto the run summary.
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-ant
 
 name: BedDeM CI
@@ -13,6 +14,13 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
+    # Needed so the test-results step can post a check + comment on the PR.
+    permissions:
+      checks: write
+      pull-requests: write
+      issues: write
+      contents: read
 
     steps:
     - uses: actions/checkout@v4
@@ -33,7 +41,75 @@ jobs:
         ant junitreport
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()          # publish even when a test fails
       with:
         files: |
           junit/**/*.xml
+        check_name: "Test Results"
+        comment_mode: always        # always post/update a comment on the PR
+        comment_title: "BedDeM test results"
+    - name: Upload JUnit report
+      uses: actions/upload-artifact@v4
+      if: always()          # keep the HTML/XML report even on failure
+      with:
+        name: junit-report
+        path: junit/
 
+    # ---- Run the model and show its real decision output ---------------------
+    # The batch (headless) run drives DummyReporter, which writes
+    # output/decisions.csv. output/ is gitignored, so this is produced fresh in
+    # the pipeline on every run -- nothing is committed.
+    - name: Run model (headless)
+      continue-on-error: true          # keep going so we can locate output + diagnose
+      timeout-minutes: 10              # don't hang the job if the run stalls
+      run: |
+        # Runs the dummy (CSV) model headless via the run-headless target
+        # (beddem_simulator.HeadlessRun) -- no Swing GUI, so it works with no
+        # display. Produces output/decisions.csv.
+        rm -f output/decisions.csv
+        ant run-headless "-DECLIPSE_HOME=$(pwd)"
+    - name: Locate decision output
+      if: always()
+      # Repast's batch runner executes each run in its own instance directory, so
+      # DummyReporter's relative "output/decisions.csv" may land there rather than
+      # at the repo root. Find whatever the run produced and bring it back.
+      run: |
+        echo "Files produced by the run:"
+        find . -name 'decisions.csv' -o -name 'DummyOutput*.txt' 2>/dev/null || true
+        latest=$(find . -name 'decisions.csv' -printf '%T@ %p\n' 2>/dev/null | sort -nr | head -1 | cut -d' ' -f2-)
+        if [ -n "$latest" ] && [ "$latest" != "./output/decisions.csv" ]; then
+          mkdir -p output && cp "$latest" output/decisions.csv
+          echo "Copied $latest -> output/decisions.csv"
+        fi
+        echo "--- output/ ---"; ls -la output/ 2>&1 || echo "(no output dir)"
+    - name: Set up Python
+      if: always()
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Summarise decisions
+      if: always()          # still report (or note "no output") if the run failed
+      run: |
+        python analysis/summarize_decisions.py > decision_summary.md
+        cat decision_summary.md >> "$GITHUB_STEP_SUMMARY"
+    - name: Post decision results to PR
+      # Skipped automatically for PRs from forks (their token is read-only and
+      # cannot comment); the results still appear in the run summary + artifact.
+      if: always() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
+      continue-on-error: true          # never fail the build just over the comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: tib-decisions          # one comment, updated on each run
+        path: decision_summary.md
+    - name: Render decision chart
+      if: always()
+      run: |
+        pip install matplotlib
+        python analysis/plot_tib.py
+    - name: Upload decision chart
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: tib-decisions
+        path: analysis/tib_decisions.png
+        if-no-files-found: ignore

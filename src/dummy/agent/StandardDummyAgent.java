@@ -1,5 +1,7 @@
 package dummy.agent;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -112,29 +114,39 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 				this.attitudeWeight, this.socialWeight, this.affectWeight, this.intentionWeight, this.habitWeight);
 	}
 
+	/**
+	 * Expected utility per mode for each trip (task executing time -&gt; mode -&gt; EU),
+	 * as computed by this agent's decision component. Used by the reporter to
+	 * export the full decision, not just the chosen mode.
+	 */
+	public Map<Double, Map<String, Double>> getEuByTime() {
+		return ((DummyDecisionComponent) this.decisionComponent).getEuByTime();
+	}
+
 	/*******************************************************************************************/
 	private Determinant createBeliefDeterminant() {
-		// TODO Auto-generated method stub
-		return null;
+		// Belief: how reliably the agent expects this mode to work as intended
+		// (e.g. arriving on time, no breakdown/cancellation risk).
+		return new LeafDeterminant("belief", this.beliefWeight) {
+			@Override
+			protected double evalOpt(Option opt, Task task) {
+				return logged("BELIEF", opt, lookup(RELIABILITY, modeOf(opt)));
+			}
+		};
 	}
 
 	private Determinant createEvaluationDeterminant() {
-		ParentDeterminant evaluation = new ParentDeterminant("evaluation", 1);
+		ParentDeterminant evaluation = new ParentDeterminant("evaluation", this.evaluationWeight);
 		evaluation.addDeterminantChild(new LeafDeterminant("time", this.timeWeight) {
-
 			@Override
 			protected double evalOpt(Option opt, Task task) {
-				MobilityOption mobilityOpt = (MobilityOption) opt;
-				LOGGER.log(Level.DEBUG, "Evaluating TIME option " + mobilityOpt.getTime());
-				return mobilityOpt.getTime();
+				return logged("TIME", opt, ((MobilityOption) opt).getTime());
 			}
 		});
 		evaluation.addDeterminantChild(new LeafDeterminant("cost", this.costWeight) {
 			@Override
 			protected double evalOpt(Option opt, Task task) {
-				MobilityOption mobilityOption = (MobilityOption) opt;
-				LOGGER.log(Level.DEBUG, "Evaluating COST option " + mobilityOption.getCost());
-				return mobilityOption.getCost();
+				return logged("COST", opt, ((MobilityOption) opt).getCost());
 			}
 		});
 		LOGGER.log(Level.DEBUG, " Evalutation " + evaluation.toString());
@@ -142,39 +154,106 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	}
 
 	private Determinant createNormDeterminant() {
+		// Social norm: how socially accepted the mode is (car slightly less so).
 		return new LeafDeterminant("norm", this.normWeight) {
-
 			@Override
 			protected double evalOpt(Option opt, Task task) {
-				// TODO Auto-generated method stub
-				return 0;
+				return logged("NORM", opt, lookup(SOCIAL_NORM, modeOf(opt)));
 			}
 		};
 	}
 
 	private Determinant createRoleDeterminant() {
-		// TODO Auto-generated method stub
-		return null;
+		// Role / environmental values: emissions penalty (active < public < car).
+		return new LeafDeterminant("role", this.roleWeight) {
+			@Override
+			protected double evalOpt(Option opt, Task task) {
+				return logged("ROLE", opt, lookup(EMISSIONS, modeOf(opt)));
+			}
+		};
 	}
 
 	private Determinant createSelfDeterminant() {
-		// TODO Auto-generated method stub
-		return null;
+		// Self-concept: preference ranking per mode.
+		return new LeafDeterminant("self", this.selfWeight) {
+			@Override
+			protected double evalOpt(Option opt, Task task) {
+				return logged("SELF", opt, lookup(SELF_CONCEPT, modeOf(opt)));
+			}
+		};
 	}
 
 	private Determinant createEmotionDeterminant() {
-		// TODO Auto-generated method stub
-		return null;
+		// Emotion / comfort: perceived (dis)comfort of the mode (car comfiest).
+		return new LeafDeterminant("emotion", this.emotionWeight) {
+			@Override
+			protected double evalOpt(Option opt, Task task) {
+				return logged("EMOTION", opt, lookup(DISCOMFORT, modeOf(opt)));
+			}
+		};
 	}
 
 	private Determinant createFacilitatingDeterminant() {
-		// TODO Auto-generated method stub
-		return null;
+		// Facilitating conditions: convenience / directness (transfers penalised).
+		return new LeafDeterminant("facilitating", this.facilitatingWeight) {
+			@Override
+			protected double evalOpt(Option opt, Task task) {
+				return logged("FACILITATING", opt, lookup(INCONVENIENCE, modeOf(opt)));
+			}
+		};
 	}
 
 	private Determinant createFreqDeterminant() {
-		// TODO Auto-generated method stub
-		return null;
+		// Habit: modes used more often in the past get a lower penalty. Reads the
+		// running frequency count from the agent's memory, so this determinant
+		// reflects the agent's earlier choices during the simulation.
+		return new LeafDeterminant("freq", this.freqWeight) {
+			@Override
+			protected double evalOpt(Option opt, Task task) {
+				Vehicle v = ((MobilityOption) opt).getMainVehicle();
+				int past = ((DummyMemoryComponent) StandardDummyAgent.this.memoryComponent).getPastFrequency(v);
+				return logged("FREQ", opt, 1.0 / (1.0 + past));
+			}
+		};
+	}
+
+	/*
+	 * Helper penalty tables. Each determinant returns a cost value (a lower value
+	 * is preferred). The six columns are the modes defined in data/vehicle.csv.
+	 */
+	private static String modeOf(Option opt) {
+		return ((MobilityOption) opt).getMainVehicle().getName().toLowerCase();
+	}
+
+	/** Log a determinant's value for one option, then return it unchanged. */
+	private static double logged(String determinant, Option opt, double value) {
+		LOGGER.log(Level.DEBUG, "Evaluating " + determinant + " " + modeOf(opt) + " = " + value);
+		return value;
+	}
+
+	private static double lookup(Map<String, Double> table, String mode) {
+		// Unknown modes get a neutral mid penalty rather than crashing.
+		return table.getOrDefault(mode, 2.0);
+	}
+
+	//                                             train  bus  tram  car  walking  biking
+	private static final Map<String, Double> SOCIAL_NORM   = penalties(1, 1, 1, 2, 1, 3);
+	private static final Map<String, Double> EMISSIONS     = penalties(2, 2, 1, 3, 0, 1);
+	private static final Map<String, Double> DISCOMFORT    = penalties(2, 2, 1, 1, 3, 3);
+	private static final Map<String, Double> INCONVENIENCE = penalties(0, 2, 1, 0, 0, 0);
+	private static final Map<String, Double> SELF_CONCEPT  = penalties(2, 2, 2, 1, 3, 3);
+	private static final Map<String, Double> RELIABILITY   = penalties(1, 2, 1, 1, 0, 0);
+
+	private static Map<String, Double> penalties(double train, double bus, double tram, double car, double walking,
+			double biking) {
+		Map<String, Double> t = new HashMap<String, Double>();
+		t.put("train", train);
+		t.put("bus", bus);
+		t.put("tram", tram);
+		t.put("car", car);
+		t.put("walking", walking);
+		t.put("biking", biking);
+		return t;
 	}
 	/*******************************************************************************************/
 
