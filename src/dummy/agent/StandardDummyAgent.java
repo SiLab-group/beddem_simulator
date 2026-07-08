@@ -174,12 +174,11 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	}
 
 	private Determinant createSelfDeterminant() {
-		// Self-concept: the agent identifies with the modes it owns.
+		// Self-concept: preference ranking per mode.
 		return new LeafDeterminant("self", this.selfWeight) {
 			@Override
 			protected double evalOpt(Option opt, Task task) {
-				Vehicle v = ((MobilityOption) opt).getMainVehicle();
-				return logged("SELF", opt, StandardDummyAgent.this.ownVehicles.contains(v) ? 0.0 : 2.0);
+				return logged("SELF", opt, lookup(SELF_CONCEPT, modeOf(opt)));
 			}
 		};
 	}
@@ -238,10 +237,11 @@ public class StandardDummyAgent extends TaskExecutionAgent {
 	}
 
 	//                                             train  bus  tram  car  walking  biking
-	private static final Map<String, Double> SOCIAL_NORM   = penalties(1, 1, 1, 2, 1, 1);
-	private static final Map<String, Double> EMISSIONS     = penalties(1, 2, 1, 3, 0, 0);
-	private static final Map<String, Double> DISCOMFORT    = penalties(1, 2, 1, 0, 3, 2);
-	private static final Map<String, Double> INCONVENIENCE = penalties(1, 2, 1, 0, 0, 0);
+	private static final Map<String, Double> SOCIAL_NORM   = penalties(1, 1, 1, 2, 1, 3);
+	private static final Map<String, Double> EMISSIONS     = penalties(2, 2, 1, 3, 0, 1);
+	private static final Map<String, Double> DISCOMFORT    = penalties(2, 2, 1, 1, 3, 3);
+	private static final Map<String, Double> INCONVENIENCE = penalties(0, 2, 1, 0, 0, 0);
+	private static final Map<String, Double> SELF_CONCEPT  = penalties(2, 2, 2, 1, 3, 3);
 	private static final Map<String, Double> RELIABILITY   = penalties(1, 2, 1, 1, 0, 0);
 
 	private static Map<String, Double> penalties(double train, double bus, double tram, double car, double walking,

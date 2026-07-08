@@ -5,7 +5,6 @@ import java.util.Set;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import dummy.concept.MobilityEnvironmentalState;
 import dummy.concept.MobilityInternalState;
 import dummy.concept.MobilityOption;
 import dummy.concept.MobilityTask;

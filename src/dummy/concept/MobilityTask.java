@@ -1,6 +1,7 @@
 package dummy.concept;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.log4j.Level;
@@ -74,13 +75,15 @@ public class MobilityTask extends Task {
 	public boolean equals(Object other) {
 		if (this == other)
 			return true;
-		if (other == null)
+		if (!(other instanceof MobilityTask))
 			return false;
-		if (other instanceof MobilityTask) {
-			MobilityTask otherTask = (MobilityTask) other;
-			return this.timeStart == otherTask.getTimeStart();
-		}
-		return false;
+		MobilityTask o = (MobilityTask) other;
+		return this.timeStart == o.timeStart && this.distance == o.distance
+				&& Objects.equals(this.fromLoc, o.fromLoc) && Objects.equals(this.toLoc, o.toLoc);
+	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.timeStart, this.distance, this.fromLoc, this.toLoc);
 	}
 }
